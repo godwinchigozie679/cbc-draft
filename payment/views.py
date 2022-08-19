@@ -7,7 +7,8 @@ from e_learning.models.video import Video
 from e_learning.templatetags import course_custom_tags
 from .models import Payment, PaymentExchangeRate
 from time import time
-from pypaystack import Transaction, Customer, Plan
+# from pypaystack import Transaction, Customer, Plan
+from paystackapi.paystack import Paystack
 import json
 from django.http import JsonResponse
 import math
@@ -128,9 +129,10 @@ def verify_paystack_payment(request, order_id, slug):
     
     try:
         paystack_secret_key = 'sk_test_91ea127069a2e935c5dd98f51de416fa8a0a80ab'
-        transaction = Transaction(authorization_key=paystack_secret_key, )
-        response = transaction.verify(order_id) 
-        
+        # transaction = Transaction(authorization_key=paystack_secret_key, )
+        paystack = Paystack(secret_key=paystack_secret_key)        
+        # response = transaction.verify(order_id) 
+        response = paystack.customer.get(order_id)
         
         
         paystack_payment_id = response[3]['customer']['customer_code']
