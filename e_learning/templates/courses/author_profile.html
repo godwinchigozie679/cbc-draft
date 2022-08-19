@@ -1,0 +1,179 @@
+{% extends 'courses/base/dashboard_base.html' %}
+{% load course_custom_tags %}
+
+{%block title%}Dashboard{%endblock%}
+
+{%block content%}
+
+
+<!-- Start of Quick Link -->
+<section class="container-fluid my-2">
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
+      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
+      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
+    </div>
+  </div>
+</section>
+<!-- End of Quick Link -->
+
+<!-- Start of User Profile -->
+<section class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header"><h6 class="fs-6 fw-bolder text-center">{{course_author_profile.author.username|capfirst}}'s Profile</h6></div>
+        <div class="card-body">      
+
+          <!-- Profile -->
+          <div class="row">
+            <!-- Start of Image -->
+            <div class="col-lg-4 mb-2">
+              <div class="card" style="max-width: 180px; width: 100%;">
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <img class="rounded-circle" 
+                    src="{{course_author_profile.author.profile_image.url}}" 
+                    alt="avater", 
+                    style="max-width: 100%; max-height: 150px;">
+                </div>
+              </div>
+            </div>
+
+            <!-- End of Image -->
+
+            <!-- user profile -->
+            <div class="col-lg-4">
+              <!-- Check first name -->
+              {%if course_author_profile.author.first_name%}
+                  <p class="fw-bolder">First Name: <span class="fw-normal"> {{course_author_profile.author.first_name|capfirst}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    First name not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of Check first name -->
+
+              <!-- Check last name -->
+              {%if course_author_profile.author.last_name%}
+                  <p class="fw-bolder">Last Name: <span class="fw-normal"> {{course_author_profile.author.last_name|capfirst}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Last name not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of Check last name -->
+
+              <!-- Check email -->
+              {%if course_author_profile.author.email%}
+              <p class="fw-bolder">Email: <span class="fw-normal">{{course_author_profile.author.email}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Email not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of Check email -->
+
+              <!-- Check username -->
+              {%if course_author_profile.author.username%}
+              <p class="fw-bolder">Username: <span class="fw-normal">{{course_author_profile.author.username|capfirst}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Username not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of Check Username -->
+
+              <!-- Check phone -->
+              {%if course_author_profile.author.profile.phone%}
+              <p class="fw-bolder">Phone Number: <span class="fw-normal">{{course_author_profile.author.profile.phone}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Phone Number not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of phone -->
+
+              <!-- Check twitter_url -->
+              {%if course_author_profile.author.profile.twitter_url%}
+                  <p class="fw-bolder">Twitter Url: <span class="fw-normal"> {{course_author_profile.author.profile.twitter_url}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Twitter Url not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of twitter_url -->
+
+            </div>
+            <!-- end of user profile -->
+
+            <!-- start of other profile -->
+            <div class="col-lg-4">
+            
+            <!-- Check Facebook URL -->
+            {%if course_author_profile.author.profile.facebook_url%}
+            <p class="fw-bolder">Facebook URL: <span class="fw-normal">{{course_author_profile.author.profile.facebook_url}}</span></p>          
+            {%else %}
+                <div class="alert alert-warning" role="alert">
+                  Facebook URL not provided by user
+                </div>
+            {%endif %}
+            <!-- End of Facebook URL -->
+
+
+            <!-- Check instagram_urll -->
+            {%if course_author_profile.author.profile.instagram_url%}
+                <p class="fw-bolder">Instagram Url: <span class="fw-normal"> {{course_author_profile.author.profile.instagram_url}}</span></p>          
+            {%else %}
+                <div class="alert alert-warning" role="alert">
+                  Instagram Url not provided by user
+                </div>
+            {%endif %}
+            <!-- End of instagram_url -->
+          
+            </div>
+
+            <!-- end of other profile -->
+          </div>
+          <!-- End of Profile -->
+
+          <div class="row">
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-10">
+              <!-- Check biography -->
+              {%if course_author_profile.author.profile.biography%}
+              <p class="fw-bolder">Biography:</p> <span class="fw-normal">{{course_author_profile.author.profile.biography|safe}}</span>        
+              {%else %}
+                <div class="alert alert-warning" role="alert">
+                    Biography not provided by user
+                </div>
+              {%endif %}
+              <!-- End of biography -->
+
+            </div>
+            <div class="col-lg-1">
+
+            </div>
+          </div>
+
+           
+        </div>    
+
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+<br>
+<br>
+
+<!-- End of User Profile -->
+
+
+
+
+{% endblock%}

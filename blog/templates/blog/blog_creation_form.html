@@ -1,0 +1,30 @@
+{% extends 'courses/base/dashboard_base.html' %}
+{%block title%}
+    {%if user%}
+    {{user.get_full_name}}
+    {%else%}
+    blog & Author
+    {%endif%}
+{%endblock%}
+
+{%block content%}
+
+<!-- Start of Form -->
+<section class="my-5 px-lg-5 px-md-5 px-sm-5 px-2">
+    <h5 class="fw-bold my-3 text-center">Add Article ....</h5>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row pe-md-5 form-group pe-sm-5 pe-lg-5 ps-lg-2 ps-md-2 ps-sm-2">          
+            
+            {{form.media}} 
+            {{form.as_p}}
+                     
+            <button id="button-hover-black-bg" style="font-size: 11px" class="border-0 mx-3 my-2 py-2 col-3 col-lg-1  text-white fw-bolder btn btn-primary" type="submit">POST<i class="fas fa-caret-right"></i></button>
+            
+        </div>                     
+    </form>    
+</section>
+<!-- End of Form -->
+
+
+{%endblock%}

@@ -1,0 +1,53 @@
+{% extends 'courses/base/dashboard_base.html' %}
+{% load course_custom_tags %}
+
+{%block title%}Dashboard{%endblock%}
+
+{%block content%}
+
+
+<!-- Start of Quick Link -->
+<section class="container-fluid my-2">
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
+      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
+      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
+    </div>
+  </div>
+</section>
+<!-- End of Quick Link -->
+
+<!-- Start of Delete Account form -->
+<section class="container my-5">
+  <div class="row">
+    <div class="col-lg-2">
+
+    </div>
+
+    <div class="col-lg-8">
+      <div class="card" style="max-width: 500px; width:100%">
+        <div class="card-body">
+          <form method="POST">{% csrf_token %}
+            <p>Are you sure you want to delete the account "{{ user.username }}"?</p>
+              {{ form }}
+            <b class="btn btn-sm btn-danger"><a class="text-decoration-none text-white" href="{%url 'confirm_delete'%}">Confirm</a></b>
+            <a class="btn btn-sm m-2 btn-secondary text-decoration-none text-white" href="{%url 'account_settings' user.id %}">Cancel</a>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-2">
+
+    </div>
+  </div>
+  
+
+</section>
+<!-- End of Delete Account Form -->
+
+
+
+{% endblock%}

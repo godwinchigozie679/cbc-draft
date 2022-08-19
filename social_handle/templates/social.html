@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <style>
+    
+        /*SOCIAL MEDIA FOLLOW*/
+        @media (max-width: 380px){
+
+            .followers{
+                display: none !important;
+                
+            }
+        
+        
+        }
+
+    </style>
+
+    {%for social in social_handle%} 
+        <a id="a-tag-social" class="text-decoration-none fw-bold text-white" href="{{social.username_url}}" target="_blank">
+        <span class="" ><i style="color: rgb(188, 42, 141)" id="social_image" class="fw-bolder text-center {{social.icon}}"></i></span>
+        <span class="followers" style="color: #6c757d; font-weight: 600; font-size: 12px;">Followers</span>
+        <span class="followers" style="color: #1c1c1d; font-weight: 600; font-size: 12px;">{{social.followers_numbers}}</span>
+        </a>
+    {%endfor%}
+      
+</body>
+</html>

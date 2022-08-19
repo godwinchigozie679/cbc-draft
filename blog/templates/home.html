@@ -1,0 +1,1494 @@
+{% extends 'courses/base/blog.html' %}
+
+
+{%block title%} Blog {%endblock%}
+
+{%block content%}
+<style>
+   .slide-item > #owl-hot-news-text:hover{
+        color:#0d6efd;
+    }
+</style>
+
+<!-- Start of News and blog header -->
+
+<section style="background-color: #f9f9f9; z-index: 0;" >    
+    <div class="container-fluid px-sm-5 px-md-5 px-lg-5 pt-5">
+        <div class="row g-2">
+            <!-- Start of Single News -->
+            <div class=" col-lg-6 relative-position owl-carousel owl-news1"> 
+                {% for news_cat in news_categories|slice:":" %}               
+                {% for news in news_cat.news_category.all|slice:":6" %}                
+                <div class=" slide-item">
+
+                    <!-- Start of Author -->
+                    <div style="position: absolute; z-index: 2; top:30px; left: 40px; width: 100%;">
+                        <a style="position: absolute; z-index: 1;" id="text-hover" class="d-flex text-decoration-none" href="">
+                            <img id="text-hover" style="width: 30px; height: 30px" class=" m-1 rounded-circle" src="{{news.author.profile_image.url}}"  alt="{{news.author}} image">
+                            <span id="text-hover" style="font-size: 11px" class=" m-2 fw-bolder text-white"> by {{news.author.first_name|capfirst}} {{news.author.last_name|capfirst}}</span>
+                        </a>
+                         
+                    </div>
+                    <!-- End of Author -->
+
+                    <!-- Start of Image -->                    
+                    <div class="HoverDiv">
+                        {% if news.post_image %}
+                        <div class="general-overlay-zoom"></div>
+                        <img class="hover-image rounded" style="height: 390px;" src="{{news.post_image.url}}" alt="{{single_news.post_image.url}}">
+                        {% else %}
+                        {% endif %}
+                    </div>
+                    <!-- End of Image -->
+
+                    <!-- Start Category, Title, and other features -->
+                    <div style="position: absolute; bottom:10%; left: 2%; z-index: 2;" id="blog-news-font" class="mx-2 text-white">
+                        <a id="category-hover" class=" category text-decoration-none px-2 py-1 rounded fs-6 fw-bolder text-white" href="{{news_cat.get_absolute_url}}">News</a>
+                        
+                        <ul class="my-2">
+                            <a href="{{news.get_absolute_url}}" class="fs-6 fw-bold text-decoration-none text-white fw-bolder" >{{news.title|truncatechars:100}}</a>
+                             
+                        </ul>
+
+                        <!--Other Features  -->
+                        <div class="mt-3">
+                            <!-- Start of Date -->
+                            <span style="font-size: 11px" class="m-1 fw-bolder text-white"><i class="m-2 fa-regular fa-clock text-primary"></i> {{news.publish.date}}</span>
+                            <!-- End Date -->
+
+                            <!-- Start Comment -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{news.news_post_comment.all.count}}</span>
+                            <!-- End Comment -->
+
+                            <!-- Start Views -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{news.views}}</span>
+                            <!-- End Views -->                                                        
+                            
+                        </div>
+                        <!-- End of Other Features -->
+                    
+                    </div>
+                    <!-- End of Category, Title, and other features -->
+                </div>
+                {% endfor%}  
+                {% endfor%}
+    
+            </div>
+            <!-- End of Single News -->
+    
+            <!-- Start of Blog -->        
+            <div style="z-index: 1;" class="col-lg-6">
+                <!-- Start of First Post -->
+                <div class="row">
+                    {% for post in posts|slice:":4"%}                    
+                        <div class="col-lg-6 mb-1 position-relative ">
+                            <!-- Start of Author -->
+                            <div style="position: absolute; z-index: 2; top:15px; left: 20px; width: 100%;">
+                                <a style="position: absolute; z-index: 2;" id="text-hover" class="d-flex text-decoration-none" href="{%url 'blog_author' post.pk%}">
+                                    <img id="text-hover" style="width: 30px; height: 30px" class=" m-1 rounded-circle" src="{{post.author.profile_image.url}}"  alt="{{post.author}} image">
+                                    <span id="text-hover" style="font-size: 11px" class=" m-2 fw-bolder text-white"> by {{post.author.get_full_name}}</span>
+                                </a>                                
+                                
+                            </div>
+                            <!-- End of Author --> 
+                            
+
+                            <div class="">
+                                <!-- Start Image -->
+                                <div class="HoverDiv">
+                                    {% if post.post_image %}
+                                    <div class="general-overlay-zoom"></div>
+                                    <img class="hover-image img-fluid position-relative" style="width: 100%; height: 192px;" src="{{post.post_image.url}}" alt="{{post.title}} image">                           
+                                    {% else %}
+                                    {% endif %}
+
+                                </div>
+                                <!-- End of Image -->
+
+                                <!-- Start of Features -->
+                                <div style="position: absolute; bottom:4%; left: 6%; z-index:2;" id="blog-news-font" class="text-white px-1">
+                                    <a id="category-hover" href="{{post.category.get_absolute_url}}" class="category text-decoration-none px-2 py-1 rounded fs-6 fw-bolder  bg-dark text-white">{{post.sub_category.name}}</a>
+                                    
+                                    <ul class="my-2">
+                                        <a style="font-size: 13px;" href="{{post.get_absolute_url}}" class="fw-bold text-decoration-none text-white fw-bolder" >{{post.title|truncatechars:35}}</a>
+                                         
+                                    </ul>
+            
+                                    <!--Other Features  -->
+                                    <div class="">
+                                        <!-- Start of Date -->
+                                        <span style="font-size: 11px" class="m-1 fw-bolder text-white"><i class="m-2 fa-regular fa-clock text-primary"></i> {{post.publish.date}}</span>
+                                        <!-- End Date -->
+            
+                                        <!-- Start Comment -->
+                                        <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{post.blog_post_comment.all.count}}</span>
+                                        <!-- End Comment -->
+            
+                                        <!-- Start Views -->
+                                        <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                                        <!-- End Views -->                                                        
+                                        
+                                    </div>
+                                    <!-- End of Other Features -->
+                                </div>
+                                <!-- End of Features -->
+                            </div> 
+                             
+                              
+                        </div>
+                    {%endfor%}                    
+
+                </div> 
+                <!-- End of  First Blog -->
+
+                            
+            </div>
+            <!-- End of Blog -->
+            
+        </div>
+        
+    </div>
+    
+</section>
+<!-- end of News and blog header  -->
+
+
+<!-- Start of first ads -->
+<section class="py-5 px-lg-5" style="background-color: #f9f9f9;">
+    <div class="container-fluid border rounded">
+        {%for ad in ads|slice:":1"%}
+            <!-- Image -->
+            <a href="">
+                {%if ad.image %}
+                    <img style="width: 100%; height: 100px;" class="rounded" src="{{ad.image.url}}" alt="ad-image">
+                {%else%}
+                {%endif%}
+            </a>
+            <!-- end Image -->
+        {%endfor%}
+        
+    </div>
+</section>
+<!-- End of Second ads -->
+
+<!-- Start Section two -->
+<section class="mt-2  container-fluid px-lg-5 px-md-5 px-sm-5">
+    <div class="row  ">
+        <!-- Start first column -->        
+        <div class="col-lg-8 border-end">
+            <!-- Start of Latest News -->
+            <div class="row position-relative border-bottom">
+                <div class="col-5">
+                    <h6 class="fs-6 fw-bolder ">Lastest World News</h6>                
+                    <span style="font-size:12px" class="fw-bold text-muted">Don't miss daily news</span>
+                </div>
+    
+                <div style="font-size: 12px;" class="fw-bold col-lg-7">
+                    <!-- Start of news Category -->
+                    <ul class="nav nav-pills mb-3 mx-0" id="pills-tab" role="tablist">
+                        {%for cat in news_categories|slice:":3"%}
+                        <li class="border nav-item text-dark bg-dark " role="presentation">
+                          <a class="rounded-0 nav-link text-decoration-none text-white {%if cat_id == cat.id%} active {%endif%} "                           
+                          
+                          id="pills-{{cat.id}}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{cat.id}}" type="button" role="tab" aria-controls="pills-{{cat.id}}" aria-selected="true">{{cat.name}}</a>
+                        
+                        </li>
+                        {%endfor%}                        
+                    </ul>
+                    
+                    <!-- End of News Category -->
+                </div>
+                <!-- Start of Style border-bottom -->
+                <span style="border-bottom-width: 1px;
+                position: absolute;
+                left:0;
+                top: 100%;
+                width: 10%; 
+                margin: 0 0 -1px 0;
+                border-bottom-color: #0d6efd !important; 
+                display: inline-block; border-bottom-style: 
+                solid;" 
+                > 
+                </span>
+                <!-- End of Style border-bottom -->
+            </div>
+            
+            
+            <div class="row px-1">
+                <!-- Start of latest News Post -->
+                <div class="tab-content" id="pills-tabContent">
+                    {%for cat in news_categories|slice:":3"%}
+                        
+                    <div class="row my-5 tab-pane fade {%if cat_id == cat.id%} show active {%endif%}" id="pills-{{cat.id}}" role="tabpanel" aria-labelledby="pills-{{cat.id}}-tab">
+                       
+                        {%for news in cat.news_category.all|slice:":5"%} 
+                        <div style="width: 97%;"  class="row border-bottom position-relative">
+                            <!-- image of latest News -->                            
+                            <div class="hover-effect-image-and-overlay col-lg-4 col-md-4 p-1 position-relative"> 
+                                <!-- Start of Image -->
+                                <a href="{{news.get_absolute_url}}">
+                                    <div class="m-1 relative-position">
+                                        <!-- overlay -->
+                                        <div class="general-overlay rounded"> </div>
+                                        <!--End overlay -->
+                                        
+                                        <!-- Start of main Image -->
+                                        <div class="relative-position">
+                                            {% if news.post_image %}
+                                            <img class="rounded relative-position" style="width: 100%; object-fit: cover; object-position: bottom; height:200px; z-index: 0; top:0; bottom:0;right:0;left:0;" src="{{news.post_image.url}}" alt="{{news.name}} image">
+                                            <a href="{{news.get_absolute_url}}" class="general-link border border-3  rounded-circle bg-primary"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                            {% else %}
+                                            {% endif %}
+                                        </div>
+                                        <!-- End of main Image -->
+                                    </div>
+                                </a>
+                                <!-- End of Image --> 
+                                                  
+                            </div>
+                            <!-- End of Image of Latest News -->
+
+                            <div class="col-lg-8 col-md-8 p-2"> 
+                                 <!--start category  -->
+                                <div class="my-2 latest-world-news">
+                                    <a id="lastest-news-cat" style="font-size: 12px;" href="{{news.category.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-primary text-white rounded p-2">{{news.sub_category.name}}</a>
+                                </div>                                
+                                <!-- end category -->
+
+                                <!-- Start of title -->
+                                <div class="my-2">
+                                    <a id="text-hover" href="{{news.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{news.title}}</a>
+                                </div>
+                                <!-- End of Title -->
+
+                                <div class="my-2">
+                                    <!-- Start Date -->
+                                    <span style="font-size: 12px" class="p-1 fw-bold text-muted"><i class="p-2 fa-regular fa-clock text-primary"></i> {{news.publish.date}}</span>
+                                    <!-- End Date -->
+
+                                    <!-- Start of News article  -->
+                                    <br>
+                                    <span style="font-size: 12.5px;" class="text-muted text-justify lh-lg"><a class="text-decoration-none link-secondary" href="{{news.get_absolute_url}}">{{news.overview|truncatechars:150}}</a></span>
+                                    <!-- End of start of news article -->
+
+                                </div>
+
+                                <!--Other Features  -->
+                                <div class="row">
+                                    <div class="col-8">
+                                        <!-- Start of Author -->
+                                        <a id="text-hover" class="d-flex text-decoration-none" href="">
+                                            <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{news.author.profile_image.url}}"  alt="{{news.author}} image">
+                                            <span id="text-hover" style="font-size: 11px" class=" m-2 fw-bolder text-muted"> by {{news.author.first_name|capfirst}} {{news.author.last_name|capfirst}}</span>
+                                        </a>
+                                        <!-- End Author -->  
+                                    </div>
+                                    <div class="col-4">
+                                        <!-- Start Comment -->
+                                        <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{news.news_post_comment.all.count}}</span>
+                                        <!-- End Comment --> 
+
+                                        <!-- Start Views -->
+                                        <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{news.views}}</span>
+                                        <!-- End Views --> 
+                                    </div>
+                                    
+                                </div>
+                                <!-- End of Other Features -->
+
+                                
+                            </div>
+                            <!-- Start of Style border-bottom -->
+                            <span style="border-bottom-width: 1px;
+                                        position: absolute;
+                                        left:0;
+                                        top: 100%;
+                                    width: 5%; 
+                                    margin: 0 0 -1px 0;
+                                    border-bottom-color: #0d6efd !important; 
+                                    display: inline-block; border-bottom-style: 
+                                    solid;" 
+                                class=""> 
+                            </span>
+                            <!-- End of Style border-bottom -->
+                        
+                        </div>
+                        {%endfor%}    
+                    </div>
+                    {%endfor%}
+                </div>
+            </div>
+            <!-- End of Latest News........................ -->
+            
+            <!-- Start of Second Ad -->
+            <div class="col-12 border">
+                <p>Second Ad</p>
+
+            </div>
+            <!-- End of Second Ad -->
+            
+            <!-- Start of Popular Post Header -->
+            <div style="width: 99%;" class="row mt-5 position-relative border-bottom">
+                <div class="col-11">
+                    <h6 class="fs-6 fw-bolder ">Our Popular Post</h6>                
+                    <span style="font-size:12px" class="fw-bold text-muted">Don't miss our daily post</span>
+                </div>
+        
+                <div style="font-size: 12px;" class="fw-bolder col-1">
+                    <i class="fw-bolder fs-4 text-primary fa-solid fa-caret-down"></i>
+                </div>
+                
+                <!-- Start of Style border-bottom -->
+                <span style="border-bottom-width: 1px;
+                    position: absolute;
+                    left:0;
+                    top: 100%;
+                    width: 10%; 
+                    margin: 0 0 -1px 0;
+                    border-bottom-color: #0d6efd !important; 
+                    display: inline-block; border-bottom-style: 
+                    solid;" 
+                    > 
+                </span>
+                <!-- End of Style border-bottom -->
+            </div> 
+            <!-- End of Popular Post Header -->
+
+            <!-- Start of Popular Post -->
+            <div class="row mb-2 pb-2">
+                {%for popular_post in all_popular_post|slice:":2"%}
+                    <div class="position-relative ps-1 border-bottom col-lg-6  col-md-6 hover-effect-image-and-overlay ">
+                        
+                       
+                        
+
+                        <div style="position: absolute; z-index: 2; top:12px; left:50%;" class="">
+                            <!-- Start Comment -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{popular_post.blog_post_comment.all.count}}</span>
+                            <!-- End Comment --> 
+
+                            <!-- Start Views -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{popular_post.views}}</span>
+                            <!-- End Views --> 
+                        </div>
+                       
+                        
+                        <!-- Start of Image -->
+                        <a href="{{popular_post.get_absolute_url}}">
+                            <div class="m-2 relative-position">
+                                <!--start category  -->
+                                <div  class="">
+                                    
+                                    <a style=" z-index: 2; top:8px; left:12px; font-size: 12px;" href="{{popular_post.category.get_absolute_url}}" class="position-absolute start-0 top-0 text-decoration-none fw-bolder bg-primary text-white rounded p-2">{{popular_post.sub_category.name}}</a>
+                                
+                                </div>                                
+                                <!-- end category -->
+                                <!-- overlay -->
+                                <div class="general-overlay rounded"> </div>
+                                <!--End overlay -->
+                                
+                                <!-- Start of main Image -->
+                                <div class="position-relative">
+                                    {% if popular_post.post_image %}
+                                    
+                                    <img class="rounded relative-position" style="width: 100%; object-fit: cover;
+                                    object-position: bottom; height:250px; z-index: 0; top:0; bottom:0;right:0;left:0;" src="{{popular_post.post_image.url}}" alt="{{popular_post.name}} image">
+                                    <a href="{{popular_post.get_absolute_url}}" class="general-link border border-3  rounded-circle bg-primary"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                                 <!-- End of main Image -->
+                            </div>
+                        </a>
+                        <!-- End of Image -->
+
+                        <div class="p-2">                             
+                           <!-- Start of title -->
+                           <div class="my-2">
+                               <a id="text-hover" href="{{popular_post.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{popular_post.title}}</a>
+                           </div>
+                           <!-- End of Title -->
+
+                           <div class="my-2">
+                               <!-- Start Date -->
+                               <span style="font-size: 12px" class="m-1 fw-bold text-muted"><i class="m-2 fa-regular fa-clock text-primary"></i> {{popular_post.publish.date}}</span>
+                               <!-- End Date -->                               
+                           </div>
+                        </div>
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                        position: absolute;
+                        left:0;            
+                        top: 100%;
+                        width: 10%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; 
+                        border-bottom-style: solid;" 
+                        > 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    </div> 
+                {%endfor%}
+            </div>            
+            <!-- End of Popular Post........................ -->
+
+            <!-- Start of Popular Single Post Caurosel -->
+            <div id="owl-popular-post" class="mb-5 col-12 position-relative owl-carousel owl-popular-post owl-theme"> 
+                {% for post in all_popular_post|slice:"2:5" %} 
+                <div class="slide-item">
+
+                    <!-- Start of Author -->
+                    <div style="position: absolute; z-index: 2; top:30px; left: 40px; width: 100%;">
+                        <a style="position: absolute; z-index: 2;" id="text-hover" class="d-flex text-decoration-none" href="{%url 'blog_author' post.pk%}">
+                            <img id="text-hover" style="width: 30px; height: 30px" class=" m-1 rounded-circle" src="{{post.author.profile_image.url}}"  alt="{{post.author}} image">
+                            <span id="text-hover" style="font-size: 11px" class=" m-2 fw-bolder text-white"> by {{post.author.get_full_name}}</span>
+                        </a>
+                         
+                    </div>
+                    <!-- End of Author -->
+
+                    <!-- Start of Image -->
+                    <div class="HoverDiv">
+                        {%if post.post_image %}
+                        <div class="general-overlay-zoom"></div>
+                        <img class="hover-image rounded" style="height: 390px;" src="{{post.post_image.url}}" alt="{{post.post_image.url}}">
+                        {%else %}
+                        {%endif %}
+                    </div>
+                    <!-- End of Image -->
+
+                    <!-- Start Category, Title, and other features -->
+                    <div style="position: absolute; bottom:10%; left: 2%; z-index: 2;" id="blog-news-font" class="mx-2 text-white">
+                        <a id="category-hover" class=" category text-decoration-none px-2 py-1 rounded fs-6 fw-bolder text-white" href="{{post.category.get_absolute_url}}">{{post.sub_category.name}}</a>
+                        
+                        <ul class="my-2">
+                            <a href="{{post.get_absolute_url}}" class="fs-6 fw-bold text-decoration-none text-white fw-bolder" >{{post.title|truncatechars:100}}</a>
+                             
+                        </ul>
+
+                        <!--Other Features  -->
+                        <div class="mt-3">
+                            <!-- Start of Date -->
+                            <span style="font-size: 11px" class="m-1 fw-bolder text-white"><i class="m-2 fa-regular fa-clock text-primary"></i> {{post.publish.date}}</span>
+                            <!-- End Date -->
+
+                            <!-- Start Comment -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{post.blog_post_comment.all.count}}</span>
+                            <!-- End Comment -->
+
+                            <!-- Start Views -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                            <!-- End Views -->                                                        
+                            
+                        </div>
+                        <!-- End of Other Features -->
+                    
+                    </div>
+                    <!-- End of Category, Title, and other features -->
+                </div>                  
+                {% endfor%}
+    
+            </div>            
+            <!-- End of Popular Single Post Caurosel -->
+
+            <!-- Start of Four Other Popular Post -->
+            <div class="row mb-2 pb-2">
+                {%for popular_post in all_popular_post|slice:"5:9"%}
+                    <div class="position-relative ps-1 border-bottom col-lg-6  col-md-6 hover-effect-image-and-overlay ">
+                        
+                       
+                        
+
+                        <div style="position: absolute; z-index: 2; top:12px; left:50%;" class="">
+                            <!-- Start Comment -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{popular_post.blog_post_comment.all.count}}</span>
+                            <!-- End Comment --> 
+
+                            <!-- Start Views -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{popular_post.views}}</span>
+                            <!-- End Views --> 
+                        </div>
+                       
+                        
+                        <!-- Start of Image -->
+                        <a href="{{popular_post.get_absolute_url}}">
+                            <div class="m-2 relative-position">
+                                <!--start category  -->
+                                <div  class="">
+                                    
+                                    <a style=" z-index: 2; top:8px; left:12px; font-size: 12px;" href="{{popular_post.category.get_absolute_url}}" class="position-absolute start-0 top-0 text-decoration-none fw-bolder bg-primary text-white rounded p-2">{{popular_post.sub_category.name}}</a>
+                                
+                                </div>                                
+                                <!-- end category -->
+                                <!-- overlay -->
+                                <div class="general-overlay rounded"> </div>
+                                <!--End overlay -->
+                                
+                                <!-- Start of main Image -->
+                                <div class="position-relative">
+                                    {% if popular_post.post_image %}
+                                    
+                                    <img class="rounded relative-position" style="width: 100%; object-fit: cover;
+                                    object-position: bottom; height:250px; z-index: 0; top:0; bottom:0;right:0;left:0;" src="{{popular_post.post_image.url}}" alt="{{popular_post.name}} image">
+                                    <a href="{{popular_post.get_absolute_url}}" class="general-link border border-3  rounded-circle bg-primary"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                                 <!-- End of main Image -->
+                            </div>
+                        </a>
+                        <!-- End of Image -->
+
+                        <div class="p-2">                             
+                           <!-- Start of title -->
+                           <div class="my-2">
+                               <a id="text-hover" href="{{popular_post.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{popular_post.title}}</a>
+                           </div>
+                           <!-- End of Title -->
+
+                           <div class="my-2">
+                               <!-- Start Date -->
+                               <span style="font-size: 12px" class="m-1 fw-bold text-muted"><i class="m-2 fa-regular fa-clock text-primary"></i> {{popular_post.publish.date}}</span>
+                               <!-- End Date -->                               
+                           </div>
+                        </div>
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                        position: absolute;
+                        left:0;            
+                        top: 100%;
+                        width: 10%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; 
+                        border-bottom-style: solid;" 
+                        > 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    </div> 
+                {%endfor%}
+            </div>            
+            <!-- End of Four Other Popular Post........................ -->
+
+            <!-- Start of More Post -->
+            
+            <div  class="d-grid gap-2 mb-3">
+                <a id="background-btn-hover" style="font-size: 15px;" class="btn-outline-dark text-decoration-none btn fw-bolder btn-lg bg-dark btn-primary text-white" href="{% url 'latest_post'%}">Read All Post</a>
+            </div>
+           
+            <!-- End of More Post -->
+
+        </div> 
+        <!-- End of First Column -->
+        
+        <!-- Start of Second column -->        
+        <div   class="mt-5 col-lg-4">
+            <!-- Start of Recent Blog -->
+            <div  class="col-12 border rounded-top">
+                <div style="background-color: #f9f9f9;" class="card">
+                    <div class="card-header rounded-top text-center fw-bolder text-white bg-dark">Recent Post</div>
+
+                    <div class="card-body">
+                        <div>
+                            <!-- Start of Recent Post -->
+                            {% for post in posts|slice:":4"%}    
+                                <div >
+                                    <div  class="row m-lg-1 m-md-1 m-sm-1 border-bottom position-relative">
+                                        <!-- image of Recent -->
+                                        
+                                        <div class="hover-effect-image-and-overlay col-lg-5 p-lg-1 p-md-1 p-sm-1 position-relative">  
+                                                                                                         
+                                                <!-- Start of Image -->
+                                                <a href="{{post.get_absolute_url}}">
+                                                    <div class="m-2 relative-position">
+                                                        <!-- overlay -->
+                                                        <div class="general-overlay rounded"> </div>
+                                                        <!--End overlay -->
+                                                        
+                                                        <!-- Start of main Image -->
+                                                        <div class="relative-position">
+                                                            {% if post.post_image %}
+                                                            <img class="rounded relative-position" style="width: 100%; object-fit: cover; object-position: bottom; height:100%;" src="{{post.post_image.url}}" alt="{{post.name}} image">
+                                                            <a href="{{post.get_absolute_url}}" class="general-link"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                                            {% else %}
+                                                            {% endif %}
+                                                        </div>
+                                                        <!-- End of main Image -->
+                                                    </div>
+                                                </a>
+                                                <!-- End of Image -->
+                                              
+                                        </div>
+                                        <!-- End of Image of Recent -->
+            
+                                        <div class="col-lg-7 p-1">                                     
+            
+                                            <!-- Start of title -->
+                                            <div class="">
+                                                <a href="{{post.get_absolute_url}}" style="font-size: 12px" id="text-hover"  class=" fw-bolder text-dark text-decoration-none">{{post.title|truncatechars:100}}</a>
+                                            </div>
+                                            <!-- End of Title -->
+                                            <!--Other Features  -->
+                                            <div class="mt-3">
+                                            
+                                                <!-- Start of Date -->
+                                                <span style="font-size: 11px" class="text-muted"><i class="m-1 fa-regular fa-clock text-primary"></i> {{post.publish.date}}</span>
+                                                <!-- End Date -->  
+                                               
+                                                <!-- Start Comment -->
+                                                <span style="font-size: 11px" class="px-1 text-muted"><i class="mx-1 fa-solid fa-comment text-primary"></i> {{post.blog_post_comment.all.count}}</span>
+                                                <!-- End Comment --> 
+                                                
+                                                <!-- Start Views -->
+                                                <span style="font-size: 11px" class="px-1 text-muted"><i class="mx-1 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                                                <!-- End Views --> 
+                                            </div>
+                                            <!-- End of Other Features -->
+                                        </div>                               
+                                    
+                                    </div>                        
+                            
+                                </div>
+                            {%endfor %}
+                            <!-- End of Recent Post -->
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- End of Recent Blog -->
+
+            <!-- Start of Image from Category -->
+            <div style="background: #f9f9f9;" class="col-12 my-lg-5 my-md-5 rounded p-2 my-sm-5 my-3">
+                {% for cat in blog_categories|slice:":1" %}
+                    {% if cat.category_image %}
+                    <img class="rounded" style="width: 100%; object-fit: cover; object-position: bottom; height:20px;" src="{{cat.category_image.url}}" alt="{{cat.name}} image">                    
+                    {% else %}
+                    {% endif %}
+                {% endfor %}
+            </div>            
+            <!-- End of Image from Category -->
+
+            <!-- Start of Follow Us -->
+            <div class="row my-5">                
+                <div class="col-12">
+                    <!-- Start of Header -->
+                    <div class="row mb-2 position-relative border-bottom">
+                        <div class="col-12">
+                            <h2 style="font-size: 18px;" class="my-3 fw-bolder ">Follow Us</h2>                
+
+                        </div>   
+
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                        position: absolute;
+                        left:0;
+                        top: 100%;
+                        width: 10%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; border-bottom-style: 
+                        solid;" 
+                        > 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    </div>
+                    <!-- End of Header -->
+
+                    <!-- Start of Follow Us Content -->
+                    <div  class="col-12 mb-5">
+                        {%load social%}
+                        {%social%}
+                    </div>
+                    <!-- End of Follow Us Content -->
+                </div>   
+                
+            </div>
+            <!-- End of Follow Us -->
+            
+            <!-- Start of Crypto Market Price -->
+            <!--  Bitcoin marketCap -->
+            
+            <div style="background: #f9f9f9;" class="col-sm-12 rounded col-md-12 col-lg-12 p-2 my-2">
+                            
+                <table class="table table-dark" style="width: 100%;" id="table-border-radius">
+                        <thead class="table table-dark">
+                            <tr>                                 
+                                <th>Coin</th>
+                                <th class="text-center">USD Price</th>                                
+                            </tr>
+                        </thead>
+                        {%load blog_crypto_custom_price%}
+                        {%blog_show_crypto_price%}
+                </table>
+                        
+            </div>
+            <!-- End of Crypto Market Price -->
+
+
+            <!-- Start of Popular Tags -->
+            <div class="row mb-3">
+                <div class="col-12">
+                    <!-- Start of Header -->
+                    <div class="row mt-4 mb-3 position-relative border-bottom">
+                        <div class="col-12">
+                            <h2 style="font-size: 18px;" class="my-3 fw-bolder ">Popular Tags</h2>                
+                            
+                        </div>   
+                        
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                        position: absolute;
+                        left:0;
+                        top: 100%;
+                        width: 10%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; border-bottom-style: 
+                        solid;" 
+                        > 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    </div>
+                    <!-- End of Header -->
+        
+                    <!-- Start of tag Content -->
+                    <div  class="col-12">
+                        
+                        {%for tag in common_tags|slice:":8"%}   
+                                                                      
+                        <a id="tag-bg-hover" class="tag-bg text-decoration-none bg-dark fw-bold text-white" href="{% url 'blog_tag_list' tag.slug %}" >{{tag|capfirst}}</a>                          
+                          
+                        
+                        {%endfor%}
+                        
+                    </div>
+                    <!-- End of tag Content -->                
+                </div>
+            </div>
+            <!-- End of Popular Tag --> 
+            
+        </div>
+        <!-- End of Second Column -->
+    </div>
+</section>
+<!-- End of Section two -->
+
+
+
+<!-- Featured Videos -->
+<section style="background: rgb(25, 25, 25);" class="container-fluid px-lg-5 px-md-5 px-sm-5 my-5">
+    <!-- Start of Two Columns for Featured Videos -->
+    <div class="row">
+        <!-- Start of First Column -->
+        <div class="col-lg-7 col-md-7">
+            <!-- start of header -->
+            <div class="row mt-5">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <h2 style="font-size: 24px;font-weight: 700;" class="text-white">Featured Courses</h2>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <h4 class="fs-6 p-2 fw-bolder text-muted">Learn-and-grow</h4>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <hr class="text-muted">
+                </div>
+                <!-- Start of More Course Link -->
+                {%for cat in course_categories|slice:":1"%}
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                    <a style="font-size: 12px;" class="rounded-none px-4 py-2 text-white text-decoration-none fw-bolder btn btn-sm bg-primary" href="{{cat.get_absolute_url}}">Views All <i class="ms-2 text-white fw-bolder fs-6 fa-solid fa-forward"></i></a>
+                </div>
+                {%endfor%}
+                
+                <!-- End of More Course Link -->
+            </div>
+            <!-- End of Header -->
+
+            <!-- Start of Video -->
+            <div style="background: #222;" class="mb-5 mt-3 col-12 relative-position owl-carousel owl-popular-post owl-theme"> 
+                {% for course in featured_courses|slice:":1" %}
+                <div class="slide-item">
+                    <!-- Start of Video Play -->
+                    <div id="featured-video-button" >
+                        <a id="play-video" class="video-play-button" href="#" data-bs-toggle="modal" data-bs-target="#videoModal-{{course.id}}">
+                            <span class="" ></span>
+                        </a>  
+                    </div>   
+                    <!-- End of Video Play -->
+
+                    <!-- Start of Author -->
+                    <div style="position: absolute; z-index: 2; top:30px; left: 40px; width: 100%;">
+                        <a style="position: absolute; z-index: 2;" id="text-hover" class="d-flex text-decoration-none" href="">
+                            <img id="text-hover" style="width: 30px; height: 30px" class=" m-1 rounded-circle" src="{{course.author.profile_image.url}}"  alt="{{course.author}} image">
+                            <span id="text-hover" style="font-size: 11px" class=" m-2 fw-bolder text-white"> by {{course.author.first_name|capfirst}} {{course.author.last_name|capfirst}}</span>
+                        </a>                         
+                    </div>
+                    <!-- End of Author -->
+
+                    <!-- Start of Image -->
+                    <div class="">
+                        {%if course.thumbnail %}
+                        <div class="general-overlay-zoom"></div>
+                        <img class="hover-image rounded" style="height: 300px;" src="{{course.thumbnail.url}}" alt="{{course.name}} image">
+                                             
+                        {%else %}
+                        {%endif %}
+                    </div>
+                    <!-- End of Image -->
+                   
+                    <!-- Start Category, Title, and other features -->
+                    <div style="z-index: 2;" id="blog-news-font" class="row mx-2 my-3 text-white">
+                        <!-- Start of Title -->
+                        <div style="z-index: 2;" class="col-lg-8 col-md-8 col-sm-8">
+                            <a href="{{course.get_absolute_url}}" class="fs-6 fw-bold text-decoration-none text-white fw-bolder" >{{course.name|truncatechars:100}}</a>
+                        </div>
+                        <!-- End of Title -->
+                        
+                        <!-- Start of Course Category -->
+                        <div style="z-index: 2;" class="my-2 col-lg-4 col-md-4 col-sm-4">
+
+                            <a class=" category text-decoration-none px-2 py-1 rounded fs-6 fw-bolder text-white" href="{{course.sector.get_absolute_url}}">{{course.sub_sector.name}}</a>                           
+                        </div>
+                        <!-- End of Course Category -->
+
+                        <!--Other Features  -->
+                        <div style="z-index: 2;" class="mt-3">
+                            <!-- Start of Date -->
+                            <span style="font-size: 11px" class="m-1 fw-bolder text-white"><i class="m-2 fa-regular fa-clock text-primary"></i> {{course.date.date}}</span>
+                            <!-- End Date -->
+
+                            <!-- Start Comment -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{course.reviews.all.count}}</span>
+                            <!-- End Comment -->
+
+                            <!-- Start Views -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{course.views}}</span>
+                            <!-- End Views -->                                                        
+                            
+                        </div>
+                        <!-- End of Other Features -->
+                    
+                    </div>
+                    <!-- End of Category, Title, and other features -->
+                </div>                 
+                {% endfor%}    
+            </div>
+            
+            <!-- End of Video -->
+        </div>
+        <!-- End of First Column -->
+
+        <!-- Start of Second Column -->
+        <div class="col-lg-5 col-md-5 my-lg-5 my-md-5 my-sm-5">
+            <!-- Start of Video 2 -->
+            {% for course in featured_courses|slice:"1:3"%}                   
+                        <div style="z-index: 100;" class="col-lg-12 mb-1 col-md-12 position-relative ">
+
+                            <div class="">
+                                <!-- Start Image -->
+                                <div class="HoverDiv">
+                                    {% if course.thumbnail %}
+                                    <!-- Start of Video Play -->
+                                    <div id="other-featured-video-button" >
+                                        <a id="play-video" class="video-play-button" href="#" data-bs-toggle="modal" data-bs-target="#videoModal-{{course.id}}">
+                                            <span class="" ></span>
+                                        </a>  
+                                    </div>   
+                                    <!-- End of Video Play -->
+                                    <div class="general-overlay-zoom"></div>
+                                    <img class="hover-image img-fluid position-relative" style="width: 100%; object-fit: cover; object-position: bottom; height:228px;" src="{{course.thumbnail.url}}" alt="{{course.title}} image">                           
+                                    {% else %}
+                                    {% endif %}
+
+                                </div>
+                                <!-- End of Image -->
+
+                                <!-- Start of Features -->
+                                <div style="position: absolute; bottom:4%; left: 6%; z-index:2;" id="blog-news-font" class="text-white px-1">                                    
+                                    
+                                    <ul class="my-2">
+                                        <a href="{{course.get_absolute_url}}" class="fw-bold fs-5 text-decoration-none text-white fw-bolder" >{{course.name|truncatechars:100}}</a>
+                                         
+                                    </ul>
+            
+                                    <!--Other Features  -->
+                                    <div style="z-index: 100;" class="row px-2">
+                                         <!-- Start of Date -->
+                                        <div class="col-lg-6 col-md-6 col-sm-6 ">
+                                            <span style="font-size: 11px" class="fw-bolder text-white"><i class="m-2 fa-regular fa-clock text-primary"></i> {{course.date.date}}</span>
+                                            
+                                        </div>
+                                        <!-- End Date -->   
+            
+                                        <!-- Start Views -->
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
+                                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{course.views}}</span>
+                                        </div>
+                                        <!-- End Views -->
+                                        
+                                         <!-- Start Enroll -->
+                                         <div class="col-lg-2 col-md-2 col-sm-2">
+                                            <a href="{% url 'checkout' course.slug %}" class="mx-1 btn btn-primary btn-sm fw-bolder text-white">Enroll</a>
+                                         </div>
+                                         <!-- End Enroll -->
+                                        
+                                    </div>
+                                    <!-- End of Other Features -->
+                                </div>
+                                <!-- End of Features -->
+                            </div>                              
+                              
+                        </div>                      
+                    {%endfor%}
+            <!-- End of Video 2 -->
+        </div>
+        <!-- End of Second Column -->
+
+
+        <!-- Start of Popular Videos with Owl Carousel -->        
+        <div style="background: #222; padding: 20px 10px 30px;" class="row  rounded">
+            <!-- Start of header -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <h4 style="font-size: 16px;" class="fw-bolder text-white py-2">Popular Videos</h4>
+                </div>
+                <div class="col-lg-4">
+                    
+                </div>
+            </div>
+            <!-- End of Header -->
+            <!-- Start of Video -->
+            <div class="row owl-carousel popular-videos">                
+                {% for course in featured_courses|slice:"3:8"%}                   
+                        <div style="z-index: 100; width:100%" class="slide-item col-lg-4 mb-1 col-md-4 position-relative ">
+
+                            <div class="">
+                                <!-- Start Image -->
+                                <div class="HoverDiv">
+                                    {% if course.thumbnail %}
+                                    <!-- Start of Video Play -->
+                                    <div id="other-featured-video-button" >
+                                        <a id="play-video" class="video-play-button" href="#" data-bs-toggle="modal" data-bs-target="#videoModal-{{course.id}}">
+                                            <span class="" ></span>
+                                        </a>  
+                                    </div>   
+                                    <!-- End of Video Play -->
+                                    <div class="general-overlay-zoom"></div>
+                                    <img class="hover-image position-relative" style="max-width: 1000px; height:228px;" src="{{course.thumbnail.url}}" alt="{{course.title}} image">                           
+                                    {% else %}
+                                    {% endif %}
+
+                                </div>
+                                <!-- End of Image -->
+
+                                <!-- Start of Features -->
+                                <div style="position: absolute; bottom:4%; left: 6%; z-index:2;" id="blog-news-font" class="text-white px-1">                                    
+                                    
+                                    <ul class="my-2">
+                                        <a href="{{course.get_absolute_url}}" class="fw-bold fs-5 text-decoration-none text-white fw-bolder" >{{course.name|truncatechars:100}}</a>
+                                         
+                                    </ul>
+            
+                                    <!--Other Features  -->
+                                    <div style="z-index: 100;" class="row">
+                                         <!-- Start of Date -->
+                                        <div class="col-lg-5 col-md-5 col-sm-5 ">
+                                            <span style="font-size: 11px" class="fw-bolder text-white"><i class="m-2 fa-regular fa-clock text-primary"></i> {{course.date.date}}</span>
+                                            
+                                        </div>
+                                        <!-- End Date -->   
+            
+                                        <!-- Start Views -->
+                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{course.views}}</span>
+                                        </div>
+                                        <!-- End Views -->
+                                        
+                                         <!-- Start Enroll -->
+                                         <div class="col-lg-1 col-md-1 col-sm-1">
+                                            <a href="{% url 'checkout' course.slug %}" class="mx-1 btn btn-primary btn-sm fw-bolder text-white">Enroll</a>
+                                         </div>
+                                         <!-- End Enroll -->
+                                        
+                                    </div>
+                                    <!-- End of Other Features -->
+                                </div>
+                                <!-- End of Features -->
+                            </div>                              
+                              
+                        </div>                      
+                    {%endfor%}
+            </div>
+            <!-- End of Video  -->
+        </div>
+        <!-- End of Popular Videos with Owl Carousel -->
+    </div>
+    <!-- End of Two Columns for Featured Videos -->
+
+</section>
+<!-- End of Featured Videos -->
+
+<!-- Start of Best Of Categorys -->
+<section class="container-fluid my-5 px-lg-5 px-md-5 px-sm-5">
+    <!-- Start of header -->
+    <div class="row">
+        <div class="row position-relative border-bottom">
+            <div class="col-11">
+                <h2 style="font-size: 24px; font-weight: 700" class=" ">Best In Categories</h2>                
+                <span style="font-size:13px" class="fw-bold text-muted">Don't miss our daily Post & News</span>
+            </div>
+    
+            <div style="font-size: 12px;" class="fw-bolder col-1">
+                <i class="fw-bolder fs-4 text-primary fa-solid fa-caret-down"></i>
+            </div>
+            <!-- Start of Style border-bottom -->
+            <span style="border-bottom-width: 1px;
+            position: absolute;
+            left:0;
+            top: 100%;
+            width: 10%; 
+            margin: 0 0 -1px 0;
+            border-bottom-color: #0d6efd !important; 
+            display: inline-block; border-bottom-style: 
+            solid;" 
+            > 
+            </span>
+            <!-- End of Style border-bottom -->
+        </div>
+    </div>
+    <!-- End of Header -->
+
+    <!-- Start best categories Column -->
+    <div class="row">
+        <!-- Start of first Column news -->
+        <div class="col-lg-5 col-md-5 col-sm-5">
+            <div style="width: 100%;" class="row mb-2 pb-2">
+                {%for popular_news in popular_news_post|slice:":1"%}
+                    <div class="relative-position ps-1 border-bottom col-12 hover-effect-image-and-overlay ">
+                        
+                       
+                        <!--start category  -->
+                        <div  class="">
+                            
+                            <a style="position: absolute; z-index: 2; top:8px; left:12px; font-size: 12px;" href="{{popular_news.category.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-primary text-white rounded p-2">{{popular_news.sub_category.name}}</a>
+                            
+                        </div>                                
+                        <!-- end category -->
+
+                        <div style="position: absolute; z-index: 2; top:12px; left:50%;" class="">
+                            <!-- Start Comment -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{popular_news.news_post_comment.all.count}}</span>
+                            <!-- End Comment --> 
+
+                            <!-- Start Views -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{popular_news.views}}</span>
+                            <!-- End Views --> 
+                        </div>
+                       
+                        
+                        <!-- Start of Image -->
+                        <a href="{{popular_news.get_absolute_url}}">
+                            <div class="m-2 relative-position">
+                                <!-- overlay -->
+                                <div class="general-overlay rounded"> </div>
+                                <!--End overlay -->
+                                
+                                <!-- Start of main Image -->
+                                <div class="relative-position">
+                                    {% if popular_news.post_image %}
+                                    
+                                    <img class="rounded relative-position" style="width: 100%; object-fit: cover;
+                                    object-position: bottom; height:300px; z-index: 0; top:0; bottom:0;right:0;left:0;" src="{{popular_news.post_image.url}}" alt="{{popular_news.name}} image">
+                                    <a href="{{popular_news.get_absolute_url}}" class="general-link border border-3  rounded-circle bg-primary"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                                 <!-- End of main Image -->
+                            </div>
+                        </a>
+                        <!-- End of Image -->
+
+                        <div class="p-2">                             
+                           <!-- Start of title -->
+                           <div class="my-2">
+                               <a id="text-hover" href="{{popular_news.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{popular_news.title}}</a>
+                           </div>
+                           <!-- End of Title -->
+
+                           <div class="my-2">
+                               <!-- Start Date -->
+                               <span style="font-size: 12px" class="m-1 fw-bold text-muted"><i class="m-2 fa-regular fa-clock text-primary"></i> {{popular_news.publish.date}}</span>
+                               <!-- End Date -->                               
+                           </div>
+                        </div>
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                        position: absolute;
+                        left:0;            
+                        top: 100%;
+                        width: 10%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; 
+                        border-bottom-style: solid;" 
+                        > 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    </div> 
+                {%endfor%}
+            </div>
+
+            <!-- Start of More News -->          
+                <div  class="d-grid gap-2 mb-3">
+                    <a id="background-btn-hover" style="font-size: 15px;" class="btn-outline-dark text-decoration-none btn fw-bolder btn-lg bg-dark btn-primary text-white" href="{%url 'latest_news'%}">Read All News</a>
+                </div>           
+            <!-- End of More News -->
+
+        </div>
+        <!-- end of First Column News -->
+
+        <!-- Start of second Column blog -->
+        <div style="background: #f9f9f9;" class="border col-lg-7 col-md-7 col-sm-7"> 
+            <!-- Start of Header Trending -->            
+            <div class="col-12 mb-lg-3 mb-md-3 mb-sm-3 bg-dark rounded border">
+                <h6 class="text-white text-center py-2 fw-bolder">Trending Post</h6>
+            </div>           
+            <!-- End of header Trending --> 
+            
+            <!-- Start of first Trending Post -->
+            <div class="row  ms-lg-3 ">                 
+                {%for post in all_trending_post|slice:":1"%}
+                <div style="width: 97%;"  class="row border-bottom position-relative">                            
+                    <div class=" col-md-7 my-1"> 
+                        <!--start category  -->
+                        <div class="my-2 latest-world-news">
+                            <a id="lastest-news-cat" style="font-size: 12px;" href="{{post.category.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-primary text-white rounded p-2">{{post.sub_category.name}}</a>
+                        </div>                                
+                        <!-- end category -->
+                        <!-- Start of title -->
+                        <div class="my-2">
+                            <a id="text-hover" href="{{post.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{post.title}}</a>
+                        </div>
+                        <!-- End of Title -->
+                        <div class="my-2">
+                            <!-- Start Date -->
+                            <span style="font-size: 12px" class="m-1 fw-bold text-muted"><i class="m-2 fa-regular fa-clock text-primary"></i> {{post.publish.date}}</span>
+                            <!-- End Date -->
+                            <!-- Start of News article  -->
+                            <br>
+                            <span style="font-size: 12.5px;" class="text-muted text-justify lh-lg"><a href="{{post.get_absolute_url}}" class="text-decoration-none text-muted">{{post.overview|truncatechars:150}}</a></span>
+                            <!-- End of start of news article -->
+                        </div>
+                        <!--Other Features  -->
+                        <div class="row">
+                            <div class="col-7">
+                                <!-- Start of Author -->
+                                <a id="text-hover" class="d-flex text-decoration-none" href="{%url 'blog_author' post.pk%}">
+                                    <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{post.author.profile_image.url}}"  alt="{{post.author}} image">
+                                    <span id="text-hover" style="font-size: 11px" class=" m-2 fw-bolder text-muted"> by {{post.author.get_full_name}}</span>
+                                </a>
+                                <!-- End Author -->  
+                            </div>
+                            <div class="col-5">
+                                <!-- Start Comment -->
+                                <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{post.blog_post_comment.all.count}}</span>
+                                <!-- End Comment --> 
+                                <!-- Start Views -->
+                                <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                                <!-- End Views --> 
+                            </div>
+                            
+                        </div>
+                        <!-- End of Other Features -->
+                    </div>
+                    <!-- image of latest News -->                            
+                    <div class="hover-effect-image-and-overlay col-lg-5 col-md-5 p-1 position-relative"> 
+                        <!-- Start of Image -->
+                        <a href="{{post.get_absolute_url}}">
+                            <div class="m-1 relative-position">
+                                <!-- overlay -->
+                                <div class="general-overlay rounded"> </div>
+                                <!--End overlay -->
+                                
+                                <!-- Start of main Image -->
+                                <div class="relative-position">
+                                    {% if post.post_image %}
+                                    <img class="rounded relative-position" style="width: 100%; object-fit: cover; object-position: bottom; height:200px; z-index: 0; top:0; bottom:0;right:0;left:0;" src="{{post.post_image.url}}" alt="{{post.name}} image">
+                                    <a href="{{post.get_absolute_url}}" class="general-link border border-3  rounded-circle bg-primary"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                                <!-- End of main Image -->
+                            </div>
+                        </a>
+                        <!-- End of Image --> 
+                                          
+                    </div>
+                    <!-- End of Image of Latest News -->
+                    
+                </div>                
+                {%endfor%}
+            </div>  
+            <!-- End of firt Trending Post --> 
+
+            <!-- Start of Other Trending Post -->           
+            <div class="row mt-4 owl-carousel owl-blog-cat-second-column ms-lg-3 ">
+                {%for post in all_trending_post|slice:"1:7"%}                     
+                
+                <div style="width: 97%;"  class="row slide-item border-bottom relative-postion">                            
+                    <div class=" col-md-7 my-1 "> 
+                         <!--start category  -->
+                        <div  class="my-2 ms-4 latest-world-news ">
+                            <a id="lastest-news-cat" style="font-size: 12px; left: 10%;" href="{{post.category.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-primary text-white rounded p-2">{{post.sub_category.name}}</a>
+                        </div>                                
+                        <!-- end category -->
+                        <!-- Start of title -->
+                        <div class="my-3">
+                            <a id="text-hover" href="{{post.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{post.title}}</a>
+                        </div>
+                        <!-- End of Title -->
+                        <div class="my-2">
+                            <!-- Start Date -->
+                            <span style="font-size: 12px;" class="m-1 fw-bold text-muted"><i class="m-2 fa-regular fa-clock text-primary"></i> {{post.publish.date}}</span>
+                            <!-- End Date -->
+                            <!-- Start of News article  -->
+                            <br>
+                            <span style="font-size: 12.5px;" class="text-muted text-justify lh-lg"><a href="{{post.get_absolute_url}}" class="text-decoration-none text-muted">{{post.overview|truncatechars:150}}</a></span>
+                            <!-- End of start of news article -->
+                        </div>
+                        <!--Other Features  -->
+                        <div class="row">
+                            <div class="col-7">
+                                <!-- Start of Author -->
+                                <a id="text-hover" class="d-flex text-decoration-none" href="{%url 'blog_author' post.pk%}">
+                                    <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{post.author.profile_image.url}}"  alt="{{post.author}} image">
+                                    <span id="text-hover" style="font-size: 11px" class=" m-2 fw-bolder text-muted"> by {{post.author.get_full_name}}</span>
+                                </a>
+                                <!-- End Author -->  
+                            </div>
+                            <div class="col-5">
+                                <!-- Start Comment -->
+                                <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{post.blog_post_comment.all.count}}</span>
+                                <!-- End Comment --> 
+                                <!-- Start Views -->
+                                <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                                <!-- End Views --> 
+                            </div>
+                            
+                        </div>
+                        <!-- End of Other Features -->
+                    </div>
+                    <!-- image of latest News -->                            
+                    <div class="hover-effect-image-and-overlay col-lg-5 col-md-5 p-1 position-relative"> 
+                        <!-- Start of Image -->
+                        <a href="{{post.get_absolute_url}}">
+                            <div class="m-1 relative-position">
+                                <!-- overlay -->
+                                <div class="general-overlay rounded"> </div>
+                                <!--End overlay -->
+                                
+                                <!-- Start of main Image -->
+                                <div class="relative-position">
+                                    {% if post.post_image %}
+                                    <img class="rounded relative-position" style="width: 100%; object-fit: cover; object-position: bottom; height:200px; z-index: 0; top:0; bottom:0;right:0;left:0;" src="{{post.post_image.url}}" alt="{{post.name}} image">
+                                    <a href="{{post.get_absolute_url}}" class="general-link border border-3  rounded-circle bg-primary"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                    {% else %}
+                                    {% endif %}
+                                </div>
+                                <!-- End of main Image -->
+                            </div>
+                        </a>
+                        <!-- End of Image --> 
+                                          
+                    </div>
+                    <!-- End of Image of Latest News -->
+                    
+                </div>
+                
+               
+                {%endfor%}
+            </div> 
+            <!-- End of Other Trending Post -->
+        </div>
+        <!-- end of second Column blog -->
+    </div>
+    <!-- End of best categories Column -->
+</section>
+<!-- End of Best of Categories -->
+
+<!-- Start of Post and Trending News -->
+<section class=" my-5 py-0">
+    <!-- Start of two column -->
+    <div style="background: #191919;" class="row p-0">
+        <!-- Start of first Column -->
+        <div class="col-lg-4 py-0">
+            <div  class="row ps-5 mt-5 pt-5">
+                <!-- Start of news part -->
+                <div class="text-white col-12">
+                    <!-- Start of Style border-bottom -->
+                    <span style="border-bottom-width: 3px;            
+                    left:0;
+                    top: 100%;
+                    width: 10%; 
+                    margin: 0 0 -1px 0;
+                    border-bottom-color: #0d6efd !important; 
+                    display: inline-block; border-bottom-style: 
+                    solid;" 
+                    > 
+                    </span>
+                    <!-- End of Style border-bottom -->
+                    <h3 style="font-size: 25px;font-weight: 600;
+                    line-height: 32px" class="fw-bold my-2">Trending News</h3>
+                    <p class="my-2">Don't Miss And Stay Up-to-date. Top news for you.</p>
+                        
+                </div>
+                <!-- End of news part -->
+                
+            </div>
+            <div class="row position-relative ">
+                <!-- Start of bg image -->
+                <div class="" id="home-news-bioheader"></div>
+                <!-- end of bg image -->
+                
+            </div>            
+        </div>
+        <!-- End of first Column -->
+
+        <!-- Start of Second Column -->
+        <div class="col-lg-8 py-0">
+            <!-- Start of Single News -->
+            <div style="width: 100%;" class=" m-0 p-0 border-0 col-lg-4 col-md-4 col-sm-4 relative-position owl-carousel owl-trending-news"> 
+                {% for news_cat in news_categories%}               
+                {% for news in news_cat.news_category.all|slice:":6" %}                
+                <div class=" slide-item py-0">
+
+                    <!-- Start of Author -->
+                    <div style="position: absolute; z-index: 2; top:30px; left: 40px; width: 100%;">
+                        <a style="position: absolute; z-index: 1;" id="text-hover" class="d-flex text-decoration-none" href="">
+                            <img id="text-hover" style="width: 30px; height: 30px" class=" m-1 rounded-circle" src="{{news.author.profile_image.url}}"  alt="{{news.author}} image">
+                            <span id="text-hover" style="font-size: 11px" class=" m-2 fw-bolder text-white"> by {{news.author.first_name|capfirst}} {{news.author.last_name|capfirst}}</span>
+                        </a>
+                         
+                    </div>
+                    <!-- End of Author -->
+
+                    <!-- Start of Image -->                    
+                    <div class="HoverDiv">
+                        {% if news.post_image %}
+                        <div class="general-overlay-zoom"></div>
+                        <img class="hover-image" style="height: 450px;" src="{{news.post_image.url}}" alt="{{single_news.post_image.url}}">
+                        {% else %}
+                        {% endif %}
+                    </div>
+                    <!-- End of Image -->
+
+                    <!-- Start Category, Title, and other features -->
+                    <div style="position: absolute; bottom:10%; left: 2%; z-index: 2;" id="blog-news-font" class="mx-2 text-white">
+                        <a id="category-hover" class=" category text-decoration-none px-2 py-1 rounded fs-6 fw-bolder text-white" href="{{news.category.get_absolute_url}}">{{news.sub_category.name}}</a>
+                        
+                        <ul class="my-2">
+                            <a href="{{news.get_absolute_url}}" class="fs-6 fw-bold text-decoration-none text-white fw-bolder" >{{news.title|truncatechars:100}}</a>
+                             
+                        </ul>
+
+                        <!--Other Features  -->
+                        <div class="mt-3">
+                            <!-- Start of Date -->
+                            <span style="font-size: 11px" class="m-1 fw-bolder text-white"><i class="m-2 fa-regular fa-clock text-primary"></i> {{news.publish.date}}</span>
+                            <!-- End Date -->
+
+                            <!-- Start Comment -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{news.news_post_comment.all.count}}</span>
+                            <!-- End Comment -->
+
+                            <!-- Start Views -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{news.views}}</span>
+                            <!-- End Views -->                                                        
+                            
+                        </div>
+                        <!-- End of Other Features -->
+                    
+                    </div>
+                    <!-- End of Category, Title, and other features -->
+                </div>
+                {% endfor%}  
+                {% endfor%}
+    
+            </div>
+            <!-- End of Single News -->
+            
+        </div>
+        <!-- End of Second Column -->
+
+    </div>
+    <!-- End of two column -->
+</section>
+<!-- End of Trending Post and News -->
+
+<!-- Start of second ads -->
+<section class="py-3 px-lg-5" style="background-color: #f9f9f9;">
+    <div class="container-fluid bg-dark border rounded">
+        {%for ad in ads|slice:"1:2"%}
+            <!-- Image -->
+            <a href="">
+                {%if ad.image %}
+                    <img style="width: 100%; height: 100px;" class="rounded" src="{{ad.image.url}}" alt="ad-image">
+                {%else%}
+                {%endif%}
+            </a>
+            <!-- end Image -->
+        {%endfor%}
+        
+    </div>
+</section>
+<!-- End of second ads -->
+
+<!-- mmmmmmmmmmmmmmmmmmmmmm Model Videos -->
+<!-- Start of Model Video -->
+{% for course in featured_courses%}  
+{% for video in course.video_course.all|slice:":1" %} 
+<div class="modal fade" id="videoModal-{{course.id}}" tabindex="-1" aria-labelledby="exampleModalLabel-{{course.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-{{course.id}}">{{course.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="container-fluid px-lg-5 px-md-5 px-sm-5 modal-body py-0">
+               
+                <div class="row pt-2">
+                    <!-- Start of video Introduction -->
+                    <div class="col-lg-6 col-md-6">
+                       <div class="ratio ratio-16x9 ">
+                        <iframe style="width: 100%;" class="rounded" src="https://player.vimeo.com/video/{{video.video_id}}" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                       </div>
+                    </div>
+                    <!-- End of video Introduction -->
+
+                    <!-- Start of Sales Content -->
+                    <div class="col-lg-6 col-md-6">
+                        <p>{{course.description|safe}}</p>
+
+                    </div>
+                    <!-- End of Sales Content -->
+                    <!-- Start Enroll Now -->
+                    <div class="my-4">
+                        <a style="font-size: 14px;" href="{%url 'checkout' course.slug %}" class="btn text-muted btn-5 fw-bold py-2 btn-lg border border-primary btn-slide slide-primary shadow mb-4 mb-md-0 aos-init aos-animate" data-aos-duration="200" data-aos="fade-up">
+                          ENROLL NOW
+                        </a>
+                     </div>
+                    <!-- End Enroll Now -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}  
+{% endfor %}  
+<!-- End of Model Video -->
+<!-- mmmmmmmmmmmmmmmmmmmmmm Model Videos -->
+
+{%endblock%}

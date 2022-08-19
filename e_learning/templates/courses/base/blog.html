@@ -1,0 +1,393 @@
+{% load static %}
+{% load active_link_tags %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+       
+    <!--Custom CSS-->
+    <link rel='stylesheet' href="{% static 'courses/css/nav.css' %}">
+    <link rel='stylesheet' href="{% static 'courses/css/scroll.css' %}">
+    <link rel='stylesheet' href="{% static 'courses/css/common.css' %}">
+
+    <!-- Owl Carousal CSS -->
+    <link rel='stylesheet' href="{% static 'courses/css/owl_carousal/owl.carousel.min.css' %}">
+    <link rel='stylesheet' href="{% static 'courses/css/owl_carousal/owl.theme.default.min.css' %}">
+
+   
+    <!-- Carousel JS -->
+    <script src="{% static '/courses/js/jquery.min.js' %}"></script>
+    <script src="{% static '/courses/js/owl.carousel.min.js' %}"></script>
+    
+    <!-- JS -->
+    <script src="{% static '/courses/js/navbar.js' %}"></script>
+    
+    <!-- FonAwesome -->
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Boxicons CSS -->
+
+    <!-- Boxicons CSS -->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>
+        {%block title%} {%endblock%}
+    </title>
+  </head>
+
+
+  <body>
+    <style>    
+      
+       /*Owl Carousel*/
+      /* CAUROSAL mmmmmmmmmmmmmmmmmmmmmmmmm */
+      /* new1 mmmmmmmmmmmmmmmmmmmmmmmmm */
+      
+      .owl-carousel .nav-button-news1 {
+        height: 50px;
+        width: 22px;
+        cursor: pointer;
+        background-color: #0d6efd;
+        position: absolute;
+        top: 110px !important;
+        z-index: 1;
+      }
+      
+      .owl-carousel .owl-prev {
+        left: 0;
+      }
+  
+      .owl-carousel .owl-next {
+        right: 0;
+      }
+  
+      .owl-carousel .owl-nav [class*=owl-] {
+        color: #ffffff;
+        font-size: 35px;
+        background:#0d6efd;
+        border-radius: 5px;
+      }
+      /* CAUROSAL hot-news*/
+      .owl-carousel .nav-button-news1 {
+        height: 50px;
+        width: 22px;
+        cursor: pointer;
+        background-color: #0d6efd;
+        position: absolute;
+        top: 110px !important;
+        z-index: 1;
+      }
+      
+      .owl-carousel .owl-prev-hot-news {
+        left: 480px;
+        top: 0;
+        position: absolute;
+        z-index: 1;        
+      }
+  
+      .owl-carousel .owl-next-hot-news {
+        right: 140px;
+        top: 0;
+        position: absolute;
+        z-index: 1;
+      }
+  
+      .owl-carousel .owl-nav [class*=owl-] {
+        color: white;
+        font-size: 35px;
+        background: #0d6efd;
+        border-radius: 5px;
+      }
+
+      /*Owl Trending */
+
+      .owl-carousel .nav-button-trending {
+        height: 47px;
+        width: 18px;
+        cursor: pointer;
+        background-color: #0d6efd;
+        position: absolute;
+        top: 0 !important;
+        z-index: 1;
+      }
+      
+    /*Style owl-theme of owl-popular-post owl-theme */
+
+
+    
+      
+    /*Category Image*/
+    #category-img{
+      max-width: 120px;
+      max-height: 120px;
+    }
+    
+  
+    </style>
+    <!-- Start of Hot News -->
+    <section class="container-fluid py-3 bg-dark">
+      {%load social_and_hot_news%}
+      {%social_and_hot_news%}
+        
+    </section>
+    <!-- End of Hot News -->
+    
+    <!-- Navbar -->
+    <nav style="z-index: 200;" class="navbar  navbar-expand-lg navbar-transparent bg-transparent border text-muted ">
+      <div class="container-fluid">  
+        <!-- TStart of Logo -->
+        <a href='{% url "home" %}' class="navbar-brand text-decoration-none me-lg-5 pe-lg-5">
+            <!-- <img src="images/logo.svg" height="28" alt="CoolBrand"> -->
+           <img src="{% static 'courses/cbc/logo/NAV-CBC-logo-1.png' %}" alt="", style="max-width: 10.6rem; max-height: 4.2rem;">
+            
+         </a>
+        <!-- end of log -->
+
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+              <span class="navbar-toggler-icon">
+                <i class="fas fa-bars" style="color:rgb(7, 0, 0); font-size:28px;"></i>
+              </span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+              <div class="navbar-nav me-lg-5">
+                <!-- Start of Blog -->
+                <a  style="font-size: 13px;"  href="{% url 'blog_home' %}" class="nav-item nav-link fw-bolder text-decoration-none text-muted me-lg-4">
+                  <span {%if request.resolver_match.url_name == 'blog_home'%} id="active"{%endif%}>Blog</span>
+                </a>
+                <!-- End of Blog -->
+                <!-- Start News -->
+                  {%for news_cat in news_categories|slice:":2"%}
+                  <a style="font-size: 13px;" href='{{news_cat.get_absolute_url}}' class=" text-muted nav-item nav-link fw-bolder me-lg-3"><span>{{news_cat.name}}</span></a>
+                  {%endfor%}
+                <!-- End News -->                                  
+                  
+                 
+                  <a style="font-size: 13px;" href="" class="text-muted nav-item nav-link fw-bolder me-lg-3"><span>About</span></a>
+                 
+                  
+                  <a style="font-size: 13px;" href="" class="text-muted nav-item nav-link fw-bolder me-lg-3"><span>Contact</span></a>
+                  <!-- Start of category -->
+                  <li class="dropdown  menu-large me-lg-3">
+                    <a style="font-size: 13px;" class="text-muted fw-bold nav-item nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span>More</span>
+                    </a>                   
+                    <ul style="font-size: 13px;" class="mx-0 ps-0 dropdown-menu dropdown-menu-white row megamenu  " aria-labelledby="navbarDarkDropdownMenuLink">
+                     
+                        <div class="row px-2"> 
+                          {% for category in blog_categories%} 
+                          <div class="col-sm-4 col-md-3 col-lg-2"> 
+                            <!-- Start of title -->
+                            <p style="font-size: 14px;" class="fw-bold text-muted">{{category.name}}</p>
+                            <!-- End of Title -->                           
+                            {%for sub_category in category.blog_category.all%}                            
+                            <!-- Start of content -->
+                            <a class="text-muted dropdown-item ps-0 my-2" href="{{category.get_absolute_url}}">
+                              <span>{{sub_category.name}}</span>
+                            </a>
+                            {%endfor%}
+                            <!-- End of content -->
+                            
+                          </div>
+                          {% endfor%}                    
+                        </div>
+                        <!-- Start of Other Features -->
+                        <div style="border-top: 1px solid #0d6efd;" class="mb-5">
+                          <div class="row">
+                            <div class="col-lg-2 col-md-3 col-sm-4">
+                              <a class="text-muted dropdown-item ps-0 my-2" href="{%url 'latest_news'%}">
+                                <span class="p-2">Latest News</span>
+                              </a>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-4">
+                              <a class="text-muted dropdown-item ps-0 my-2" href="{% url 'login' %}">
+                                <span class="p-2">Sign in</span>
+                              </a>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-4">
+                              <a class="text-muted dropdown-item ps-0 my-2" href="{% url 'register' %}">
+                                <span class="p-2">Get Started</span>
+                              </a>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-4">
+                              <a class="text-muted dropdown-item ps-0 my-2" href="{%url 'blog_portal' post.pk%}">
+                                <span class="p-2">Guest Post</span>
+                              </a>
+                            </div>
+                            
+                          </div>
+                        </div>
+                        <!-- End of Other Features -->
+
+                      
+                                    
+                    </ul>
+                    
+
+                  </li>
+                                   
+                  <!-- End of Category -->
+              </div>
+              <div style="width: 40%;" class="ms-auto">                 
+                  
+                <form id="search" action="#">
+                  <div class="input-group">
+                      <div class="form-outline col-12">
+                        <input style="width: 100%;" type="search" id="form1" class="search border-none form-control" placeholder="Search..." />                      
+                      </div>
+                      <button type="button" class="position-absolute end-0 btn btn-primary">
+                        <i class="fa fa-search"></i>
+                      </button>
+                  </div>
+                </form>
+              
+              </div>
+          </div>
+      </div>
+    </nav>
+    <!-- End of Navbar -->
+    
+
+  <!--Start of Dynamic content -->
+
+  {%block content%}  
+
+
+  {% endblock%}
+  <!--End of Dynamic content -->
+
+  <footer style="background-color: rgb(243, 240, 236);" class="container-fluid px-lg-5">
+    {%load footer%}
+    {%show_footer%}
+  </footer> 
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  {%block scripts%}
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".owl-carousel").owlCarousel();
+        });
+
+        //Owl-News1
+        $('.owl-news1').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            navText: ["<div class='nav-button-news1 owl-prev'>‹</div>", "<div class='nav-button-news1 owl-next'>›</div>"],
+            dots: false,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 1
+                }
+            }
+        })
+
+        
+      //owl-popular-post      
+      $('.owl-popular-post').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: false,
+        navText: ["<div class='nav-button-news1 owl-prev'>‹</div>", "<div class='nav-button-news1 owl-next'>›</div>"],
+        dots: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            }
+        }
+    })
+
+    //Popular Videos
+    $('.popular-videos').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      navText: ["<div class='nav-button-news1 owl-trending-prev'>‹</div>", "<div class='nav-button-news1 owl-next'>›</div>"],
+      dots: false,
+      responsive: {
+          0: {
+              items: 1
+          },
+          600: {
+              items: 3
+          },
+          1000: {
+              items: 3
+          }
+      }
+  })
+
+
+  //Best blog Categories blog-cat-second-column
+  $('.owl-blog-cat-second-column').owlCarousel({
+    loop: true,
+    margin: 10,
+    autoplay: true,
+    autoplayTimeout: 3000,    
+    autoplayHoverPause: true,
+    nav: true,
+    navText: ["<div class='nav-button-trending owl-prev'>‹</div>", "<div class='nav-button-trending owl-next'>›</div>"],
+    dots: false,
+    responsive: {
+        0: {
+            items: 1
+        },
+        600: {
+            items: 1
+        },
+        1000: {
+            items: 1
+        }
+    }
+})
+
+//Owl-Trending News
+$('.owl-trending-news').owlCarousel({
+  loop: true,
+  margin: 0,
+  padding: 0,
+  smartSpeed:2500, 
+  nav: true,
+  navText: ["<div class='nav-button-news1 owl-prev'>‹</div>", "<div class='nav-button-news1 owl-next'>›</div>"],
+  dots: false,  
+  responsive: {
+      0: {
+          items: 1
+      },
+      600: {
+          items: 3
+      },
+      1000: {
+          items: 3,
+          
+      }
+  }
+})
+
+
+    </script>
+
+    {%endblock%}
+
+    
+  </body>
+</html>

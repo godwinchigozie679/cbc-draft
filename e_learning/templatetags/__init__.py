@@ -1,0 +1,4 @@
+from e_learning.templatetags import course_custom_tags
+from e_learning.templatetags import crypto_custom_price
+from e_learning.templatetags import category_dash_replace_tags
+from e_learning.templatetags import footer

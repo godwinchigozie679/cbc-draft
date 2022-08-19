@@ -1,0 +1,700 @@
+{% extends 'courses/base/base.html' %}
+{% load course_custom_tags %}
+
+{%block scripts%}
+<script type="text/javascript">
+
+  $(document).ready(function () {
+    $(".owl-carousel").owlCarousel();
+});
+
+//Owl-home
+$('.owl-related-course').owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: true,
+    navText: ["<div class='nav-button-owl-related-course owl-prev'>‹</div>", "<div class='nav-button-owl-related-course owl-next'>›</div>"],
+    dots: false,
+    responsive: {
+        0: {
+            items: 1
+        },                    
+        600: {
+            items: 3
+        },
+        1000: {
+            items: 3
+        }
+    }
+})
+
+</script>
+
+{%endblock scripts%}
+
+<!--Title-->
+{%block title%}{{course.name}}{%endblock%}
+
+{%block content%}
+<style>
+
+  #course-breadcrumb-bg{
+    /* The image fade to white */
+  background-image: linear-gradient( to left, rgba(17, 17, 17, 0.3) 5%, rgba(10, 10, 10, 0.6) 90%), 
+  /* The image used */ 
+  url('{{course.thumbnail.url}}');                    
+  top: 176px !important;
+  left: 0;        
+  height: 100% !important;                   
+  /* Create the parallax scrolling effect */
+  width: 100% !important;
+  background-attachment: scroll;
+  transform: translate3d(0px, 0px, 0px);
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: cover;  
+  }
+
+
+  
+  @media screen and (min-width: 990px) and (max-width: 1115px){
+
+    #course-breadcrumb-bg {  
+      top: 37% !important;       
+     
+    }
+
+  }
+
+
+  @media (min-width: 650px) and (max-width: 990px){
+
+    #course-breadcrumb-bg {  
+      top: 49% !important;        
+       
+    }
+
+  }
+
+  @media (min-width: 400px) and (max-width: 650px){
+
+    #course-breadcrumb-bg {  
+      top: 50% !important;        
+      
+    }
+
+  }
+
+  @media (min-width: 300px) and (max-width: 400px){
+
+    #course-breadcrumb-bg {  
+      top: 54% !important;        
+      
+    }
+
+  }
+
+  @media (min-width: 236px) and (max-width: 300px){
+
+    #course-breadcrumb-bg {  
+      top: 64% !important;        
+     
+    }
+
+  }
+  @media (min-width: 6px) and (max-width: 236px){
+
+    #course-breadcrumb-bg {  
+      top: 68% !important;        
+     
+    }
+
+  }
+
+
+  @media (min-width: 990px) and (max-width: 2000px){
+
+    .course-main-features{
+      position: absolute !important; 
+      top: 30% !important; 
+      left: 60% !important;
+    }
+
+  }
+
+  @media (min-width: 1px) and (max-width: 990px){
+
+    .course-main-features{
+      position: relative !important; 
+     
+    }
+
+  }
+
+  .sticky{
+    position: relative;
+    position: -webkit-sticky; 
+    position: sticky !important; 
+    top: 12px !important;
+  }
+  
+  
+ 
+</style>
+
+
+<!-- Start Course Inroduction -->
+<section style="background-color: #f7f8f9;" id="course-breadcrumb-bg" class="container-fluid px-lg-5">
+  <div class="row pt-4 pt-lg-0">
+    <div class="col-lg-7">
+      <div class="crs_cates cl_1 mt-5"><span>{{course.sector}}</span></div>
+      <div class="crs_cates cl_3 mt--lg-5 mt-2"><span>{{course.sub_sector.name}}</span></div>
+      <h4 class="text-white fw-bold my-3">{{course.name}}</h4>
+      
+        <u style="list-style: none;" class="text-white d-flex">
+          <li class="text-white me-4"><i class="fa fa-video-camera me-2"></i>{{course.video_course.count}} Lectures</li>
+          <li class="text-white"><i class="fa fa-user me-2 "></i>{{course.enroll_students.count}} Enrolled Students</li>
+        </u>
+        <p style="font-size: 13px;" class="text-white mb-5 mt-3 text-justify">{{course.meta_title}}</p>
+             
+    </div>    
+    
+  </div>
+  
+</section>
+<!-- End Course Introduction -->
+
+<!-- Start of two column -->
+<section style="background-color: #f7f8f9;" class="px-lg-5 container-fluid py-5">
+  <!-- Start of Share Post -->
+  <div  class="">
+    {% include 'courses/course_includes/social_share.html' %}
+
+  </div>
+  <!-- End of Share Post -->
+  <div class="row">
+    <!-- Start of first column -->
+    <div class="col-lg-7">
+      <!-- Start of header -->
+      <ul class="nav nav-tabs border border-0 text-white rounded bg-transparent p-3" id="myTab" role="tablist">
+        <li class="nav-item text-white" role="presentation">
+          <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Overview</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="curriculum-tab" data-bs-toggle="tab" data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum" aria-selected="false">Curriculum</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="Instructor-tab" data-bs-toggle="tab" data-bs-target="#Instructor" type="button" role="tab" aria-controls="Instructor" aria-selected="false">Instructor</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews</button>
+        </li>
+      </ul>
+      <!-- End of header -->
+      <!-- Start of content -->
+      <div class="tab-content mt-5" id="myTabContent">
+        <!-- Start of Overview -->
+        <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab"><p class="text-dark">
+         <!-- Start of Main Overview -->
+         <div class="shadow-sm p-3 mb-5 bg-body rounded">
+          {%if course.description is None%}
+          <h5 class="my-2">Course Overview</h5>
+          {%endif%}
+          <p style="font-size: 13px;">{{course.description|safe}}</p>
+          <h5 class="fw-bold">Requirements</h5>
+          <ul class="list-group border border-0 bg-transparent">
+            <div class="row">
+              {%for requirement in course.requirement.all%}
+              <div class="col-lg-6 col-md-6">
+                <li class="list-group-item border border-0 bg-transparent"><span><i class="fa-solid fa-play text-muted me-2"></i></span> {{requirement.list_items}}</li>
+              </div>
+              {%endfor%}
+            </div>
+            
+          </ul>
+         </div>
+         <!-- End of Main Overview -->
+        
+         <!-- Start of certification -->
+          <div class="shadow-sm p-3 mb-5 bg-body rounded">
+            <h5 class="fw-bold">Certification</h5>
+            <p>{{course.certifications}}</p>
+          </div>
+          <!-- End of certification -->
+          <!-- Start of Learn -->
+          <div class="shadow-sm p-3 mb-5 bg-body rounded">
+            <h5 class="fw-bold">What You'll Learn</h5>
+            <ul class="list-group border border-0 bg-transparent">
+              <div class="row">
+                {%for learn in course.learning.all%}
+                  <div class="col-lg-6 col-md-6">
+                    <li class="list-group-item border border-0 bg-transparent"><span><i class="fa-solid fa-check text-muted me-2"></i></span> {{learn.list_items}}</li>
+                  </div>
+                {%endfor%}
+              </div>
+              
+            </ul>
+          </div>
+
+          <!-- End of Learn -->
+          
+
+        </div>
+        <!-- End of Overview -->
+        
+        <!-- Start of Curricullum -->
+        <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
+          <div class="shadow-sm p-3 mb-5 bg-body rounded">
+            <h6 class="fw-bold my-3">Course Curriculum</h6>
+            <!-- Start of first module -->
+            {% for module in course.course_modules.all|slice:"0:1" %}
+            <div class="accordion bg-transparent my-1" id="accordionExample">
+                <div class="accordion-item">
+                  <h6 class="accordion-header" id="header{{module.id}}">
+                      <button class=" card-btn accordion-button accordion-button-curriculum bg-transparent collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Arr{{module.id}}" aria-expanded="false" aria-controls="Arr{{module.id}}">
+                      <p class="fw-bold px-2 pt-2">{{module.name}}</p>
+                      </button>
+                  </h6>
+                  <div id="Arr{{module.id}}" class="accordion-collapse collapse m-0 show" aria-labelledby="heading{{module.id}}" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <!-- Start first video -->
+                        {% for v in module.modules.all|slice:":1" %}       
+
+                          <a class="text-decoration-none" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#videoModal-{{course.id}}">
+                            <li class="list-group-item border border-0 d-flex justify-content-between"><span id="video-text" class="fs-6"><i style="color: rgb(251, 191, 117);" class="me-2 fas fa-clipboard"></i>{{v.title}}</span><span style="background-color: rgb(251, 191, 117); font-size: 11px;" class="border rounded ms-2 text-white p-2" >preview</span></li>
+                          </a>                            
+
+                        {% endfor %}                        
+                        <!-- End of first video -->                        
+                        <!-- Start of other video -->
+                        {% for v in module.modules.all|slice:"1:" %}       
+
+                          <a class="text-decoration-none" href="{%url 'checkout' course.slug %}">
+                            <li class="list-group-item border border-0 d-flex justify-content-between"><span id="video-text" class="fs-6"><i style="color: rgb(251, 191, 117);" class="me-2 fas fa-clipboard"></i>{{v.title}}</span><span class="ms-2 text-white p-2" ><i style="color: rgb(251, 191, 117); font-size: 13px;" class="fa fa-lock"></i></span></li>
+                          </a>                            
+
+                        {% endfor %}
+                        
+                        <!-- End of other video -->
+                        <!-- Start of first Quiz -->
+                        {% for quiz in module.course_module_quiz.all|slice:":1" %}      
+
+                        <a class="text-decoration-none" href="{%url 'checkout' course.slug %}">
+                          <li class="list-group-item border border-0 d-flex justify-content-between"><span id="video-text" class="fs-6"><i style="color: rgb(251, 191, 117);" class="me-2 fa fa-lock"></i>{{quiz.topic}}</span><span  class="text-white p-2" ><i style="color: rgb(251, 191, 117); font-size: 11px;" class="fas fa-clipboard"></i></span></li>
+                        </a>                            
+
+                        {% endfor %}
+                        <!-- End of first Quiz -->
+                      
+                      </div>
+
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- End of first module -->
+            <!-- Start of other module -->
+            {% for module in course.course_modules.all|slice:"1:" %}
+            <div class="accordion bg-transparent my-1" id="accordionExample">
+                <div class="accordion-item">
+                  <h6 class="accordion-header" id="header{{module.id}}">
+                      <button class=" accordion-button accordion-button-curriculum bg-transparent collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Arr{{module.id}}" aria-expanded="false" aria-controls="Arr{{module.id}}">
+                      <p class="fw-bold px-2 pt-2">{{module.name}}</p>
+                      </button>
+                  </h6>
+                  <div id="Arr{{module.id}}" class="accordion-collapse collapse m-0" aria-labelledby="heading{{module.id}}" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        {% for v in module.modules.all %}       
+
+                          <a class="text-decoration-none" href="{%url 'checkout' course.slug %}">
+                            <li class="list-group-item border border-0 d-flex justify-content-between"><span id="video-text" class="fs-6"><i style="color: rgb(251, 191, 117);" class="me-2 fas fa-clipboard"></i>{{v.title}}</span><span class="ms-2 text-white p-2" ><i style="color: rgb(251, 191, 117); font-size: 13px;" class="fa fa-lock"></i></span></li>
+                          </a>                            
+
+                        {% endfor %}
+                        <!-- Start of Other Quiz -->
+                        {% for quiz in module.course_module_quiz.all|slice:":1" %}      
+
+                        <a class="text-decoration-none" href="{%url 'checkout' course.slug %}">
+                          <li class="list-group-item border border-0 d-flex justify-content-between"><span id="video-text" class="fs-6"><i style="color: rgb(251, 191, 117);" class="me-2 fa fa-lock"></i>{{quiz.topic}}</span><span  class="text-white p-2" ><i style="color: rgb(251, 191, 117); font-size: 11px;" class="fas fa-clipboard"></i></span></li>
+                        </a>                            
+
+                        {% endfor %}
+                        <!-- End of Other Quiz -->
+                      
+                      </div>
+
+                  </div>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- End of other module -->
+          </div>
+                   
+        </div>
+        <!-- End of Curricullum -->
+
+        <!-- Start of Instructor -->
+        <div class="tab-pane fade" id="Instructor" role="tabpanel" aria-labelledby="Instructor-tab">
+          <div class="my-5 pb-5 shadow-sm p-3 mb-5 bg-body rounded">
+            <div class="row ">
+              <!-- Start of Author Image -->
+              <div class="col-lg-3 col-md-3">
+                <img class="rounded m-2" width="100%" src="{{course.author.profile_image.url}}" alt="">
+
+              </div>
+              <!-- End of Author Image -->
+              <!-- Start of Author Data -->
+              <div class="col-lg-9 col-md-9 mt-4 mt-lg-0 mt-md-0">
+                
+                <h5 class="text-capitalize"><a href="#">{{course.author.get_full_name}}</a></h5>
+                <ul style="list-style: none;" class="mt-4 d-flex">
+                  <li style="font-size: 12px;" class="me-4"><i class="fa fa-video-camera me-2"></i>{{author_lectures.count}} Lectures</li>
+                  <li style="font-size: 12px;" class="me-4"><i class="fa fa-user me-2 "></i>{{author_enrolled_students.count}} Enrolled Students</li>
+                  <li style="font-size: 12px;" class=""><i class="fa fa-play fa-play me-2 "></i>{{author_course.count}} Courses</li>
+                </ul>
+                <p style="font: 12px;" class="">{{course.author.profile.biography}}</p>
+              </div>
+              <!-- End of Author Data -->
+              <!-- Start of social -->
+              <div class="row">
+                <div class="col-lg-4">
+
+                </div>
+                <div class="col-lg-8">
+                  
+                  <p style="font-size: 12px;" class=" text-center my-2 fw-bold ">Follow <span class="p-1"><i class="fa fa-i-cursor" aria-hidden="true"></i></span></p>
+                  <ul class="list-group list-group-horizontal m-0 px-2">
+                    <!-- Start of facebook -->
+                    <li class="list-group-item m-0">
+                        <a class="btn btn-white text-decoration-none m-0" style="font-size:15px" href="{{course.author.profile.facebook_url}}" role="button"
+                            target="_blank"><i class="text-primary bg-none fab fa-facebook-f"></i
+                            >
+                        </a>
+                    </li>
+                     <!-- End of facebook -->
+    
+                     <!-- Start of Twitter -->
+                    <li class="list-group-item m-0">
+                        <a class="btn btn-white text-decoration-none m-0" style="font-size:15px" href="{{course.author.profile.twitter_url}}" role="button"
+                            target="_blank"><i class="text-primary bg-none fab fa-twitter"></i
+                            >
+                        </a>
+                    </li>
+                     <!-- End of Twitter -->
+    
+                     <!-- Start of Instagram -->
+                    <li class="list-group-item m-0">
+                        <a class="btn btn-white text-decoration-none m-0" style="font-size:15px" href="{{course.author.profile.instagram_url}}" role="button"
+                            target="_blank"><i class="text-primary bg-none fab fa-instagram"></i
+                            >
+                        </a>
+                    </li>
+                     <!-- End of Instagram -->
+    
+                     <!-- Start of Pinterest -->
+                    <li class=" list-group-item m-0">
+                        <a class="btn btn-white text-decoration-none m-0" style="font-size:15px" href="{{course.author.profile.pinterest_url}}" role="button"
+                            target="_blank"><i class="text-primary bg-none fab fa-pinterest"></i
+                            >
+                        </a>
+                    </li>
+                     <!-- End of Pinterest -->
+                </ul>
+                </div>
+              </div>
+            <!-- End of social -->
+            </div>
+          </div>
+        </div>        
+        <!-- End of Instructor -->
+
+        <!-- Start of Reviews -->
+        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab"><p class="text-dark">
+          <!-- Start of review summary -->
+          <div class="pb-5 shadow-sm p-3 mb-5 bg-body rounded">
+            {% include 'courses/course_includes/review_summary.html' %}            
+          </div>
+          <!-- End of review summary -->
+          <!-- Start of Review List -->
+          <div class="pb-5 shadow-sm p-3 mb-5 bg-body rounded">
+            {% include 'courses/course_includes/review_list.html' %}
+          </div>
+          <!-- End of Review List -->
+          <div class="pb-5 shadow-sm p-3 mb-5 bg-body rounded">            
+            {% include 'courses/course_includes/write_course_review.html' %}
+          </div>
+          <!-- Start of Write Review -->
+
+          <!-- End of Write Review -->
+        </div>
+        <!-- End of Reviews -->
+      </div>
+      <!-- End of content -->      
+    </div>
+    <!-- End of first column -->
+
+
+    <!-- Start of second column -->
+    <div class="col-lg-5 mt-lg-5 course-main-features ">
+      <div style="position: sticky; top: 0;" class="">
+        <div class="shadow-sm p-3 m-lg-5 bg-body rounded">
+          <!-- Start of Image -->
+          <div style="position: relative;" class="">
+           <img width="100%" height="220px" class="border rounded" src="{{course.thumbnail.url}}" alt="">
+            <div style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#videoModal-{{course.id}}" class="bb-video-box">
+              <div class="bb-video-box-inner">
+                <div class="bb-video-box-innerup">
+                  <a class="theme-cl">
+                    <i class="fa fa-play"></i>
+                  
+                  </a>
+                </div>
+              </div>
+            </div>        
+            <div style="background:rgba(17, 17, 17, 0.3); top:0; left:0; z-index: 2; width: 100%; height: 220px;" class="position-absolute rounded"></div>
+              
+          </div>
+          <!-- End of Image -->
+          <!-- Start of features -->
+          <div class="mt-3">
+           <div class="mt-3">
+             <p class="text-muted">Actual Price:</p>
+             <span style="font-size: 15px;" class="text-muted"> Save {{course.percentage_discount}}%</span>
+           <span style="font-size: 15px; background-color: antiquewhite;" class="border rounded px-2 text-muted"> <del> {{course.price|dollar}}</span> <br>
+           </div>
+           <div class="my-2">
+             <span style="background-color: rgb(138, 241, 255); font-size: 25px !important;" class="border px-2 rounded text-dark fw-bold"> {% cal_main_price course.price course.percentage_discount as value %} {{value|dollar}} </span>
+           </div>
+          </div>
+          <!-- End of Features -->
+          <div>
+         <!-- Start of Enroll Now -->
+         <!-- Start of Key Features -->
+         <div class="mt-3">
+           <h5 style="color: #9197aa" class="fw-bold">Key Features</h5>
+           <ul class="list-group">
+             <li style="color: #9197aa; font-size:14px;" class=" list-group-item d-flex justify-content-between"><span><i style="color: bisque;" class="me-2 fa fa-clock"></i>Duration</span>  <span class="text-muted text-capitalize">{{course.length}}</span></li>
+             <li style="color: #9197aa; font-size:14px;" class=" list-group-item d-flex justify-content-between"><span><i style="color: bisque;" class="me-2 fa fa-video-camera"></i>Lectures</span> <span class="text-muted">{{course.video_course.count}}</span></li>
+             <li style="color: #9197aa; font-size:14px;" class=" list-group-item d-flex justify-content-between"><span><i style="color: bisque;" class="me-2 fas fa-level-up-alt"></i>Skills</span> <span class=" text-muted">{{course.level}}</span></li>
+             <li style="color: #9197aa; font-size:14px;" class=" list-group-item d-flex justify-content-between"><span><i style="color: bisque;" class="me-2 fas fa-clipboard"></i>Quiz</span> <span class=" text-muted">{{course.quiz_course.count}}</span></li>
+             {%for quiz in course.quiz_course.all|slice:':1'%}
+             <li style="color: #9197aa; font-size:14px;" class=" list-group-item d-flex justify-content-between"><span><i style="color: bisque;"  class="me-2 fa fa-percent"></i>Percentage Pass</span> <span class=" text-muted ">{{quiz.required_score_to_pass}}</span></li>
+             {%endfor%}
+             <li style="color: #9197aa; font-size:14px;" class=" list-group-item d-flex justify-content-between"><span><i style="color: bisque;" class="me-2 fa fa-certificate"></i>Certificate</span> <span class=" text-muted">Yes</span></li>
+   
+           </ul>
+   
+   
+         </div>
+         <!-- End of Key Features -->
+          <div class="my-4">
+             <a style="font-size: 14px;" href="{%url 'checkout' course.slug %}" class="btn text-muted btn-5 fw-bold py-2 btn-lg border border-primary btn-slide slide-primary shadow mb-4 mb-md-0 aos-init aos-animate" data-aos-duration="200" data-aos="fade-up">
+               ENROLL NOW
+             </a>
+          </div>
+         <!-- End of Start of Enroll Now -->
+      </div>
+    </div>
+  </div>
+  
+</section>
+<!-- End of two column -->
+
+
+<!-- Start of Related Courses -->
+<section id="course-bg" class="py-5  px-lg-5 container-fluid " style="background-color: rgba(255, 255, 241, 0.973);">
+  <!-- Start Header -->
+  <!-- Start Header -->
+  <div class="text-center justify-content-center mt-5 container">
+      <h4 class="section-title__title fw-bold">Explore <mark>Related</mark> Courses </h4>       
+      <p class="px-lg-5 mx-lg-5 mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+  </div>
+  <!-- End Header -->
+ 
+
+  <!-- Start Featured Course Content -->  
+      
+  <div class="owl-carousel owl-related-course ">          
+      {%for course in related_courses%}                    
+      <div class="slide-item ">                  
+           
+          <div style="width: 97%; height: 100%"  class="border-bottom bg-transparent card position-relative">
+              <!-- image of latest course -->                            
+              <div class="hover-effect-image-and-overlay col-lg-12 col-md-12 p-1 position-relative"> 
+                  
+                  <!-- Start of Image -->
+                  <a href="{{course.get_absolute_url}}">                                
+                      <div class="m-1 relative-position">
+                          <!--start category  -->
+                          <div style="font-size: 12px; z-index:20" class="position-absolute end-0 my-2 latest-world-course">
+                              <a id="lastest-course-cat" href="{{course.sector.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-dark text-white rounded p-2">{{course.sub_sector.name}}</a>
+                          </div>                                
+                          <!-- end category -->
+                                                           
+                          <!-- Start of main Image -->
+                          <div style="z-index: 1" class="HoverDiv2">
+                              {% if course.thumbnail %}
+                              <div class="general-overlay-zoom2"></div>
+                              <img class="hover-image img-fluid position-relative" style="width: 100%; height: 194px;" src="{{course.thumbnail.url}}" alt="{{course.name}} image">                           
+                              <a href="{{course.get_absolute_url}}" class="general-link2 border border-3  rounded-circle bg-dark"><i class="text-white text-white m-2 fa-solid fa-play"></i></a>
+                              {% else %}
+                              {% endif %}
+
+                          </div>
+                          <!-- End of main Image -->
+                      </div>
+                  </a>
+                  <!-- End of Image --> 
+                                    
+              </div>
+              <!-- End of Image of Latest course -->
+              <div class="col-lg-12 col-md-12 p-2">
+                  <!-- Start of title -->
+                  <div  class="my-2">
+                      <a id="text-hover" href="{{course.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{course.name}} </a>
+                  </div>
+                  <!-- End of Title -->
+                  <div class="my-1">
+                      <!-- Start student count -->
+                      <span style="font-size: 12px; height: 32px;" class="me-1 fw-bold text-muted"><i class="m-2 fas fa-user text-primary"></i> {{course.enroll_students.all.count}}</span>   
+                      <!-- End student count -->
+                      <br>
+                      <!-- Start level -->
+                      {% if course.level.name == 'Beginner' %}
+                      <span style="background-color: rgba(8, 116, 218, 0.15);" class=" border-none rounded px-1 text-info">{{course.level.name}}</span>
+                      {%elif course.level.name == 'Intermediate'%}
+                      <span style="background-color:  rgb(255, 233, 199);" class="border-none rounded text-warning px-1">{{course.level.name}}</span>
+                      {%else%}
+                      <span style="background-color:  rgb(221, 221, 250);" class="border-none rounded px-1 text-white">{{course.level.name}}</span>
+                      {%endif%}
+                      <!-- End level -->
+                      
+                      <!-- Start of course article  -->
+                      <br>                                
+                      <!-- End of start of course article -->
+                  </div>
+                  <!--Author  -->
+                  <div class="row card-footer border-0">
+                      <div class="col-8">
+                          <!-- Start of Author -->
+                          <a id="text-hover" class="d-flex text-decoration-none" href="">
+                              <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{course.author.profile_image.url}}"  alt="{{course.author}} image">
+                              <span id="text-hover" style="font-size: 11px" class=" m-2 py-2 fw-bolder text-muted"> {{course.author.get_full_name}}</span>
+                          </a>
+                          <!-- End Author -->  
+                      </div>  
+                      <div class="col-4">
+                          <!-- Start of Save Price -->  
+                              {% is_enrolled request course as enrolled %}
+                              {% if not enrolled%}
+                                  {%if course.percentage_discount > 0 %}                                            
+                                  <span style="font-size: 11px;" class="py-2 text-muted"> Save {{course.percentage_discount}}%</span>
+                                  <span style="font-size: 12px; background-color: antiquewhite;" class="border rounded px-2 text-muted"> <del> {{course.price|dollar}}</span>
+                                  {%else %}
+                                  <span class=""> <i style="font-size: 14px;" class="text-primary fa fa-check-circle"></i> </span>
+                                  {%endif%}
+                              {%else%}
+                                  <span class=""> <i style="font-size: 14px;" class="text-primary fa fa-check-circle"></i> </span>
+                              {%endif%}
+                 
+                          <!-- End Save Price -->  
+                      </div>                              
+                      
+                  </div>
+                  <!-- End Author -->
+
+                  <!-- Start of price and enroll -->
+                  <div class="row">
+                      <!-- Start Price -->
+                      <div class="col-4 px-2">
+                          <!--Serve Price and %discount from Database-->
+                          {% is_enrolled request course as enrolled %}
+                          {% if not enrolled%}
+                              {%if course.price > 0 %}
+                              <span style="background-color: rgb(247, 178, 94);" class="border px-2 rounded fs-6 text-white fw-bold"> {% cal_main_price course.price course.percentage_discount as value %} {{value|dollar}} </span>
+                              {%else %}
+                              <span style="background-color: bisque;" class="fs-6 px-2 border rounded fw-bold"> Free </span>
+                              {%endif%}
+                          {%else%}
+                              <a style="font-size: 12px;" href="{{course.get_absolute_url}}" class="btn btn-sm btn-dark" role="button">Start<span class=""> <i style="font-size: 12px;" class="text-white fa fa-check-circle"></i> </span></a>
+                          {%endif%}
+                      </div>
+                      <!-- End Price -->
+
+                      <!-- Start Enroll -->
+                      <div class="col-8">
+                          {% if not enrolled%}
+                          <a style="font-size: 12px;" href="{%url 'course_details' course.slug%}" class=" mt-1 btn btn-sm btn-dark" role="button"> <span class=""><i style="font-size: 12px;" class="text-white fa-solid fa-receipt"></i> </span> Details</a>
+                          <a style="font-size: 12px;" href="{%url 'checkout' course.slug %}" class=" mt-1 btn btn-sm btn-dark" role="button"><span class=""><i style="font-size: 12px;" class="text-white fa-solid fa-cart-arrow-down"></i> </span> Enroll</a>
+                          {%endif%}
+
+                      </div>
+                      <!-- End Enroll -->
+                  </div>
+                  <!-- End of Price and Enroll  -->
+                  
+              </div>
+              <!-- Start of Style border-bottom -->
+              <span style="border-bottom-width: 1px;
+                          position: absolute;
+                          left:0;
+                          top: 100%;
+                      width: 5%; 
+                      margin: 0 0 -1px 0;
+                      border-bottom-color: #0d6efd !important; 
+                      display: inline-block; border-bottom-style: 
+                      solid;" 
+                  class=""> 
+              </span>
+              <!-- End of Style border-bottom -->
+          
+          </div>
+             
+      </div>
+  {%endfor%}
+  </div>  
+</section>  
+<!-- End Related Course -->
+
+
+<!-- mmmmmmmmmmmmmmmmmmmmmm Model Videos -->
+<!-- Start of Model Video --> 
+{% for video in course.video_course.all|slice:":1" %} 
+<div class="modal fade container-fluid" id="videoModal-{{course.id}}" tabindex="-1" aria-labelledby="exampleModalLabel-{{course.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-{{course.id}}">{{course.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="container-fluid px-lg-5 px-md-5 px-sm-5 modal-body py-0">
+               
+                <div class="row py-2">
+                    <!-- Start of video Introduction -->
+                    <div class="col-12">
+                       <div class="ratio ratio-16x9 ">
+                        <iframe style="width: 100%;" class="rounded" src="https://player.vimeo.com/video/{{video.video_id}}" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                       </div>
+                    </div>
+                    <!-- End of video Introduction -->
+
+                    <!-- Start Enroll -->
+                    <div class="my-4">
+                      <a style="font-size: 14px;" href="{%url 'checkout' course.slug %}" class="btn text-muted btn-5 fw-bold py-2 btn-lg border border-primary btn-slide slide-primary shadow mb-4 mb-md-0 aos-init aos-animate" data-aos-duration="200" data-aos="fade-up">
+                        ENROLL NOW
+                      </a>
+                    </div>
+                    <!-- End Enroll -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}    
+<!-- End of Model Video -->
+<!-- mmmmmmmmmmmmmmmmmmmmmm Model Videos -->
+
+
+
+{% endblock%}

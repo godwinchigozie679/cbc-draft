@@ -1,0 +1,132 @@
+{% extends 'courses/base/student_dashboard.html' %}
+
+{%load static %}
+
+{%block scripts%}
+<script src="{% static 'courses/js/quiz.js' %}" defer></script>
+{%endblock scripts%}
+  <!--Title-->
+{%block title%}
+  {{quiz}}
+{%endblock%}
+
+{%block content%}
+<style>
+  .quiz-bg{
+    background-color: rgb(208, 245, 208)
+  }
+
+  .quiz-result-bg{
+    background-color: rgb(235, 240, 235);
+  }
+</style>
+
+<!-- Start of Header -->
+<section  style="width: 100%; background: #f5f5f5;border-bottom: 1px solid #eee;" class="border position-relative py-4 container-fluid px-lg-5 px-md-5 px-sm-5"> 
+  <div class="row mt-5">      
+      <!-- Start of breadcrumb -->
+      <div class="col-lg-10 col-md-10 col-sm-10">
+         
+          <nav class="" aria-label="breadcrumb">                
+              <ol style="color: #666; font-size:13px;" class="breadcrumb">
+                <li class=" fw-bold breadcrumb-item"><a class="text-decoration-none" href="{% url 'home'%}">Home </a></li>  
+                <li class=" fw-bold breadcrumb-item"><a class="text-decoration-none" href="{% url 'course_page'%}">Courses </a></li>  
+                <li class=" fw-bold breadcrumb-item"><a class="text-decoration-none" href="{{quiz.course.get_absolute_url}}">{{quiz.course.name}} |>> </a></li>
+                <li class=" fw-bold breadcrumb-item active"><a href="{{quiz.get_absolute_url}}">Quiz</a></li>                                        
+                                      
+                  
+              </ol>
+          </nav>
+         
+
+      </div>
+      <!-- End of Breadcumb -->
+      <!-- Start of Bubble -->
+      <div class="col-lg-2 col-md-2 col-sm-2 position-relative ">
+          <div class="border rounded mousey">
+              <div style="z-index: 300;" class="bubble x1"></div>                               
+          </div>
+          <div style="font-size: 11px; font-weight: 700; z-index: 200;" class="mt-2 position-absolute">Scroll Down To Discover</div>
+          
+          
+      </div>
+      <!-- End of Bubble -->        
+
+  </div> 
+</section>
+    <!-- Start of breadcrumb background Image -->
+        
+      <div id="nav-base_dashboard"></div>
+      
+    <!-- End of breadcrumb background Image -->
+<!-- End of Header -->
+
+
+<!-- start of Quiz -->
+<section class="container">
+
+  <!-- Start of Quiz Pre Info -->
+  <div style="z-index: 1000;" class="row mt-5" id="quiz-pre-info">
+    <div class="col-lg-4 my-1">
+      <h6 class="text-muted"> <span><i class="fa fa-asterisk text-primary" aria-hidden="true"></i></span> Required Pass Score: {{quiz.required_score_to_pass}}%</h6>
+    </div>
+    <div class="col-lg-6 my-1">
+      <a class="btn btn-sm btn-primary" href="{{quiz.course.get_absolute_url}}"> <span><i class="fa-solid fa-backward"></i></span> back to course</a>
+    </div>
+    <div class="col-lg-2 my-1  " >
+      <h6 style="z-index: 250000; background-color:rgb(238, 245, 238);" class="border p-3 rounded"> <span><i class="fas fa-clock text-primary"></i></span> <span id="timer-box"></span> </h6>
+    </div>
+  </div>
+  <!-- End of Quiz Pre Info -->
+  <!-- Start quiz -->
+  <div class="row my-3 py-3">
+    <div class="col-lg-3">
+
+    </div>
+    <!-- start of Quiz Question -->
+    <div id="main-quiz-container" class="col-lg-6 py-4 rounded">
+      <!-- Start Dispaly Result -->
+      <div id="score-box">  </div>
+      <div id="result-box" >  </div>
+      <!-- End Display Result -->
+      <!-- Start Quiz Form -->
+      <form id="quiz-form" >
+        {%csrf_token%}
+        <div id="quiz-box"></div>
+
+        <div id="quiz-button"></div>
+      </form>
+      <!-- End Quiz Form -->
+    
+      
+    </div>
+    <!-- End of Quiz Question -->
+    <div class="col-lg-3">
+      
+    </div>
+
+  </div>
+  <!-- End quiz -->
+
+  <!-- Start of Quiz Post Info -->
+  <div id="quiz-post-info">
+    <div class="row mt-2" >
+      <div class="col-lg-4">
+        <a class="text-center text-decoration-none border btn btn-sm btn-primary" role="button" href="{{quiz.get_absolute_url}}"> <span><i class="fa fa-refresh text-white" aria-hidden="true"></i></span> Try Again</a>
+      </div>
+      <div class="col-lg-6">
+  
+      </div>
+      <div class="col-lg-2">
+        <h6 style="z-index: 250000; background-color:rgb(238, 245, 238);" class="border p-3 rounded"> <span><i class="fas fa-clock text-primary"></i></span> Time: {{quiz.time}}</h6>
+      </div>
+    </div>
+  </div>
+  <!-- End of Quiz Post Info -->
+
+
+</section>
+<!-- End of Quiz  -->
+
+  
+{% endblock%}

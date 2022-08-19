@@ -1,0 +1,13 @@
+{% autoescape off %}
+Welcome to CBC.
+
+Hello {{name}}!
+
+Please confirm your email by clicking on the following link.
+
+Confirmation Link: http://{{domain}}{% url 'activate' uidb64=uid token=token%}
+
+or 
+
+Simply copy the link: http://{{domain}}{% url 'activate' uidb64=uid token=token%} and paste on your browser.
+{% endautoescape %}

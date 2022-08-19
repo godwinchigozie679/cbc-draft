@@ -1,0 +1,63 @@
+<!-- start main pagination -->            
+<div class="row"> 
+    <!-- Start of Pagination -->                  
+    <div class="col-lg-8 mt-2">                       
+        <ul id="pagination" style="font-size: 12px;" class="col-lg-8 pagination rounded">
+            {% if courses.has_previous %}
+                <!-- 'First' and 'Previous' Buttons -->                              
+                <a id="bg-pagination" class="page-link p-2 p-md-3 p-lg-3 border text-decoration-none text-white rounded" href="?page=1"><i class="fas fa-caret-left"></i></a>                             
+                <a id="bg-pagination" class="page-link p-2 p-md-3 p-lg-3 border text-decoration-none text-white rounded" href="?page={{ current_page.previous_page_number }}">Previous</a>
+             
+            {% endif %}
+          
+            <!-- Numbered Buttons -->
+            {% for page in paginator.page_range %}
+              {% if courses.number == page %}
+                
+                  <a id="bg-pagination" class="page-link p-2 p-md-3 p-lg-3 border text-decoration-none  text-white {% if courses.number == page %}
+                                                            bg-primary
+                                                {% elif page > courses.number|add:'-3' and page < courses.number|add:'3' %}
+                                                bg-dark
+                                                {% endif %}
+                                                " href="?page={{ page }}">
+                {{ page }}
+                </a>
+                
+              {% elif page > courses.number|add:'-3' and page < courses.number|add:'3' %}
+               
+                  <a id="bg-pagination" class="page-link p-2 p-md-3 p-lg-3 text-decoration-none border text-white" href="?page={{ page }}">{{ page }}</a>
+               
+              {% endif %}
+            {% endfor %}
+          
+            <!-- 'Next' and 'Last' Buttons -->
+            {% if courses.has_next %}
+              
+                <a id="bg-pagination" class="page-link p-2 p-md-3 p-lg-3 bg-dark text-decoration-none text-white border" 
+                  href="?page={{ courses.next_page_number }}"><i class="fas fa-caret-right"></i></a>
+                {%else%}                     
+             
+                <a id="bg-pagination" class="page-link p-2 p-md-3 p-lg-3 bg-dark text-decoration-none rounded text-white border" href="?page={{ courses.paginator.num_pages }}"><i class="fas fa-caret-right"></i></a>
+             
+            {% endif %}
+        </ul>                        
+    </div>
+    <!-- End of Pagination -->
+    
+    <!-- Start of Load More -->
+    <div class="col-lg-4 mt-2">                        
+        <ul style="font-size: 12px; font-weight: 700" class="pagination rounded">
+            {% if courses.has_next %}                             
+            <a class="bg px-5 py-3 bg-dark rounded text-white text-decoration-none" 
+              href="?page={{ courses.next_page_number }}"><i class="fas fa-spinner m-1 spinning"></i> Load More
+            </a> 
+            {%else%} 
+                <a class="px-5 py-3 bg-dark text-white text-decoration-none rounded" href="?page={{ courses.paginator.num_pages }}">
+                    <i class="fas fa-spinner spinning m-1"></i> Load More</a>                                                       
+            {% endif %}
+        </ul>
+    </div>
+    <!-- End of Load More -->
+
+</div>            
+<!-- end of main pagination page -->

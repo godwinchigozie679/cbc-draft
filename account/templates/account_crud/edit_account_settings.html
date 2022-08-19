@@ -1,0 +1,88 @@
+{% extends 'courses/base/dashboard_base.html' %}
+{% load course_custom_tags %}
+
+{%block title%}Dashboard{%endblock%}
+
+{%block content%}
+
+<style>
+  .social-form-control{
+    max-width: 300px !important;
+    width: 100% !important;
+  }
+</style>
+
+<!-- Start of Quick Link -->
+<section class="container-fluid my-2">
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
+      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
+      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
+    </div>
+  </div>
+</section>
+<!-- End of Quick Link -->
+
+<!-- Start of Delete Account form -->
+<section class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <form action="{% url 'edit_account' user.id%}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+            <!-- Start of Messages -->
+              {% include 'messages/message.html' %} 
+            <!-- End of Messages -->
+
+            <!-- Start First name -->
+            <div class="form-outline mb-4"> 
+
+              <label for="first_name" class="fs-6 fw-bold ms-2">First Name:</label>
+              <div class="social-form-control form-control-sm fs-6">{{form.first_name}}</div>
+            </div>
+             <!-- End First name -->
+
+             <!-- Start Last name -->
+            <div class="form-outline mb-4"> 
+
+              <label for="last_name" class="fs-6 fw-bold ms-2">Last Name:</label>
+              <div class="social-form-control form-control-sm fs-6">{{form.last_name}}</div>
+            </div>
+             <!-- End Last name -->
+
+
+            <!-- Start username -->
+            <div class="form-outline mb-4"> 
+
+              <label for="username" class="fs-6 fw-bold ms-2">Username:</label>
+              <div class="social-form-control form-control-sm fs-6">{{form.username}}</div>
+            </div>
+             <!-- End username -->
+
+            <!-- Start profile_image -->
+            <div class="form-outline mb-4"> 
+
+              <label for="profile_image" class="fs-6 fw-bold ms-2">Profile Image:</label>
+              <div class="form-control-sm fs-6">{{form.profile_image}}</div>
+            </div>
+             <!-- End Profile_Image -->
+           
+             <button class="btn btn-sm btn-secondary fw-bolder">Update</button>
+
+          </form>
+          
+
+        </div>        
+      </div>
+    </div>
+  </div>
+  
+
+</section>
+<!-- End of Delete Account Form -->
+
+
+
+{% endblock%}

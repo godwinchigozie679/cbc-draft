@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <div class="row">  
+        <!-- Start of Social Media -->
+        <div class="col-lg-3 ms-lg-5">
+          {%for social in social_handle%}
+          <a class="btn btn-primary text-decoration-none my-2" style="font-size:15px" href="{{social.username_url}}" role="button"
+              target="_blank"><i class="text-white bg-none {{social.icon}}"></i
+            ></a>
+          {%endfor%}
+        </div>
+        <!-- End of Social Media -->
+        <!-- Start of Hot News Date -->
+        <div  class=" col-lg-1 position-relative">
+            {% for news in all_news|slice:":1"%}
+            <span class=" fs-4 text-white fw-bold" style="position: absolute;" >{{news.publish.date|date:'d'}}</span>
+            <span class=" text-white" style="text-align:left; float:left; width: 100%; font-size: 11px; font-weight:500; margin-left: 30px" >{{news.publish.date|date:'M'}}</span>
+            <span class=" text-white" style="text-align:left; float:left; width: 100%; font-size: 11px; font-weight:500; margin-left: 30px;" >{{news.publish.date|date:'Y'}}</span>
+            {% endfor%}        
+        </div> 
+        <!-- End of Hot News Date -->
+        <!-- Start of Hot News Header -->
+        <div class=" m-1 col-lg-1 border-start bg-gradient py-2 rounded">
+            <span style="font-size: 13px;"  class="p-1 bg-primary rounded fw-bold text-white">Hot News:</span>
+        </div> 
+        <!-- End of Hot News Header -->
+          
+        <!-- Start of Hot news Content -->
+        <div style="background-color: #333333;" class="owl-carousel owl-hot-news m-1 col-lg-5 py-2 ">
+            {% for news in all_news|slice:":5"%}  
+            <a style="font-size: 13px;" href="{{news.get_absolute_url}}" id="owl-hot-news-text"  class="slide-item text-white text-decoration-none ">{{news.title}}</a>
+            {% endfor%}
+        </div>
+        <!-- End of Hot News Content -->
+      </div>
+
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+     
+        <script type="text/javascript">
+    
+            $(document).ready(function () {
+                $(".owl-carousel").owlCarousel();
+            });
+    
+              
+    
+            //Owl-Hot-News
+            $('.owl-hot-news').owlCarousel({
+              loop: true,
+              margin: 10,
+              autoplay: true,          
+              slideSpeed : 7000,
+              autoplayTimeout: 7000,
+              smartSpeed:8000,  
+              autoplayHoverPause: true,         
+              nav: false,
+              navText: ["<div class='owl-prev-hot-news'>‹</div>", "<div class='owl-next-hot-news'>›</div>"],
+              dots: false,
+              responsive: {
+                  0: {
+                      items: 1
+                  },
+                  600: {
+                      items: 1
+                  },
+                  1000: {
+                      items: 1
+                  }
+              }
+          })   
+    
+</script>
+</body>
+</html>

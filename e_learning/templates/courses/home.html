@@ -1,0 +1,731 @@
+{% extends 'courses/base/base.html' %}
+{% load course_custom_tags %}
+
+{%load static %}
+
+{%block scripts%}
+<script src="{% static 'courses/js/home.js' %}" defer></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+      $(".owl-carousel").owlCarousel();
+  });
+
+  //Owl-home
+  $('.owl-home').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      navText: ["<div class='nav-button-home owl-prev'>‹</div>", "<div class='nav-button-home owl-next'>›</div>"],
+      dots: false,
+      responsive: {
+          0: {
+              items: 1
+          },
+          600: {
+              items: 3
+          },
+          1000: {
+              items: 4
+          }
+      }
+  })
+
+
+  //Owl-home-review
+  $('.owl-home-review').owlCarousel({
+    loop: true,
+    margin: 0,
+    nav: true,
+    navText: ["<div class='nav-button-home-review owl-prev'>‹</div>", "<div class='nav-button-home-review owl-next'>›</div>"],
+    dots: false,
+    responsive: {
+        0: {
+            items: 1
+        },
+        600: {
+            items: 1
+        },
+        1000: {
+            items: 1
+        }
+    }
+})
+
+
+//Partners
+  $('.owl-partners').owlCarousel({
+    loop: true,    
+    margin: 10,
+    autoplay: true,
+    slideTransition: 'linear',
+    autoplayTimeout: 3000,
+    autoplaySpeed: 3000,
+    autoplayHoverPause: true,
+    nav: false,    
+    responsive: {
+        0: {
+            items: 1
+        },
+        600: {
+            items: 3
+        },
+        1000: {
+            items: 4
+        }
+    }
+})
+
+</script>
+{%endblock scripts%}
+
+  <!--Title-->
+{%block title%}Home{%endblock%}
+
+{%block content%}
+
+<!--Start of First part of Home-->  
+   
+<section id="home-course-review" style="background-color: rgba(207, 213, 250, 0.12);" class="container-fluid pb-lg-5 px-lg-5">
+    <!-- Start of Info -->
+    <div class="row">
+        <!-- Start of Hearder -->
+        <div class="col-lg-7 banner-content ps-2">
+            <h6 style="color: #0d6efd;; font-size: 18px; letter-spacing: 5px;" class="fw-bolder mt-4 pt-4 mt-lg-5 pt-lg-5 subtitle text-uppercase fw-medium">Online education</h6>
+            <h1 class="fw-bolder text-muted"><span class="d-lg-block">Learn The</span> Skills You Need <span class="d-lg-block">To Succeed</span></h1>
+            <p class="desc mt-3 text-muted">Free online courses from the world’s Leading experts. join 18+ million Learners today.</p>
+            
+            <form id="home-search" action="#">
+                <div class="input-group">
+                    <div class="form-outline col-12">
+                      <input style="width: 85%;" type="search" id="form1" class="home-search border-none form-control" placeholder="Hey {%if request.user.is_authenticated%} {{request.user.get_full_name}} {%else%} dear {%endif%}, What do you want to Learn?..." />                      
+                    </div>
+                    <button type="button" class="position-absolute end-0 btn">
+                      <i class="text-white fa fa-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-muted mt-5 banner-catagory d-flex flex-wrap"><p>Most Popular : </p><ul class="lab-ul d-flex flex-wrap">{%for course in popular_course_|slice:':4'%}<li class="me-2" style="list-style: none;"><a class="popular-course-text text-muted  text-capitalize" href="#">{{course}}</a></li> {%endfor%}</ul></div>
+        </div>
+        <!-- End of Header -->
+        <!-- Start of Image -->
+        <div style="position: relative; display: flex; justify-content:center; min-height:100vh;" class="col-lg-5">
+            <img class="circle" src="{% static 'cbc-web/home-img/home-why-chose-us-bg.jpg' %}" alt="">
+            <img class="mine" src="{% static 'cbc-web/home-img/banner-shape-01.png' %}" alt="">
+
+        </div>
+        <!-- End of Image -->
+    </div>
+    <!-- End of Info -->
+
+    <!-- Start of Partners -->
+    <div class="row owl-carousel owl-partners">
+        {%for partner in partners%}
+        <div class="slide-item mx-4">
+            <img height="40px" width="100px" src="{{partner.image.url}}" alt="">
+        </div>
+        {%endfor%}
+
+    </div>
+    <!-- End of Partners -->
+
+</section>
+<!-- End of First Part of Home -->
+    
+<!-- Start Bitcoin marketCap -->
+<section  id="bitcoin-bg" class="container-fluid py-5 bg-transparent">
+    <div class="card border-0 bg-transparent">
+        <div class="card-body bg-transparent">
+            <div class="row bg-transparent">
+                
+                <!--  Bitcoin marketCap -->
+                <div class="col-sm-12 col-md-5 col-lg-5">
+                    {%load crypto_custom_price%}
+                    {%show_crypto_price%}
+                   
+                </div>
+
+                <!-- <div class="col-sm-12 col-md-1 col-lg-1">
+        
+                </div> -->
+                       
+                
+                <div class="col-sm-12 col-md-7 col-lg-7">
+                    <div class="mt-5 pt-5">
+                        <h1  class="aos-init aos-animate text-center" data-aos="fade-left" data-aos-duration="150">
+                            Learn From <span style="color: orange;" class="fw-bold">Anywhere</span>
+                        </h1>
+                        
+                        <p class="me-5 mt-3 text-muted text-capitalize aos-init aos-animate" data-aos="fade-up" data-aos-duration="200">
+                            Technology is bringing a massive wave of evolution on learning things in different ways.
+                        </p>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-4">
+                    
+
+                        </div>
+                        <!-- Start get started -->
+                        <div class="col-lg-4 mt-3">
+                            <a style="font-size: 14px;" href="{%url 'course_page'%}" class="btn text-muted btn-5 fw-bold py-2 btn-lg border border-primary btn-slide slide-primary shadow mb-4 mb-md-0 aos-init aos-animate" data-aos-duration="200" data-aos="fade-up">
+                                VIEW COURSES
+                            </a>
+
+                        </div>
+                        <!-- End get started -->
+                        <!-- Start View Courses -->
+                        <div class="col-lg-4 mt-3">
+                            <a style="font-size: 14px;" href='{% url "user_course" %}' class="btn py-2 fw-bold border border-white btn-lg bg-primary text-white border border-primary btn-slide slide-primary shadow mb-4 mb-md-0 aos-init aos-animate" data-aos-duration="200" data-aos="fade-up">
+                                GET STARTED
+                            </a>
+
+                        </div>
+                        <!-- End View Courses -->
+                    </div>
+                     
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+            
+
+</section>
+         
+<!-- End of Bit Coin -->
+       
+<!-- Start of Featured Courses -->
+<section id="course-bg" class="py-5  px-lg-5 container-fluid " style="background-color: rgba(255, 255, 241, 0.973);">
+    <!-- Start Header -->
+    <!-- Start Header -->
+    <div class="text-center justify-content-center mt-5 container">
+        <h4 class="section-title__title fw-bold">Explore <mark>Featured</mark> Courses </h4>       
+        <p class="px-lg-5 mx-lg-5 mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+    </div>
+    <!-- End Header -->
+    <div class="row my-5">       
+        <!-- Start filter -->
+        <div class="col-lg-6">            
+            <div class="courses-tab-menu aos-init aos-animate" data-aos="fade-up" data-aos-duration="1000">
+                <ul class="nav" >
+                    <li><button data-bs-toggle="tab" data-bs-target="#tab1" class="filter-home-button   text-muted fw-bolder" data-filter='all' value = "{{all.id}}" >All</button></li>
+                    <li><button data-bs-toggle="tab" data-bs-target="#tab2" class="filter-home-button   text-muted fw-bolder" data-filter='trending'  value = "{{trending.id}}" >Trending</button></li>
+                    <li><button data-bs-toggle="tab" data-bs-target="#tab3" class="filter-home-button   text-muted fw-bolder" data-filter='popularity' value = "{{popularity.id}}" >Popularity</button></li>
+                    <li><button data-bs-toggle="tab" data-bs-target="#tab4" class="filter-home-button   text-muted fw-bolder" data-filter='featured' value = "{{featured.id}}" >Featured</button></li>
+                    <li><button data-bs-toggle="tab" data-bs-target="#tab5" class="filter-home-button   text-muted fw-bolder" data-filter='category' value = "{{category.id}}" >{{category.sector.name}}</button></li>
+                    <li><button data-bs-toggle="tab2" data-bs-target="#tab6" class="filter-home-button text-muted fw-bolder" data-filter='category' value = "{{category.id}}" ><a class="text-decoration-none" href="{% url 'course_page'%}">More <span><i class="fa fa-spinner ms-2"></i></span></a></button></li>
+                   
+                    
+                </ul>
+            </div>
+
+        </div>
+        <!-- End filter -->
+
+    </div>
+    <!-- End Header -->
+
+    <!-- Start Featured Course Content -->
+    <p id="ajaxHomeLoader" class="text-center"><i class="fa-solid fa-spinner fs-4"></i></p> 
+        
+    <div class="owl-carousel owl-home " id="home-filter-data">          
+        {%for course in courses%}                    
+        <div class="slide-item ">                  
+             
+            <div style="width: 97%; height: 100%"  class="border-bottom bg-transparent card position-relative">
+                <!-- image of latest post -->                            
+                <div class="hover-effect-image-and-overlay col-lg-12 col-md-12 p-1 position-relative"> 
+                    
+                    <!-- Start of Image -->
+                    <a href="{{course.get_absolute_url}}">                                
+                        <div class="m-1 relative-position">
+                            <!--start category  -->
+                            <div style="font-size: 12px; z-index:20" class="position-absolute end-0 my-2 latest-world-post">
+                                <a id="lastest-post-cat" href="{{course.sector.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-dark text-white rounded p-2">{{course.sub_sector.name}}</a>
+                            </div>                                
+                            <!-- end category -->
+                                                             
+                            <!-- Start of main Image -->
+                            <div style="z-index: 1" class="HoverDiv2">
+                                {% if course.thumbnail %}
+                                <div class="general-overlay-zoom2"></div>
+                                <img class="hover-image img-fluid position-relative" style="width: 100%; height: 194px;" src="{{course.thumbnail.url}}" alt="{{course.name}} image">                           
+                                <a href="{{course.get_absolute_url}}" class="general-link2 border border-3  rounded-circle bg-dark"><i class="text-white text-white m-2 fa-solid fa-play"></i></a>
+                                {% else %}
+                                {% endif %}
+
+                            </div>
+                            <!-- End of main Image -->
+                        </div>
+                    </a>
+                    <!-- End of Image --> 
+                                      
+                </div>
+                <!-- End of Image of Latest post -->
+                <div class="col-lg-12 col-md-12 p-2">
+                    <!-- Start of title -->
+                    <div  class="my-2">
+                        <a id="text-hover" href="{{course.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{course.name}} </a>
+                    </div>
+                    <!-- End of Title -->
+                    <div class="my-1">
+                        <!-- Start student count -->
+                        <span style="font-size: 12px; height: 32px;" class="me-1 fw-bold text-muted"><i class="m-2 fas fa-user text-primary"></i> {{course.enroll_students.all.count}}</span>   
+                        <!-- End student count -->
+                        <br>
+                        <!-- Start level -->
+                        {% if course.level.name.capitalize == 'Beginner' %}
+                        <span style="background-color: rgba(8, 116, 218, 0.15);" class=" border-none rounded px-1 text-info">{{course.level.name.capitalize}}</span>
+                        {%elif course.level.name.capitalize == 'Intermediate'%}
+                        <span style="background-color:  rgb(255, 233, 199);" class="border-none rounded text-warning px-1">{{course.level.name.capitalize}}</span>
+                        {%else%}
+                        <span style="background-color:  rgb(221, 221, 250);" class="border-none rounded px-1 text-white">{{course.level.name.capitalize}}</span>
+                        {%endif%}
+                        <!-- End level -->
+                        
+                        <!-- Start of post article  -->
+                        <br>                                
+                        <!-- End of start of post article -->
+                    </div>
+                    <!--Author  -->
+                    <div class="row card-footer border-0">
+                        <div class="col-8">
+                            <!-- Start of Author -->
+                            <a id="text-hover" class="d-flex text-decoration-none" href="">
+                                <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{course.author.profile_image.url}}"  alt="{{course.author}} image">
+                                <span id="text-hover" style="font-size: 11px" class=" m-2 py-2 fw-bolder text-muted"> {{course.author.get_full_name}}</span>
+                            </a>
+                            <!-- End Author -->  
+                        </div>  
+                        <div class="col-4">
+                            <!-- Start of Save Price -->  
+                                {% is_enrolled request course as enrolled %}
+                                {% if not enrolled%}
+                                    {%if course.percentage_discount > 0 %}                                            
+                                    <span style="font-size: 11px;" class="py-2 text-muted"> Save {{course.percentage_discount}}%</span>
+                                    <span style="font-size: 12px; background-color: antiquewhite;" class="border rounded px-2 text-muted"> <del> {{course.price|dollar}}</span>
+                                    {%else %}
+                                    <span class=""> <i style="font-size: 14px;" class="text-primary fa fa-check-circle"></i> </span>
+                                    {%endif%}
+                                {%else%}
+                                    <span class=""> <i style="font-size: 14px;" class="text-primary fa fa-check-circle"></i> </span>
+                                {%endif%}
+                   
+                            <!-- End Save Price -->  
+                        </div>                              
+                        
+                    </div>
+                    <!-- End Author -->
+
+                    <!-- Start of price and enroll -->
+                    <div class="row">
+                        <!-- Start Price -->
+                        <div class="col-4 px-2">
+                            <!--Serve Price and %discount from Database-->
+                            {% is_enrolled request course as enrolled %}
+                            {% if not enrolled%}
+                                {%if course.price > 0 %}
+                                <span style="background-color: rgb(247, 178, 94);" class="border px-2 rounded fs-6 text-white fw-bold"> {% cal_main_price course.price course.percentage_discount as value %} {{value|dollar}} </span>
+                                {%else %}
+                                <span style="background-color: bisque;" class="fs-6 px-2 border rounded fw-bold"> Free </span>
+                                {%endif%}
+                            {%else%}
+                                <a style="font-size: 12px;" href="{{course.get_absolute_url}}" class="btn btn-sm btn-dark" role="button">Start<span class=""> <i style="font-size: 12px;" class="text-white fa fa-check-circle"></i> </span></a>
+                            {%endif%}
+                        </div>
+                        <!-- End Price -->
+
+                        <!-- Start Enroll -->
+                        <div class="col-8">
+                            {% if not enrolled%}
+                            <a style="font-size: 12px;" href="{%url 'course_details' course.slug%}" class=" mt-1 btn btn-sm btn-dark" role="button"> <span class=""><i style="font-size: 12px;" class="text-white fa-solid fa-receipt"></i> </span> Details</a>
+                            <a style="font-size: 12px;" href="{%url 'checkout' course.slug %}" class=" mt-1 btn btn-sm btn-dark" role="button"><span class=""><i style="font-size: 12px;" class="text-white fa-solid fa-cart-arrow-down"></i> </span> Enroll</a>
+                            {%endif%}
+
+                        </div>
+                        <!-- End Enroll -->
+                    </div>
+                    <!-- End of Price and Enroll  -->
+                    
+                </div>
+                <!-- Start of Style border-bottom -->
+                <span style="border-bottom-width: 1px;
+                            position: absolute;
+                            left:0;
+                            top: 100%;
+                        width: 5%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; border-bottom-style: 
+                        solid;" 
+                    class=""> 
+                </span>
+                <!-- End of Style border-bottom -->
+            
+            </div>
+               
+        </div>
+    {%endfor%}
+    </div>  
+</section>  
+<!-- End Featured Course Content -->
+
+<!-- Start of Featured Category -->
+<section id="home-category" class="py-5  px-lg-5 container-fluid" style="background-color: #f7f8f9;">
+    <!-- Start Header -->
+    <div class="text-center justify-content-center mt-5 container">
+        <h4 class="fw-bold mb-2">Explore <mark>Featured</mark> Categories </h4>        
+        <p class="px-lg-5 mx-lg-5 mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+    </div>
+    <!-- End Header -->
+    <!-- Start Category Content -->
+    <div class="row pt-5 container-fluid">
+        {%for category in categories|slice:":7"%}
+        
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 bg-transparent">
+            <div class="crs_cate_wrap style_2">
+                <a href="{{category.get_absolute_url}}" class="crs_cate_box text-decoration-none">
+                    <img class="rounded-circle border mx-auto d-block" src="{{category.sector_image.url}}" width="50" height="50" alt="{{category.name}} Image">                    
+                    <div class="crs_cate_caption text-center mt-4 text-muted"><span>{{category.name}}</span></div>
+                    <div style="font-size: 12px;" class="crs_cate_count text-center"><span>{{category.course_category.count}} Courses</span></div>
+                </a>
+            </div>
+        </div>
+        {%endfor%}
+        <!-- Start Explore Category -->
+            
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 bg-transparent">
+            <div class="crs_cate_wrap style_2">
+                <a href="{%url 'category_course' category.slug%}" class="crs_cate_box text-decoration-none">
+                    <i style="font-size:40px;" class="mx-auto d-block fa fa-school"></i>
+                    <!-- <img class="rounded-circle border mx-auto d-block" src="" width="50" height="50" alt="more Category Image">                     -->
+                    <div class="crs_cate_caption text-center mt-4 text-muted"><span>More Category</span></div>
+                    <div style="font-size: 12px;" class="crs_cate_count text-center"><span>Explore All Category</span></div>
+                </a>
+            </div>
+        </div>
+       
+        <!-- End Explore Category -->
+    </div>
+    <!-- End of Category Content -->
+</section>
+<!-- End of Featured Category -->
+
+<!-- Start of Why Choose Us -->
+<section id="why-choose-us-bg" class="py-5 container-fluid  px-lg-5" style="background-color: rgba(104, 125, 248, 0.12);">
+    <div class="row container-fluid">
+        <!-- Start of image -->
+        <div class="col-lg-6">
+            <img src="{% static 'cbc-web/home-img/choose-us-img-01.jpg' %}" class="image-fluid" alt="image for choose us">
+        </div>
+        <!-- End of Image -->
+        <!-- Start of choose us now -->
+        <div class="col-lg-1">
+
+        </div>
+        <div class="col-lg-5 ">
+            <div class="row">
+                <div class="col-12 py-5">
+                    
+                </div>
+                <!-- Start of choose content -->
+                <div class="col-12 mt-2 justify-content-center"> 
+                    <div class="mb-3">
+                        <span style="font-size: 25px; color:rgb(247, 178, 94);" class="my-5 py-5 text-center">Why Choose Us</span>
+                    </div>                   
+                    <div>
+                        <h2 class="mb-3 fw-bolder text-primary">Good Qualification Services And Better Skills</h2>
+                        <p>Dramatically supply transparent deliverables before can backward comp internal or "organic" sources.</p>
+                    </div>
+                </div>
+                <div class="mt-3">                    
+                    <!--  -->
+                    <ul class="list-group">
+                        <li class="list-group-item bg-transparent border-0 ">
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-2 col-md-2 ms-1">
+                                    <img style="background-color: rgb(226, 169, 100);" src="{% static 'cbc-web/home-img/choose-us-user.jpg' %}" class="rounded-circle" alt="about icon rajibraj91 rajibraj">
+                                </div>
+                                <div class="col-lg-9 col-sm-9 col-md-9">
+                                    <h5 style="color: rgb(151, 85, 4);">Skilled Instructors</h5>
+                                    <p>Distinctively provide acces mutfuncto users whereas communicate leveraged services</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="my-2 list-group-item bg-transparent border-0 ">
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-2 col-md-2 ms-1">
+                                    <img class="bg-primary rounded-circle" src="{% static 'cbc-web/home-img/choose-us-user.jpg' %}" alt="about icon rajibraj91 rajibraj">
+                                </div>
+                                <div class="col-lg-9 col-sm-9 col-md-9">
+                                    <h5 style="color: rgb(151, 85, 4);">Get Certificate</h5>
+                                    <p>Distinctively provide acces mutfuncto users whereas communicate leveraged services</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item bg-transparent border-0 ">
+                            <div class="row">
+                                <div class="col-lg-2 col-sm-2 col-md-2 ms-1">
+                                    <img class="rounded-circle" src="{% static 'cbc-web/home-img/choose-us-user.jpg' %}" alt="about icon rajibraj91 rajibraj">
+                                </div>
+                                <div class="col-lg-9 col-sm-9 col-md-9">
+                                    <h5 style="color: rgb(151, 85, 4);">Online Classes</h5>
+                                    <p>Distinctively provide acces mutfuncto users whereas communicate leveraged services</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                 </div>
+                 <div class="mt-5">
+                    <a style="font-size: 14px;" href="{%url 'course_page'%}" class="btn text-muted btn-5 fw-bold py-2 btn-lg border border-primary btn-slide slide-primary shadow mb-4 mb-md-0 aos-init aos-animate" data-aos-duration="200" data-aos="fade-up">
+                        EXPLORE COURSES
+                    </a>
+                 </div>
+                <!-- End of choose content -->
+            </div>
+
+        </div>
+        <!-- End of choose us now -->
+    </div>
+
+</section>
+<!-- End of Why Choose Us -->
+
+<!-- Start of Review -->
+<section id="home-course-review" class="py-5 container-fluid  px-lg-5" style="background-color: rgba(164, 176, 245, 0.12);">
+    <!-- Stat Review Main Header -->
+    <div class="text-center justify-content-center my-5 container">
+        <h4 class="fw-bold mb-2">Students Community <mark>Feedback</mark></h4>        
+        <p class="px-lg-5 mx-lg-5 py-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+    </div>
+    
+    <!-- End Review Main Header -->
+
+
+    <!-- Review -->
+    <div class="row container">
+        <!-- Start Video Review -->
+        <div class="col-lg-5 container position-relative">
+             <!-- Start Image -->
+             <div class="HoverDiv">
+                {% if video_review.image %}
+                <!-- Start of Video Play -->
+                <div id="video-review-button" >
+                    <a style="cursor: pointer;" id="play-video" class="video-play-button" data-bs-toggle="modal" data-bs-target="#videoModal-{{video_review.id}}">
+                        <span class="" ></span>
+                    </a>  
+                </div> 
+                <!-- End of Video Play -->
+                <div class=""></div>
+                <img class="hover-image img-fluid position-relative" style="width: 100%; object-fit: cover; object-position: bottom; height:228px;" src="{{video_review.image.url}}" alt="{{video_review.name}} image">                           
+                {% else %}
+                {% endif %}
+
+            </div>
+            <!-- End of Image -->           
+
+        </div>
+        <!-- End Video Review -->
+        <!-- Start of Main Review -->
+        <div class="col-1">
+
+        </div>
+        
+        <div class="col-lg-6 owl-carousel owl-home-review mt-5 mt-lg-1 ">
+            <!-- Start of site review -->
+            {%for review in site_review|slice:"0:10" %}
+            <div class="bg-transparent slide-item">
+                <!-- Start of header -->
+                <div class="row">
+                    <div class="col-3">
+                        <img src="{{review.image.url}}" alt="student rajibraj91 rajibraj"
+                        class="rounded-circle shadow-1-strong" width="50" height="100">
+                    </div>
+                    <div class="col-9">
+                        <a href="#">
+                            <h6 class=" text-muted fw-bold text-decoration-none">{{review.name}}</h6>
+                        </a>
+                        <span>{{review.career_title}}</span> <br>
+                        <span style="background-color: rgb(247, 182, 103);" class="rounded border px-2 mt-1 text-white">
+                            <i class="fa fa-star"></i> {{review.ratings}}
+                        </span>
+                    </div>
+                </div> 
+                <!-- End of Header -->
+                <div class="stu-feed-bottom text-justify mt-2">
+                    <p style="font-size: 13px;" class="">{{review.comment}} </p>
+                </div>
+            </div>
+            {%endfor %}
+            <!-- end of site review -->
+        </div>        
+        <!--End of Main Review -->
+        
+    </div>
+
+</section>
+<!-- End of Review -->
+
+<!-- Start of news & blog -->
+<section id="why-choose-us-bg" class="py-5 container-fluid  px-lg-5" style="background-color: rgba(164, 176, 245, 0.12);">
+    <!-- Stat Review Main Header -->
+    <div class="text-center justify-content-center my-5 container">
+        <h4 class="fw-bold mb-2">Latest News & <mark>Articles</mark></h4>        
+        <p class="px-lg-5 mx-lg-5 py-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+    </div>
+    
+    <!-- End Review Main Header -->
+
+    <!-- Start of Content -->
+    <div class="row">
+        {%for post in all_popular_post%}                    
+        <div class="col-lg-4 col-md-6 col-md-6 my-2">                  
+             
+            <div style="width: 97%; height: 100%"  class="border-bottom card bg-transparent position-relative">
+                <!-- image of latest post -->                            
+                <div class="hover-effect-image-and-overlay col-lg-12 col-md-12 p-1 position-relative"> 
+                    
+                    <!-- Start of Image -->
+                    <a href="{{post.get_absolute_url}}">                                
+                        <div class="m-1 relative-position">
+                            <!--start category  -->
+                            <div style="font-size: 12px; z-index:20" class="position-absolute end-0 my-2 latest-world-post">
+                                <a id="lastest-post-cat" href="{{post.category.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-primary text-white rounded p-2">{{post.sub_category.name}}</a>
+                            </div>                                
+                            <!-- end category -->
+                                                             
+                            <!-- Start of main Image -->
+                            <div style="z-index: 1" class="HoverDiv2">
+                                {% if post.post_image %}
+                                <div class="general-overlay-zoom2"></div>
+                                <img class="hover-image img-fluid position-relative" style="width: 100%; height: 194px;" src="{{post.post_image.url}}" alt="{{post.title}} image">                           
+                                <a href="{{post.get_absolute_url}}" class="general-link2 border border-3  rounded-circle bg-primary"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                {% else %}
+                                {% endif %}
+
+                            </div>
+                            <!-- End of main Image -->
+                        </div>
+                    </a>
+                    <!-- End of Image --> 
+                                      
+                </div>
+                <!-- End of Image of Latest post -->
+                <div class="col-lg-12 col-md-12 p-2">
+                    <!-- Start of title -->
+                    <div  class="my-2">
+                        <a id="text-hover" href="{{post.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{post.title}}</a>
+                    </div>
+                    <!-- End of Title -->
+                    <div class="my-1">
+                        <!-- Start Date -->
+                        <span style="font-size: 12px; height: 32px;" class="me-1 fw-bold text-muted"><i class="m-2 fa-regular fa-clock text-primary"></i> {{post.publish.date}}</span>
+                        <!-- End Date -->
+                        <!-- Start of post article  -->
+                        <br>
+                        <span style="font-size: 12.5px;" class="text-muted text-justify lh-lg"><a href="{{post.get_absolute_url}}" class="text-decoration-none text-muted" >{{post.overview|safe|truncatechars:150}}</a></span>
+                        <!-- End of start of post article -->
+                    </div>
+                    <!--Other Features  -->
+                    <div class="row card-footer border-0">
+                        <div class="col-lg-7 col-md-7 col-sm-7">
+                            <!-- Start of Author -->
+                            <a id="text-hover" class="d-flex text-decoration-none" href="{%url 'blog_author' post.pk%}">
+                                <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{post.author.profile_image.url}}"  alt="{{post.author}} image">
+                                <span id="text-hover" style="font-size: 11px" class=" m-2 py-2 fw-bolder text-muted"> by {{post.author.first_name|capfirst}} {{post.author.last_name|capfirst}}</span>
+                            </a>
+                            <!-- End Author -->  
+                        </div>
+                        <div class=" col-lg-5 col-md-5 col-sm-5">
+                            <!-- Start Comment -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{post.blog_post_comment.all.count}}</span>
+                            <!-- End Comment --> 
+                            <!-- Start Views -->
+                            <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                            <!-- End Views --> 
+                        </div>
+                        
+                    </div>
+                    <!-- End of Other Features -->
+                    
+                </div>
+                <!-- Start of Style border-bottom -->
+                <span style="border-bottom-width: 1px;
+                            position: absolute;
+                            left:0;
+                            top: 100%;
+                        width: 5%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; border-bottom-style: 
+                        solid;" 
+                    class=""> 
+                </span>
+                <!-- End of Style border-bottom -->
+            
+            </div>
+               
+        </div>
+    {%endfor%}
+    </div>        
+    <!-- End of Content -->
+
+</section>
+<!-- End of news & blog -->
+
+
+<!-- mmmmmmmmmmmmmmmmmmmmmm Model Videos -->
+<!-- Start of Model Video -->
+<div class="modal fade" id="videoModal-{{video_review.id}}" tabindex="-1" aria-labelledby="exampleModalLabel-{{video_review.id}}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel-{{video_review.id}}">{{video_review.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="container-fluid px-lg-5 px-md-5 px-sm-2 modal-body py-0">
+               
+                <div class="row py-2">
+                    <!-- Start of video Introduction -->
+                    <div class="">
+                       <div class="ratio ratio-16x9 ">   
+                        <iframe class="rounded" width="560" height="315" src="https://www.youtube.com/embed/{{video_review.id_number}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+
+                        </iframe>                     
+                       
+                       </div>
+                    </div>
+                    
+                    <!-- End of video Introduction -->
+
+                    <!-- Start of Sales Content -->
+                    <div class="my-4">
+                        <a style="font-size: 14px;" href="{%url 'course_page'%}" class="btn text-muted btn-5 fw-bold py-2 btn-lg border border-primary btn-slide slide-primary shadow mb-4 mb-md-0 aos-init aos-animate" data-aos-duration="200" data-aos="fade-up">
+                            VIEW ALL COURSES
+                        </a>
+                    </div>
+                    <!-- End of Sales Content -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>  
+<!-- End of Model Video -->
+<!-- mmmmmmmmmmmmmmmmmmmmmm Model Videos -->
+    
+    
+
+
+        
+
+    
+
+
+ 
+{% endblock%}
+
+
+

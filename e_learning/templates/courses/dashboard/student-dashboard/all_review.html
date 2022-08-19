@@ -1,0 +1,183 @@
+{% extends 'courses/base/dashboard_base.html' %}
+{% load course_custom_tags %}
+
+{%block title%}Course Review{%endblock%}
+
+{%block content%}
+
+
+<!-- Start of Quick Link -->
+<section class="container-fluid my-2">
+  <div class="card">
+      <div class="card-body">
+        <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
+        <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
+        <a href="{{course.get_absolute_url}}" class="fw-bold text-decoration-none">{{course.name}} >></a>
+        <a href="{{review.get_absolute_url}}" class="fw-bold text-decoration-none">Course Reviews</a>
+      </div>
+  </div>
+</section>
+<!-- End of Quick Link -->
+  
+<!-- Start All Review -->
+<section class="container-fluid mt-4 px-lg-5">  
+  <!-- Start of review Summary -->
+  <div class="row my-5">
+    <div class="col-md-7 border rounded">
+      {% include 'courses/course_includes/review_summary.html' %} 
+
+    </div>
+    <div class="col-md-5">
+
+    </div>
+    
+      
+  </div>
+  
+  <!-- End of Review Summary -->
+
+  <div class="card">
+    <div class="card-body">
+        
+         <!-- Review -->          
+            <div class="row">
+              <!-- Review -->
+              <div class="col-lg-6 col-md-6 col-sm-12 my-5">
+                <div class="row">
+                  <div class="col">
+                    <!-- Average Review Start -->
+                      <span id="rate"> <span> <h5 class="text-center fs-6 fw-bolder">Student Review <a class="fw-light text-decoration-none fs-6" href="">({{course_review_list.count}})</a></h5> </span> 
+                          <input type="radio" {% if average_course_review >= 5 %} checked {%endif%}/><label class="full" title="5"></label>
+                          <input type="radio" {% if average_course_review >= 4.5 and average_course_review <= 5.0 %} checked {%endif%} /><label class="half" title="4.5"></label>
+                          <input type="radio" {% if average_course_review >= 4.0 and average_course_review <= 4.5 %} checked {%endif%} /><label class = "full" title="4"></label>
+                          <input type="radio" {% if average_course_review >= 3.5 and average_course_review <= 4.0 %} checked {%endif%} /><label class="half" title="3.5"></label>
+                          <input type="radio" {% if average_course_review >= 3.0 and average_course_review <= 3.5 %} checked {%endif%} /><label class = "full" title="3"></label>
+                          <input type="radio" {% if average_course_review >= 2.5 and average_course_review <= 3.0 %} checked {%endif%} /><label class="half" title="2.5"></label>
+                          <input type="radio" {% if average_course_review >= 2.0 and average_course_review <= 2.5 %} checked {%endif%} /><label class = "full" title="2"></label>
+                          <input type="radio" {% if average_course_review >= 1.5 and average_course_review <= 2.0 %} checked {%endif%} /><label class="half" title="1.5"></label>
+                          <input type="radio" {% if average_course_review >= 0.5 and average_course_review <= 1.5 %} checked {%endif%} /><label class = "full" title="1"></label>
+                          <input type="radio" {% if average_course_review <= 0.5 %} checked {%endif%} /><label class="half" title="0.5"></label>
+
+                      </span>
+                      <!-- End of Average Review Start -->
+                  </div>
+                </div>
+      
+            <!-- start of customer review -->
+            {%for review in course_reviews%}
+    
+                  <div class="card my-1">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="{{user.profile_image.url}}" 
+                                class="rounded-circle"
+                                height="50"
+                                width="50"
+                                alt="Portrait"
+                                loading="lazy"
+                                />
+                                
+                                <p class="text-secondary text-center">{{review.create_at}}</p>
+                            </div>
+                            <div class="col-md-10">
+                                <p>
+                                    <strong>{{review.user.first_name| capfirst}} {{review.user.last_name| capfirst}}</strong>
+              
+                              </p>
+                              <div class="clearfix"></div>
+                              <!-- Start Rating -->
+          <div>
+            <span id="rate"> 
+              <input type="radio" {% if review.rating >= 5 %} checked {%endif%}/><label class="full" title="5"></label>
+              <input type="radio" {% if review.rating >= 4.5 and review.rating <= 5.0 %} checked {%endif%} /><label class="half" title="4.5"></label>
+              <input type="radio" {% if review.rating >= 4.0 and review.rating <= 4.5 %} checked {%endif%} /><label class = "full" title="4"></label>
+              <input type="radio" {% if review.rating >= 3.5 and review.rating <= 4.0 %} checked {%endif%} /><label class="half" title="3.5"></label>
+              <input type="radio" {% if review.rating >= 3.0 and review.rating <= 3.5 %} checked {%endif%} /><label class = "full" title="3"></label>
+              <input type="radio" {% if review.rating >= 2.5 and review.rating <= 3.0 %} checked {%endif%} /><label class="half" title="2.5"></label>
+              <input type="radio" {% if review.rating >= 2.0 and review.rating <= 2.5 %} checked {%endif%} /><label class = "full" title="2"></label>
+              <input type="radio" {% if review.rating >= 1.5 and review.rating <= 2.0 %} checked {%endif%} /><label class="half" title="1.5"></label>
+              <input type="radio" {% if review.rating >= 0.5 and review.rating <= 1.5 %} checked {%endif%} /><label class = "full" title="1"></label>
+              <input type="radio" {% if review.rating <= 0.5 %} checked {%endif%} /><label class="half" title="0.5"></label>
+  
+            </span>
+          </div>
+          <!-- End Rating -->
+          <br>
+          <br>
+                                <p>{{review.comment}}</p>
+                                <p style="font-size: 12px;" class="fw-bold text-success">{{review.updated_at}}</p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}  
+              <!-- end of customer review -->
+
+              <!-- Start of Pagination -->
+              <div class="row my-4">
+                <div class="col-lg-1 col-md-1 col-sm-12">
+        
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-12">
+                      <!-- Start of Pagination -->
+        
+                        <nav aria-label="..." class="position-relative">
+                            <ul class="pagination fs-6 position-absolute bottom-1 start-50 translate-middle-x">
+        
+                                {%if course_reviews.has_previous%}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" >first &laquo</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="?page={{course_reviews.previous_page_number}}">Previous</a></li>
+                                {%endif%}
+                            
+                                {% for i in nums%}
+                                <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+                                {% endfor%}
+                            <!-- <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="#">{{course_reviews.number}} of {{course_reviews.paginator.num_pages}}</a>
+                            </li> -->
+        
+                            {%if course_reviews.has_next%}
+                            <li class="page-item"><a class="page-link" href="?page={{course_reviews.next_page_number}}">Next</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{course_reviews.paginator.num_pages}}">last &raquo</a>
+                            </li>
+                            {%endif%}
+                            </ul>
+                        </nav>
+                        <!-- End of Pagination -->
+        
+                </div>
+        
+                <div class="col-lg-1 col-md-1 col-sm-12">
+        
+                </div>
+        
+            </div>
+
+              <!-- End of Pagination -->
+        
+
+        </div>
+
+        <!-- Write Review Form -->
+        <div class="col-lg-6 col-md-6 col-sm-12 ">
+          <div class="border rounded py-3" >
+            {% include 'courses/course_includes/write_course_review.html' %}     
+          </div>     
+          
+        </div>
+      </div>
+    <!-- End Review Form -->
+      </div>
+    </div>
+      
+</section>
+<!-- End All Review -->
+<br>
+<br>
+
+{% endblock%}

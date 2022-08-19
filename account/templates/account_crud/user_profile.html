@@ -1,0 +1,196 @@
+{% extends 'courses/base/dashboard_base.html' %}
+{% load course_custom_tags %}
+
+{%block title%}Dashboard{%endblock%}
+
+{%block content%}
+
+
+<!-- Start of Quick Link -->
+<section class="container-fluid my-2">
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
+      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
+      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
+    </div>
+  </div>
+</section>
+<!-- End of Quick Link -->
+
+<!-- Start of User Profile -->
+<section class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header"><h6 class="fs-6 fw-bolder text-center">Profile Settings</h6></div>
+        <div class="card-body">
+          
+
+          <!-- Profile -->
+          <div class="row">
+            <!-- Start of profile Image -->
+            <div class="col-lg-4 ">
+              <div class="card m-2" style="max-width: 200px; width: 100%;">
+                <div class="card-header"></div>
+                  <img class="rounded-circle border" 
+                  src="{{user.profile_image.url}}" 
+                  alt="avater", 
+                  style="max-width: 100%; max-height: 100%;">
+                
+              </div>
+            
+            
+
+            </div>
+            <!-- End of profile Image -->
+
+            <!-- user profile -->
+            <div class="col-lg-4 mt-4">
+              <!-- Check first name -->
+              {%if user.first_name%}
+                  <p class="fw-bolder">First Name: <span class="fw-normal"> {{user.first_name|capfirst}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    First name not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of Check first name -->
+
+              <!-- Check last name -->
+              {%if user.last_name%}
+                  <p class="fw-bolder">Last Name: <span class="fw-normal"> {{user.last_name|capfirst}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Last name not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of Check last name -->
+
+              <!-- Check email -->
+              {%if user.email%}
+              <p class="fw-bolder">Email: <span class="fw-normal">{{user.email}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Email not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of Check email -->
+
+              <!-- Check username -->
+              {%if user.username%}
+              <p class="fw-bolder">Username: <span class="fw-normal">{{user.username|capfirst}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Username not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of Check Username -->
+
+              <!-- Check phone -->
+              {%if user.profile.phone%}
+              <p class="fw-bolder">Phone Number: <span class="fw-normal">{{profile.phone}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Phone Number not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of phone -->
+
+              <!-- Check twitter_url -->
+              {%if user.profile.twitter_url%}
+                  <p class="fw-bolder">Twitter Url: <span class="fw-normal"> {{profile.twitter_url}}</span></p>          
+              {%else %}
+                  <div class="alert alert-warning" role="alert">
+                    Twitter Url not provided by user
+                  </div>
+              {%endif %}
+              <!-- End of twitter_url -->
+
+            </div>
+            <!-- end of user profile -->
+
+            <!-- start of other profile -->
+            <div class="col-lg-4">
+            
+            <!-- Check Facebook URL -->
+            {%if user.profile.facebook_url%}
+            <p class="fw-bolder">Facebook URL: <span class="fw-normal">{{profile.facebook_url}}</span></p>          
+            {%else %}
+                <div class="alert alert-warning" role="alert">
+                  Facebook URL not provided by user
+                </div>
+            {%endif %}
+            <!-- End of Facebook URL -->
+
+
+            <!-- Check instagram_urll -->
+            {%if user.profile.instagram_url%}
+                <p class="fw-bolder">Instagram Url: <span class="fw-normal"> {{profile.instagram_url}}</span></p>          
+            {%else %}
+                <div class="alert alert-warning" role="alert">
+                  Instagram Url not provided by user
+                </div>
+            {%endif %}
+            <!-- End of instagram_url -->
+          
+            </div>
+
+            <!-- end of other profile -->
+          </div>
+          <!-- End of Profile -->
+
+          <div class="row">
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-10">
+              <!-- Check biography -->
+              {%if user.profile.biography%}
+              <p class="fw-bolder">Biography:</p> <span class="fw-normal">{{profile.biography|safe}}</span>          
+              {%else %}
+                <div class="alert alert-warning" role="alert">
+                    Biography not provided by user
+                </div>
+              {%endif %}
+              <!-- End of biography -->
+
+            </div>
+            <div class="col-lg-1">
+
+            </div>
+          </div>
+
+           
+        </div>
+
+
+      {%if user.username %}
+        <!-- start of footer -->
+        <div class="card-footer bg-transparent">
+          
+          <a class="btn btn-sm btn-secondary text-white my-2" href="{% url 'edit_profile' profile.pk %}"><i class="fa-solid fa-user-pen mx-1" aria-hidden="true"></i>Edit</a>
+         
+          
+        </div>
+        <!-- end of footer -->
+      {%else %}
+
+      {%endif %}
+
+
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+<br>
+<br>
+
+<!-- End of User Profile -->
+
+
+
+
+{% endblock%}

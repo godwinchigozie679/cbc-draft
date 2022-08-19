@@ -1,0 +1,894 @@
+{% extends 'courses/base/blog.html' %}
+{% load social_share %}
+
+{%block title%}
+    {%if category%}
+    {{category.name}}    
+    {%elif tag%} 
+    {{tag}}
+    {%else%}
+    blog & News
+    {%endif%}
+{%endblock%}
+
+{%block content%}
+<style>
+    #breadcrumb-bg{
+                            /* The image fade to white */
+        background-image: linear-gradient( to left, rgba(41,41,41, 0.3) 5%, rgba(41,41,41, 0.6) 90%), 
+        /* The image used */ 
+        url('{{category.category_image.url}}');                    
+        top: 0;
+        left: 0;        
+        height: 100%;                   
+        /* Create the parallax scrolling effect */
+        width: 100%;
+        background-attachment: scroll;
+        transform: translate3d(0px, 0px, 0px);
+        background-position: center bottom;
+        background-repeat: no-repeat;
+        background-size: cover;        
+        z-index: 80;
+        position: absolute;
+    }
+</style>
+
+<!-- Start of Header -->
+<section {%if category%}id="breadcrumb-bg"{%endif%}  {%if not category%}style="width: 100%; background: #f5f5f5;border-bottom: 1px solid #eee;" {%endif%} class="border position-relative py-4 container-fluid px-lg-5 px-md-5 px-sm-5"> 
+    <div class="row mt-5">
+        {%if category%}
+        <!-- before breadcrumb -->
+        <div class="text-white col-12">
+            <!-- Start of Style border-bottom -->
+            <span style="border-bottom-width: 3px;            
+            left:0;
+            top: 100%;
+            width: 10%; 
+            margin: 0 0 -1px 0;
+            border-bottom-color: #0d6efd !important; 
+            display: inline-block; border-bottom-style: 
+            solid;" 
+            > 
+            </span>
+            <!-- End of Style border-bottom -->
+            <h3 style="font-size: 25px;font-weight: 600;
+            line-height: 32px">{{category.catching_phrase}}</h3>
+                
+        </div>
+        <!-- end of breadcrub -->
+        {%endif%}
+        <!-- Start of breadcrumb -->
+        <div class="col-lg-10 col-md-10 col-sm-10">
+            {%if category%}
+            
+            <nav class="" aria-label="breadcrumb">                
+                <ol style="color: #666; font-size:13px;" class="breadcrumb py-2">
+                  <li class=" fw-bold breadcrumb-item"><a href="{%url 'blog_home' %}" class="text-white">Blog & News </a></li>                                            
+                  <li class=" fw-bold breadcrumb-item active"><a href="{{category.get_absolute_url}}" class="text-white">{{category.name}} </a></li>                       
+                    
+                </ol>
+            </nav>
+            {%else%}
+            <nav class="" aria-label="breadcrumb">                
+                <ol style="color: #666; font-size:13px;" class="breadcrumb">
+                  <li class=" fw-bold breadcrumb-item"><a href="{%url 'blog_home' %}">Blog & News </a></li>                                            
+                  <li class=" fw-bold breadcrumb-item active"><span class="text-muted">New Post >>> </span></li>                       
+                    
+                </ol>
+            </nav>
+            {%endif%}
+
+        </div>
+        <!-- End of Breadcumb -->
+        <!-- Start of Bubble -->
+        <div class="col-lg-2 col-md-2 col-sm-2 position-relative ">
+            <div class="border rounded mousey">
+                <div style="z-index: 300;" class="bubble x1"></div>                               
+            </div>
+            <div style="font-size: 11px; font-weight: 700; z-index: 200;" class="{%if category%}text-white{%endif%} mt-2 position-absolute">Scroll Down To Discover</div>
+            
+            
+        </div>
+        <!-- End of Bubble -->        
+
+    </div> 
+</section>
+            <!-- Start of breadcrumb background Image -->
+                {%if category%}                   
+                {%else%}
+                    <div id="nav-style"></div>
+                {%endif%}
+            <!-- End of breadcrumb background Image -->
+<!-- End of Header -->
+
+
+<!-- Start of Two Columns -->
+<section class="my-5 px-lg-4 px-md-4 px-sm-4 px-2">
+    <div class="row px-2">
+        <!-- Start of first Column -->
+        <div class="col-lg-8 border-end">
+            <!-- start of first column content -->
+            <div class="">
+                <!-- Start of content Header -->
+                <div class="row mb-3"> 
+                    <!-- Start of Category -->
+                    <div class="row">
+                        <!--start Main category  -->
+                        <div style="font-size: 12px;" class="col-6">
+                            <a href="{{post.category.get_absolute_url}}" class="text-decoration-none fw-bolder bg-primary text-white p-2">{{post.sub_category.name}}</a>
+                        </div>                                
+                        <!-- end Main category -->
+                        <!--  Start of border top and right-->
+                        <div class="col-6 position-relative ">
+                            <span class="position-absolute top-0 end-0 border-top border-end p-2"></span>
+                        </div>
+                        <!--  End of border top and right-->
+                    </div>
+                    <!-- End of Category -->
+                    <!-- Start of Title -->
+                    <div class="row ">                    
+                        <!-- Start of main title -->
+                        <div  class=" mx-0 col-12 py-3">
+                            <h1 class=" mx-0 fw-bolder text-dark fs-4 text-decoration-none">{{post.title}}</h1>
+                        </div>
+                        <!-- End of main Title -->
+                    </div>
+                    <!-- End of Title -->
+
+                    <!-- Start of other features -->
+                    <div class="row">
+                        <div class="col-lg-9 col-md-7 col-sm-7">
+                            <!-- Start of Author -->
+                            <a id="text-hover" class="d-flex text-decoration-none" href="{%url 'news_author' post.pk%}">
+                                <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{post.author.profile_image.url}}"  alt="{{post.author}} image">
+                                <span id="text-hover" style="font-size: 11px" class=" py-2 m-2 fw-bolder text-muted"> by {{post.author.get_full_name}}</span>
+
+                            </a>
+                            <!-- End Author -->  
+                            <!-- Start Date -->
+                            <span style="font-size: 12px; height: 32px;" class="me-1 fw-bold text-muted"><i class="m-2 fa-solid fa-clock text-primary"></i> {{post.publish.date}}</span>
+                            <!-- End Date -->
+                        </div>
+                        <div class=" col-lg-3 col-md-5 col-sm-5">
+                            <ul style="background: #f9f9f9;" class="border p-1">
+                                <!-- Start Comment -->
+                                <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{post.news_post_comment.all.count}}</span>
+                                <!-- End Comment --> 
+                                <!-- Start Views -->
+                                <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                                <!-- End Views --> 
+                            </ul>
+                        </div>
+
+
+                    </div>
+                    <!--End of Othe Features  -->
+                
+                </div>       
+                <!-- End of content Header -->            
+
+
+                <!-- Start of Content -->   
+                <div class="row">
+                    <!-- Start of Post Image -->
+
+                    <div class="row">
+                        <!-- Start of main Image -->
+
+                        <div class="col-12 position-relative" >
+                            <span style="border-top: 2px solid #0d6efd; width: 30%" class="position-absolute start-0 top-0"></span>
+                            {% if post.post_image %}
+                            <img class="hover-image img-fluid position-relative" style="width: 100%; max-height: 370px;" src="{{post.post_image.url}}" alt="{{post.title}} image">                           
+                            {% else %}
+                            {% endif %}
+
+                        </div>
+                        <!-- End of main Image -->
+                    </div>
+                    <!-- End of Post Image -->
+
+                    <!-- Start of share and main content post -->
+                    <div class="row my-4 ">
+                    
+                        <!-- Start of Share Post -->
+                        <div class="col-lg-1 border-end">                                               
+                            <div class="social-share-header col-12">                            
+                                <span class="pt-2">Share This <br> Article:</span>
+                            </div>
+                            <div id="c" class="col-12">
+                                {% post_to_linkedin object_or_url %}
+                                {% post_to_facebook object_or_url %}                            
+                                {% post_to_gplus object_or_url %}
+                                {% post_to_reddit "{{object.title}}" object_or_url %}
+                                {% post_to_telegram "Title: {{object.title}}" object_or_url %}
+                                {% post_to_twitter "Title: {{object.title}}. Check it out!" object_or_url %}                           
+                                {% post_to_whatsapp object_or_url %}
+                            </div>
+
+                        </div>
+                        <!-- End of Share Post -->
+
+                        <!-- Start of main content --> 
+                        <div class="col-lg-11">
+
+                            <div  class=" py-4 border-bottom">
+                                <!-- Start border top -->
+                                <p class="border-top"></p>
+                                <!-- End border top -->
+
+                                <p class="">{{post.content|safe}}</p>
+
+                                <!-- Start border top -->
+                                <p class="border-bottom"></p>
+                                <!-- End border top -->
+
+                                <!-- Start of Post Tag -->
+                                <div class="row my-4">
+                                    <div class="col-lg-2">
+                                        <span style="float: left;" class="fw-bold py-2"><i class="fas fa-tag text-primary mx-3"></i> Tags:</span>                              
+                                    </div>
+
+                                    <div class="col-lg-10">                                
+                                        {%for tag in post.tags.all|slice:":4"%}  
+
+                                        <a id="tag-bg-hover" class="tag-bg text-decoration-none bg-dark fw-bold text-white" href="{% url 'news_tag_list' tag.slug %}" >{{tag|capfirst}}</a>                          
+                                    
+                                    
+                                        {%endfor%}
+
+                                    </div> 
+
+                                </div>
+                                <!-- End of Post Tag -->
+
+                                <!-- Start of Previous and Next Post -->
+                                <p  class="border-top"></p>
+                                <div class="row px-lg-5 px-md-5 px-sm-5 my-4">
+                                    <!-- Start of Previous Post -->
+                                    {% if post.get_previous_by_publish %}    
+                                    <div class="col-lg-6 mt-2 border-end prev_post_hover">
+                                        <div class="row">                                    
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a href="{{post.get_previous_by_publish.get_absolute_url }}">
+                                                <img class="prev_post_img" width="100%" height="auto" src="{{post.get_previous_by_publish.post_image.url}}" alt="{{post.get_previous_by_publish.title}} image">
+                                                </a>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="text-decoration-none" href="{{post.get_previous_by_publish.get_absolute_url }}">
+                                                    <i style="font-size: 11px;" class="py-1 fas fa-caret-left text-primary me-2"></i>
+                                                    <strong style="font-size: 11px; " class="text-muted">PREV POST</strong>
+                                                    <br>
+                                                    <strong class="prev_post_text">{{post.get_previous_by_publish.title}}</strong>
+                                                </a>   
+                                            </div>
+                                        
+                                        </div>
+                                    </div> 
+                                    {% endif %}                           
+                                    <!-- End of Previous Post -->
+
+                                    <!-- Start of next post -->
+                                    {% if post.get_next_by_publish %} 
+                                    <div class="col-lg-6 mt-2">                                 
+                                        <div class="row next_post_hover">
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a class="text-decoration-none" href="{{post.get_next_by_publish.get_absolute_url }}">
+                                                
+                                                <strong style="font-size: 11px; " class="text-muted">NEXT POST</strong>
+                                                <i style="font-size: 11px;" class="py-1 fas fa-caret-right text-primary ms-2"></i>
+                                                <br>
+                                                <strong class="text-muted next_post_text my-1">{{post.get_next_by_publish.title}}</strong>
+                                                </a>   
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <a href="{{post.get_next_by_publish.get_absolute_url }}">
+                                                <img class="next_post_img" width="100%" height="auto" src="{{post.get_next_by_publish.post_image.url}}" alt="{{post.get_next_by_publish.title}} image">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %} 
+                                    <!-- End of next post -->
+                                </div>                                               
+
+                                <!-- End of Previous and Next Post -->
+                            </div>
+                        <!-- End of main content -->
+                        </div>
+                    </div>
+                    <!-- End of share and main content post -->
+
+                </div>             
+                <!-- End of Content -->
+            </div>
+            <!-- end of first column content -->
+
+            <!-- Start of Post Author -->
+            <div style="background: #f9f9f9;" class=" card row border py-3 px-2">
+                <div  class=" card-body row">
+                    <!-- Start of Author Pics -->
+                    <div class="col-lg-2 col-md-2 col-sm-2 author-img">
+                        <img src="{{post.author.profile_image.url}}" alt="">
+                    </div>
+                    <!-- End of Author Pics -->
+                     <!-- Start of Author content -->
+                     <div class="col-lg-10 col-md-10 col-sm-10">
+                         <h5 style="font-size: 15px;" class="p-1 ">Written By <a href="{%url 'news_author' post.pk%}" class="text-decoration-none">{{post.author.get_full_name}}</a></h5>
+                        <p style="font-size: 14px; color: #5e646a;" class="px-1" >{{post.overview|safe}}</p>
+                    </div>
+                    <!-- End of Author content -->
+                </div>
+                <!-- Start of social -->
+                <div class="col-12 card-footer">
+                    <a href="{%url 'news_author' post.pk%}" class="text-decoration-none">
+                        <strong style="font-size: 11px; " class="text-muted">VIEW PROFILE</strong>
+                    <i style="font-size: 11px;" class="py-1 fas fa-caret-right text-primary ms-2"></i> 
+                    </a>
+
+                </div>
+                <!-- End of Social -->
+            </div>
+            <!-- End of Post Author -->
+
+            <!-- Start of related post -->
+            {%if related_post%}
+            <div class="row my-2">
+                
+                <!-- start of related post header -->
+                <div class="row my-3">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <h5 class="fw-bold py-0 my-0" >Related Posts</h5>   
+                    </div>
+                    <div style="position: relative;" class="col-lg-8 col-md-8 col-sm-8 border-bottom">
+                        
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                                    position: absolute;
+                                    right:0;
+                                    top: 100%;
+                                    width: 20%; 
+                                    margin: 0 0 -1px 0;
+                                    border-bottom-color: #0d6efd !important; 
+                                    display: inline-block; border-bottom-style: 
+                                    solid;" 
+                            class=""> 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                        
+                    </div>
+                    
+                </div>
+                <!-- End of related post header -->
+                
+
+                <!-- Start of related post content -->                
+                <div class="row mb-2 pb-2">
+                                        
+                    {%for post in related_post|slice:":2"%}                        
+                        <div class="position-relative ps-1 border-bottom col-lg-6  col-md-6 hover-effect-image-and-overlay ">
+
+
+                            <div style="position: absolute; z-index: 2; top:12px; left:50%;" class="">
+                                <!-- Start Comment -->
+                                <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{post.news_post_comment.all.count}}</span>
+                                <!-- End Comment --> 
+
+                                <!-- Start Views -->
+                                <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                                <!-- End Views --> 
+                            </div>
+                        
+
+                            <!-- Start of Image -->
+                            <a href="{{post.get_absolute_url}}">
+                                <div class="m-2 relative-position">
+                                    <!--start category  -->
+                                    <div  class="">
+
+                                        <a style=" z-index: 2; top:8px; left:12px; font-size: 12px;" href="{{post.category.get_absolute_url}}" class="position-absolute start-0 top-0 text-decoration-none fw-bolder bg-primary text-white rounded p-2">{{post.sub_category.name}}</a>
+                                    
+                                    </div>                                
+                                    <!-- end category -->
+                                    <!-- overlay -->
+                                    <div class="general-overlay rounded"> </div>
+                                    <!--End overlay -->
+
+                                    <!-- Start of main Image -->
+                                    <div class="position-relative">
+                                        {% if post.post_image %}
+
+                                        <img class="rounded relative-position" style="width: 100%; object-fit: cover;
+                                        object-position: bottom; height:250px; z-index: 0; top:0; bottom:0;right:0;left:0;" src="{{post.post_image.url}}" alt="{{post.name}} image">
+                                        <a href="{{post.get_absolute_url}}" class="general-link border border-3  rounded-circle bg-primary"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                        {% else %}
+                                        {% endif %}
+                                    </div>
+                                     <!-- End of main Image -->
+                                </div>
+                            </a>
+                            <!-- End of Image -->
+
+                            <div class="p-2">                             
+                               <!-- Start of title -->
+                               <div class="my-2">
+                                   <a id="text-hover" href="{{post.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{post.title}}</a>
+                               </div>
+                               <!-- End of Title -->
+
+                               <div class="my-2">
+                                   <!-- Start Date -->
+                                   <span style="font-size: 12px" class="m-1 fw-bold text-muted"><i class="m-2 fa-regular fa-clock text-primary"></i> {{post.publish.date}}</span>
+                                   <!-- End Date -->                               
+                               </div>
+                            </div>
+                            <!-- Start of Style border-bottom -->
+                            <span style="border-bottom-width: 1px;
+                            position: absolute;
+                            left:0;            
+                            top: 100%;
+                            width: 10%; 
+                            margin: 0 0 -1px 0;
+                            border-bottom-color: #0d6efd !important; 
+                            display: inline-block; 
+                            border-bottom-style: solid;" 
+                            > 
+                            </span>
+                            <!-- End of Style border-bottom -->
+                        </div> 
+                    {%endfor%}
+                </div>            
+                <!-- end of related post content -->
+
+            </div>
+            {%endif%}
+            <!-- End of related post -->
+
+            <!-- Start of comment -->
+            <div class="row">               
+                <!-- start of comment header -->
+                <div class="row my-3">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <h5 class="fw-bold py-0 my-0" >Comments <span class="p-2 text-primary">{{post.news_post_comment.all.count}}</span> </h5>   
+                    </div>
+                    <div style="position: relative;" class="col-lg-8 col-md-8 col-sm-8 border-bottom">
+                        
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                                    position: absolute;
+                                    right:0;
+                                    top: 100%;
+                                    width: 20%; 
+                                    margin: 0 0 -1px 0;
+                                    border-bottom-color: #0d6efd !important; 
+                                    display: inline-block; border-bottom-style: 
+                                    solid;" 
+                            class=""> 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                        
+                    </div>
+                    
+                </div>
+                <!-- end of comment header -->
+                
+                <!-- Start of comment message -->
+                <div class="row">
+                    {%include 'includes/message.html'%}
+                </div>
+                <!-- End of Comment Message -->
+                <!-- Start of post comment content -->
+                {%load mptt_tags%}
+                {%recursetree object_list%} 
+                            
+                <div class="row py-2 rounded">                    
+                    <!-- start of comment image -->
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                        <img style="    width: 30px; height: 30px;                        
+                        border-radius: 50%;" src="{{node.author.profile_image.url}}" alt="">
+
+                    </div>
+                    <!-- end of comment image -->
+                    <!-- start of main comment content -->
+                    <div class="comment-content col-lg-11 col-md-11 col-sm-11">
+                        
+                        <div id="{{node.id}}" class="row">
+                            <h6 class="py-2"><a href="" class="text-muted text-decoration-none">{{node.author.get_full_name}}</a></h6>
+                            <p style="color: #5e646a; font-size: 14px" class="px-2">{{node.content}}</p>                        
+                        </div>
+                        <!-- start of date and reply buttton -->
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4">                                
+                                <!-- Start Date -->
+                                <span style="font-size: 12px" class="m-1 fw-bold text-muted"><i class="m-2 fa-solid fa-clock text-primary"></i> {{node.publish.date}}</span>
+                                <!-- End Date -->  
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-4 border-bottom">
+                                
+                            </div>
+                            {%if node.level < 3%}
+                            <div class="my-2 col-4 col-md-4 col-sm-4">
+                                <a onclick="myFunction('{{node.id}}')" class="text-decoration-none px-3" role="button" ><i style="font-size: 11px" class="fas fa-reply text-primary "> </i> <span style="font-size: 14px;" class="text-muted">Reply</span></a>
+                            </div>
+                            {%endif%}
+                            
+                        </div>
+                        <!-- end of start of date and reply button  -->
+                        <!-- start of children -->
+                            {%if not node.is_leaf_node%}
+                            <div class="row">
+                                {{news_children}}
+
+                            </div>
+                            {%endif%}
+                        <!-- End of children -->
+                    </div>
+                    <!-- end of main comment content -->                    
+                </div> 
+                                 
+                {%endrecursetree%}
+                <!-- end of comment content -->
+            </div>
+            <!-- End of comment -->
+            
+            <!-- start of pagination -->
+            <div>
+                {% if is_paginated %}
+                    {% include "includes/pagination.html" %}
+                {% endif %}
+
+            </div>
+            <!-- end of pagination -->
+
+            <!-- Start of Post Comment -->            
+            <div class="row my-4">
+                <!-- Start post comment header -->
+                {%if post.author == request.user%}  
+                {%else%}
+                <div class="col-12 mb-3">
+                    <strong>Leave A Comment</strong> <i class=" text-primary fas fa-caret-down"></i>
+                </div>
+                {%endif%}
+                <!-- End of post comment header -->
+                
+                <!-- Start of post comment form -->  
+                {%if post.author == request.user%}  
+                {%else%}                                  
+                <form action='{%if request.user == comment.author%}{%url "update_news_post_comment" comment.pk %} {%else%}{%url "add_news_post_comment" post.pk %}{%endif%}' method="POST">
+                    {% csrf_token %}
+                    <div class="row pe-md-5 pe-sm-5 pe-lg-5 ps-lg-2 ps-md-2 ps-sm-2">
+                        {{comment_form}}
+                        {%if request.user == comment.author%}
+                        <button id="button-hover-black-bg" style="font-size: 11px" class="border-0 my-4 py-2 col-3 col-lg-1  text-white fw-bolder btn btn-primary" type="submit">EDIT <i class="fas fa-caret-right"></i></button>
+                        {%elif request.user.is_authenticated%}
+                        <button id="button-hover-black-bg" style="font-size: 11px" class="border-0 my-4 py-3 col-7 col-lg-3 col-md-3 col-sm-3 text-white fw-bolder btn btn-primary" type="submit">SUBMIT COMMENT <i class="fas fa-caret-right"></i></button>
+                        {%else%}  
+                        <button id="button-hover-black-bg" style="font-size: 11px" class="border-0 my-4 py-3 col-7 col-lg-3 col-md-3 col-sm-3 text-white fw-bolder btn btn-primary" type="submit">ADD COMMENT <i class="fas fa-caret-right"></i></button>                     
+                        {%endif%}
+                    </div>                     
+                </form> 
+                {%endif%}         
+                <!-- end of post comment form -->
+            </div>
+            
+            <!-- End of Post comment -->
+            
+        </div>
+        <!-- End of First Column -->
+
+        <!-- Start of second Column -->
+        <div class="col-lg-4 ">
+            <!-- Start of Search bar -->
+            <div class="row">
+                <div class="col-12 ">
+                    <form action="#">
+                        <div class="input-group">
+                            <div class="form-outline col-12">
+                              <input style="width: 100%;" type="search" id="form1" class="search border-none form-control" placeholder="Search..." />                      
+                            </div>
+                            <button type="button" class="position-absolute end-0 btn btn-primary">
+                              <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- End of Search bar -->
+
+            <!-- Start of Ad -->
+            <div class="row my-3">
+                <div class="col-12 rounded">
+                    {%for ad in ads|slice:":1"%}
+                        <!-- Image -->
+                        <a href="">
+                            {%if ad.image %}
+                                <img style="width: 100%; height: 300px;" class="rounded" src="{{ad.image.url}}" alt="ad-image">
+                            {%else%}
+                            {%endif%}
+                        </a>
+                        <!-- end Image -->
+                    {%endfor%}
+    
+                </div>
+            </div>
+            <!-- End Ad -->
+
+            <!-- Start Category List -->
+            <div class="row mt-2">
+                <div class="col-12">
+                    <!-- Start of Header -->
+                    <div class="row position-relative border-bottom">
+                        <div class="col-12">
+                            <h2 style="font-size: 18px;" class="my-3 fw-bolder ">Categories</h2>                
+                            
+                        </div>   
+                        
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                        position: absolute;
+                        left:0;
+                        top: 100%;
+                        width: 10%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; border-bottom-style: 
+                        solid;" 
+                        > 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    </div>
+                    <!-- End of Header -->
+    
+                    <!-- Start of Category Content -->
+                    <div class="col-12 mt-2">
+                        <ul class="list-group">
+                            {%for category in news_categories%}
+                                
+                            <li class="border-top-0 border-start-0 border-end-0 list-group-item d-flex justify-content-between align-items-center">
+                            <a style="font-size: 15px;" class=" me-1 text-decoration-none link-secondary" href="{{category.get_absolute_url}}">{{category.name}}</a>
+                            
+                            <span class=" badge bg-primary">{{category.news_category.count}}</span>
+                            </li> 
+                                
+                            {%endfor%}                   
+                        </ul>
+    
+                    </div>
+                    <!-- End of Category Content -->
+                </div>
+            </div>
+            <!-- End Catergory list -->
+
+            <!-- Start of Popular Tags -->
+            <div class="row my-3">
+                <div class="col-12">
+                    <!-- Start of Header -->
+                    <div class="row mt-4 mb-3 position-relative border-bottom">
+                        <div class="col-12">
+                            <h2 style="font-size: 18px;" class="my-3 fw-bolder ">Popular Tags</h2>                
+                            
+                        </div>   
+                        
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                        position: absolute;
+                        left:0;
+                        top: 100%;
+                        width: 10%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; border-bottom-style: 
+                        solid;" 
+                        > 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    </div>
+                    <!-- End of Header -->
+        
+                    <!-- Start of tag Content -->
+                    <div  class="col-12">
+                        
+                        {%for tag in common_tags|slice:":8"%}   
+                                                                      
+                        <a id="tag-bg-hover" class="tag-bg text-decoration-none bg-dark fw-bold text-white" href="{% url 'news_tag_list' tag.slug %}" >{{tag|capfirst}}</a>                          
+                          
+                        
+                        {%endfor%}
+                        
+                    </div>
+                    <!-- End of tag Content -->                
+                </div>
+            </div>
+            <!-- End of Popular Tag -->           
+
+            <!-- Start of Follow Us -->
+            <div class="row my-5">                
+                <div class="col-12">
+                    <!-- Start of Header -->
+                    <div class="row mb-2 position-relative border-bottom">
+                        <div class="col-12">
+                            <h2 style="font-size: 18px;" class="my-3 fw-bolder ">Follow Us</h2>                
+
+                        </div>   
+
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                        position: absolute;
+                        left:0;
+                        top: 100%;
+                        width: 10%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; border-bottom-style: 
+                        solid;" 
+                        > 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    </div>
+                    <!-- End of Header -->
+
+                    <!-- Start of Follow Us Content -->
+                    <div  class="col-12 mb-5">
+
+                        {%load social%}
+                        {%social%}
+
+                    </div>
+                    <!-- End of Follow Us Content -->
+                </div>   
+                
+            </div>
+            <!-- End of Follow Us -->
+
+            <!-- Start of Recent and Popular Blog -->            
+            
+            <div style="width: 100%;" class="row ms-1 px-1 border rounded">
+                <div style="font-size: 12px;" class="fw-bold">
+                    <!-- Start of news Category -->
+                    <ul class="mx-0 px-0 nav nav-pills d-flex mb-3 mx-0" id="pills-tab" role="tablist">
+                        {%for category in blog_categories|slice:":2"%}
+                            <li class="border-0 nav-item text-dark bg-dark " role="presentation">
+                                <a class="rounded-0 px-5 py-3 nav-link text-decoration-none text-white {%if post_cat_id == category.id%} active {%endif%} "                           
+                                
+                                id="pills-{{category.id}}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{category.id}}" type="button" role="tab" aria-controls="pills-{{category.id}}" aria-selected="true">{%if post_cat_id == category.id %}Recent Post{%else%}Popular Post{%endif%}</a>
+                            
+                            </li>                        
+                        {%endfor%}                        
+                    </ul>
+                    
+                    <!-- End of News Category -->
+                </div>   
+                <!-- Start of latest blog Post -->
+                <div class="tab-content" id="pills-tabContent">
+                    {%for category in blog_categories|slice:":2"%} 
+                                      
+                    <div class="row my-1 tab-pane fade {%if post_cat_id == category.id%} show active {%endif%}" id="pills-{{category.id}}" role="tabpanel" aria-labelledby="pills-{{category.id}}-tab">
+                        {%for post in category.post_category.all|slice:":5"%}                       
+                        <div class="row position-relative">
+                            <!-- image of latest News -->                            
+                            <div class="hover-effect-image-and-overlay col-lg-5 p-1 position-relative"> 
+                                
+                                <!-- Start of Image -->
+                                <a href="{{post.get_absolute_url}}">
+                                    <div class="m-2 relative-position">
+                                        <!-- overlay -->
+                                        <div class="general-overlay rounded"> </div>
+                                        <!--End overlay -->
+                                        
+                                        <!-- Start of main Image -->
+                                        <div class="relative-position">
+                                            {% if post.post_image %}
+                                            <img class="rounded relative-position" style="width: 100%; object-fit: cover; object-position: bottom; height:100%;" src="{{post.post_image.url}}" alt="{{post.name}} image">
+                                            <a href="{{post.get_absolute_url}}" class="general-link"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                            {% else %}
+                                            {% endif %}
+                                        </div>
+                                        <!-- End of main Image -->
+                                    </div>
+                                </a>
+                                
+                                <!-- End of Image --> 
+                                                  
+                            </div>
+                            <!-- End of Image of Latest News -->
+
+                            <div class="col-lg-7 p-2">  
+                                <!-- Start of title -->
+                                <div class="">
+                                    <a href="{{post.get_absolute_url}}" style="font-size: 12px" id="text-hover"  class=" fw-bolder text-dark text-decoration-none">{{post.title|truncatechars:100}}</a>
+                                </div>
+                                <!-- End of Title -->
+                                <!--Other Features  -->
+                                <div class="mt-3">
+                                
+                                    <!-- Start of Date -->
+                                    <span style="font-size: 11px" class="text-muted"><i class="m-1 fa-regular fa-clock text-primary"></i> {{post.publish.date}}</span>
+                                    <!-- End Date -->  
+                                   
+                                    <!-- Start Comment -->
+                                    <span style="font-size: 11px" class="px-1 text-muted"><i class="mx-1 fa-solid fa-comment text-primary"></i> {{post.blog_post_comment.all.count}}</span>
+                                    <!-- End Comment --> 
+                                    
+                                    <!-- Start Views -->
+                                    <span style="font-size: 11px" class="px-1 text-muted"><i class="mx-1 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                                    <!-- End Views --> 
+                                </div>
+                                <!-- End of Other Features -->                               
+
+                                                              
+                            </div>                            
+                            <!-- start of border decoration -->
+                            <span class="border-top"></span>
+                            <!-- End of border decoration -->
+                        </div>
+                        {%endfor%}  
+                    </div>
+                    
+                    {%endfor%}
+                </div>
+            </div>            
+            <!-- End of Recent and Popular blog -->               
+        </div>
+        <!-- End of second Column -->
+    </div>
+</section>
+<!-- End of Two Columns -->
+
+<!-- Start of second ads -->
+<section class="py-3 px-lg-5" style="background-color: #f9f9f9;">
+    <div class="container-fluid bg-dark border rounded">
+        {%for ad in ads|slice:"1:2"%}
+            <!-- Image -->
+            <a href="">
+                {%if ad.image %}
+                    <img style="width: 100%; height: 100px;" class="rounded" src="{{ad.image.url}}" alt="ad-image">
+                {%else%}
+                {%endif%}
+            </a>
+            <!-- end Image -->
+        {%endfor%}
+        
+    </div>
+</section>
+<!-- End of second ads -->
+
+<script>
+    function formExit(){
+        document.getElementById('newForm').remove();
+        
+    }
+
+
+    function myFunction(id){
+        
+
+        if (document.contains(document.getElementById('newForm'))){
+            document.getElementById('newForm').remove();
+
+        }
+
+      var a = document.getElementById(id);  
+      a.insertAdjacentHTML('afterend', 
+      '<form id="newForm" action="/news/{{post.pk}}/post_comment" method="POST"> \
+            {% csrf_token %} \
+            <div class="row pe-md-5 pe-sm-5 pe-lg-5 ps-lg-2 ps-md-2 ps-sm-2"> \
+                <textarea class="form-control content-comment" cols="20" id="id_content" name="content" placeholder="Your Reply:" rows="5"></textarea>\
+                <select class="d-none" id="id_parent" name="parent" type="hidden">\
+                   <option value="' + id +'" selected = "' + id + '"> </option>\
+                </select> \
+            </div>\
+            <div class="row"> \
+                <div class="col-6"> \
+                    <button class="my-4 py-3 border-0 text-white fw-bolder btn btn-primary" id="button-hover-black-bg" style="font-size: 11px" type="submit">SUBMIT COMMENT <i class="fas fa-caret-right"></i></button>\
+                </div>\
+                <div class="col-6"> \
+                    <a onclick="formExit()" type="button" class="my-2 ms-2 py-1 border-0 text-white fw-bolder btn btn-secondary" id="button-hover-black-bg" style="font-size: 11px">Close <i class="fas fa-caret-right"></i></a>\
+                </div>\
+            </div>\
+        </form> '
+        )
+    }
+</script>
+
+
+{%endblock%}

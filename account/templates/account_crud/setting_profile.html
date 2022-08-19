@@ -1,0 +1,107 @@
+{% extends 'courses/base/dashboard_base.html' %}
+{% load course_custom_tags %}
+
+{%block title%}Dashboard{%endblock%}
+
+{%block content%}
+
+
+<!-- Start of Quick Link -->
+<section class="container-fluid my-2">
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
+      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
+      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
+    </div>
+  </div>
+</section>
+<!-- End of Quick Link -->
+
+<!-- Start of Delete Account form -->
+<section class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <!-- Start of Image -->
+            <div class="col-lg-4">
+              <div class="card p-2" style="max-width: 200px; width: 100%;">
+                <div class="card-header"></div>
+                <div class="card-body">
+                  <img class="rounded-circle image-fluid" 
+                  src="{{user_account.profile_image.url}}" 
+                  alt="avater", 
+                  style="max-width: 150px; max-height: 150px;">
+                </div>
+              </div>
+
+            </div>
+            <!-- End of Image -->
+
+            <!-- Start of Data -->
+            <div class="col-lg-8 mt-4">
+          
+                <!-- Check first name -->
+                {%if user_account.first_name%}
+                <p class="fw-bolder">First Name: <span class="fw-normal"> {{user_account.first_name|capfirst}}</span></p>          
+                {%else %}
+                    <div class="alert alert-warning" role="alert">
+                      First name not provided by user
+                    </div>
+                {%endif %}
+                <!-- End of Check first name -->
+
+                <!-- Check last name -->
+                {%if user_account.last_name%}
+                <p class="fw-bolder">Last Name: <span class="fw-normal"> {{user_account.last_name|capfirst}}</span></p>          
+                {%else %}
+                    <div class="alert alert-warning" role="alert">
+                      Last name not provided by user
+                    </div>
+                {%endif %}
+                <!-- End of Check last name -->
+
+                <!-- Check username -->
+                {%if user_account.username%}
+                <p class="fw-bolder">Username: <span class="fw-normal"> {{user_account.username|capfirst}}</span></p>          
+                {%else %}
+                    <div class="alert alert-warning" role="alert">
+                      Username not provided by user
+                    </div>
+                {%endif %}
+                <!-- End username -->
+
+                <!-- Check email -->
+                {%if user_account.email%}
+                <p class="fw-bolder">Email: <span class="fw-normal"> {{user_account.email|capfirst}}</span></p>          
+                {%else %}
+                    <div class="alert alert-warning" role="alert">
+                      email adddress not provided by user
+                    </div>
+                {%endif %}
+                <!-- End email -->
+                  </div>
+            <!-- End of Data -->
+
+          </div>   
+
+        </div>
+
+        <div class="card-footer">
+          <a class="btn btn-sm btn-primary my-2" href="{% url 'password_change' %}"><i class="fa fa-lock p-0 mx-1" aria-hidden="true"></i>Change Password</a>
+          <a class="btn btn-sm btn-secondary text-white my-2" href="{% url 'edit_account' user.id %}"><i class="fa-solid fa-user-pen mx-1" aria-hidden="true"></i>Edit</a>
+          <a class="btn btn-sm btn-danger my-2" href="{% url 'delete_account' user.id%}"><i class="fa-solid fa-trash mx-1" aria-hidden="true"></i>Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+</section>
+<!-- End of Delete Account Form -->
+
+
+
+{% endblock%}

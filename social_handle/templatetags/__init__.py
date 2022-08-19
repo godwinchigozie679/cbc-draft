@@ -1,0 +1,1 @@
+from social_handle.templatetags import social

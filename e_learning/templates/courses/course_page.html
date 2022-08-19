@@ -1,0 +1,521 @@
+{% extends 'courses/base/base.html' %}
+{% load course_custom_tags %}
+
+{%load static %}
+
+{%block scripts%}
+<script src="{% static 'courses/js/course_page.js' %}" defer></script>
+<!-- General JS -->    
+<script src="{% static '/courses/js/general-script.js' %}"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+      $(".owl-carousel").owlCarousel();
+  });
+
+  //Owl-home
+  $('.owl-category').owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      navText: ["<div class='nav-button-category-caurosel owl-prev'>‹</div>", "<div class='nav-button-category-caurosel owl-next'>›</div>"],
+      dots: false,
+      responsive: {
+          0: {
+              items: 1
+          },                    
+          600: {
+              items: 3
+          },
+          1000: {
+              items: 3
+          }
+      }
+  })
+
+</script>
+
+{%endblock scripts%}
+
+
+  <!--Title-->
+{%block title%}All Course{%endblock%}
+
+{%block content%}
+
+<!-- Start of All Course in Category -->
+<section class="container-fluid mt-5">
+    <!-- Start of filter Icon -->        
+    <div onclick="myCourseFilter()" style="width: 100px; cursor: pointer; background-color: #eee;" id="filter-course-sm" class="d-xl-none mt-4 p-2  text-center text-primary rounded">
+        <a >
+            <i class="fa fa-filter" aria-hidden="true"></i> Filter
+        </a>
+       
+    </div>
+
+    <!-- End of Filter Icon -->
+
+    <!-- Start of Close -->
+    <div id="close-filter" onclick="myCloseFilter()" class="mt-4 d-none">
+        <a >
+            <i class="fa fa-times" aria-hidden="true"></i> Close All Filter
+        </a>
+       
+    </div>
+    <!-- End of Close -->
+
+    <!-- Start of two collumn -->
+    <div class="row position-relative">        
+        <!-- Start of first collumn for filter -->        
+        <div id="filter-column" class="col-xl-3 border-end d-none d-xl-block">
+            <!-- Start of Search bar -->
+            <div class="row mb-5">
+                <div class="col-12 mt-3">
+                    <form id="search" action="#">
+                        <div class="input-group">
+                            <div class="form-outline col-12">
+                              <input style="width: 100%;" type="search" id="form1" class="search border-none form-control" placeholder="Search..." />                      
+                            </div>
+                            <button type="button" class="position-absolute end-0 btn btn-primary">
+                              <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- End of Search bar -->
+
+            <!-- Start Category -->
+            <div class="accordion col" id="accordionCategory">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="Category">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <h2 style="font-size: 14px;" class="text-muted ">Category</h2> 
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="Category" data-bs-parent="#accordionCategory">
+                    <div class="accordion-body">
+                        <!-- Start Category Filter Content -->
+                        <div class="tutor-course-filter-nested-terms">
+
+                            <ul class="list-group">
+                                {%for sector in sectors%}
+                                    
+                                <li class="border-top-0 border-start-0 border-end-0 list-group-item d-flex justify-content-between align-items-center">
+                                    <label>
+                                        <input class="filter-course-page" type="checkbox" name="{{sector.name}}" data-filter='sector' value="{{sector.id}}">&nbsp;
+                                        {{sector.name}}                    
+                                    </label>
+                                
+                                <span style="background-color: rgb(214, 219, 228);" class=" badge">{{sector.course_category.count}}</span>
+                                </li> 
+                                    
+                                {%endfor%}                   
+                            </ul>
+                            
+                        </div>
+                        <!-- End Category Filter Content -->
+                        <!-- Start of Clear all Filter -->
+                        <div id="tutor-clear-all-filter" class="tutor-clear-all-filter"  data-filter='uncheck' value = "{{uncheck.id}}" class="my-2 uncheck" style="display: block;">
+                            <a class="tutor-clear-all-filter" >
+                                <i class="fa fa-times" aria-hidden="true"></i> Clear All Filter
+                            </a>
+                        
+                        </div>
+                        <!-- End of Clear all Filter -->
+                    </div>
+                  </div>
+                </div>  
+              </div>
+            <!-- End Category -->
+
+            <!-- Start Skill Level -->
+            <div class="accordion col mt-5" id="accordionSkillLevel">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="SkillLevel">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkillLevel" aria-expanded="true" aria-controls="collapseSkillLevel">
+                        <h2 style="font-size: 14px;" class="text-muted ">Skill Level</h2> 
+                    </button>
+                  </h2>
+                  <div id="collapseSkillLevel" class="accordion-collapse collapse" aria-labelledby="SkillLevel" data-bs-parent="#accordionSkillLevel">
+                    <div class="accordion-body">
+                        <!-- Start of Course Skill Level filter content -->                
+                        <div class="tutor-course-filter-nested-terms">
+                            <ul class="list-group">                       
+                                {%for level in levels%}
+                                <li class="border-top-0 border-start-0 border-end-0 list-group-item d-flex justify-content-between align-items-center">
+                                    <label>
+                                        <input class="filter-course-page" type="checkbox" name="{{level.name}}" data-filter='level' value="{{level.id}}">&nbsp;
+                                        {{level.name}}                    
+                                    </label>
+                                
+                                <span style="background-color: rgb(214, 219, 228);" class=" badge">{{level.course_level.all.count}}</span>
+                                </li>
+                                {%endfor%}
+                                    
+                                            
+                            </ul>                        
+                        </div>
+                        <!-- End of Course Skill filter content -->   
+                        <!-- Start of Clear all Filter -->
+                        <div id="tutor-clear-all-filter" class="tutor-clear-all-filter"  data-filter='uncheck' value = "{{uncheck.id}}" class="my-2 uncheck" style="display: block;">
+                            <a class="tutor-clear-all-filter" >
+                                <i class="fa fa-times" aria-hidden="true"></i> Clear All Filter
+                            </a>
+                        
+                        </div>
+                        <!-- End of Clear all Filter -->                     
+                    </div>
+                  </div>
+                </div>  
+              </div>
+            <!-- End SKill Level -->
+
+
+            <!-- Start Type of Course -->
+            <div class="accordion col mt-5" id="accordionTypeofCourse">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="TypeofCourse">
+                    <button class="accordion-button border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTypeofCourse" aria-expanded="true" aria-controls="collapseTypeofCourse">
+                        <h2 style="font-size: 14px;" class="text-muted ">Type of Course</h2> 
+                    </button>
+                  </h2>
+                  <div id="collapseTypeofCourse" class="accordion-collapse collapse" aria-labelledby="TypeofCourse" data-bs-parent="#accordionTypeofCourse">
+                    <div class="accordion-body">
+                        <!-- Start of Course Type filter content -->
+                
+                        <div class="tutor-course-filter-nested-terms">
+
+                            <ul class="list-group">
+                            
+                                <!-- Free  -->
+                                <li class="border-top-0 border-start-0 border-end-0 list-group-item d-flex justify-content-between align-items-center">
+                                    <label>
+                                        <input class="filter-course-page" type="checkbox" name="{{fre}}" data-filter='free' value="{{fre.id}}">&nbsp;
+                                        Free                    
+                                    </label>
+                                
+                                <span style="background-color: rgb(214, 219, 228);" class=" badge">{{free.all.count}}</span>
+                                </li> 
+                                <!-- Paid  -->
+                                <li class="border-top-0 border-start-0 border-end-0 list-group-item d-flex justify-content-between align-items-center">
+                                    <label>
+                                        <input class="filter-course-page" type="checkbox" name="{{pay}}" data-filter='paid' value="{{pay.id}}">&nbsp;
+                                        Paid                    
+                                    </label>
+                                
+                                <span style="background-color: rgb(214, 219, 228);" class=" badge">{{paid.all.count}}</span>
+                                </li>
+                                    
+                                                
+                            </ul>
+                            
+                        </div>
+                        <!-- End of Course Type filter content -->
+                        <!-- Start of Clear all Filter -->
+                        <div id="tutor-clear-all-filter" class="tutor-clear-all-filter"  data-filter='uncheck' value = "{{uncheck.id}}" class="my-2 uncheck" style="display: block;">
+                            <a class="tutor-clear-all-filter" >
+                                <i class="fa fa-times" aria-hidden="true"></i> Clear All Filter
+                            </a>
+                        
+                        </div>
+                        <!-- End of Clear all Filter -->
+                       
+                    </div>
+                  </div>
+                </div>  
+              </div>
+            <!-- End Type of Course --> 
+            
+            <!-- Start Price Range -->
+            <div class="accordion col mt-5" id="accordionPrice">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="Price">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrice" aria-expanded="true" aria-controls="collapsePrice">
+                        <h2 style="font-size: 14px;" class="text-muted "><i class="fa- fa-bars-filter"></i> Price</h2> 
+                    </button>
+                  </h2>
+                  <div id="collapsePrice" class="accordion-collapse collapse" aria-labelledby="Price" data-bs-parent="#accordionPrice">
+                    <div class="accordion-body">
+                        <!-- Start Price Filter Content -->
+                        <div class="tutor-course-filter-nested-terms">
+
+                            <ul class="list-group">                                
+                                    
+                                <li class="border-top-0 border-start-0 border-end-0 list-group-item d-flex justify-content-between align-items-center">
+                                    
+                                    <label for="customRange1" class="form-label">Example range</label>
+                                    <input type="range" class="form-range" id="customRange1">&nbsp;
+                                    {{sector.name}}                    
+                                   
+                                
+                                <span style="background-color: rgb(214, 219, 228);" class=" badge">{{sector.course_category.count}}</span>
+                                </li> 
+                                    
+                                             
+                            </ul>
+                            
+                        </div>
+                        <!-- End Category Filter Content -->
+                        <!-- Start of Clear all Filter -->
+                        <div id="tutor-clear-all-filter" class="tutor-clear-all-filter"  data-filter='uncheck' value = "{{uncheck.id}}" class="my-2 uncheck" style="display: block;">
+                            <a class="tutor-clear-all-filter" >
+                                <i class="fa fa-times" aria-hidden="true"></i> Clear All Filter
+                            </a>
+                        
+                        </div>
+                        <!-- End of Clear all Filter -->
+                    </div>
+                  </div>
+                </div>  
+              </div>
+            <!-- End Price Range -->
+           
+
+        </div>
+        <!-- End of first collumn for filter -->
+
+        <!-- Start of second collumn for course -->
+        
+        <div class="col-xl-9">
+            <!-- Start of Content -->   
+            <p id="ajaxLoader"><i class="fa fa-spinner"></i></p>
+            <div class="row" id="course-page-filter-data">
+                {%for course in page_obj%}                    
+                <div class="col-lg-4 col-md-6 col-sm-6 my-2">                  
+                     
+                    <div style="width: 97%; height: 100%"  class="border-bottom card position-relative">
+                        <!-- image of latest post -->                            
+                        <div class="hover-effect-image-and-overlay col-lg-12 col-md-12 p-1 position-relative"> 
+                            
+                            <!-- Start of Image -->
+                            <a href="{{course.get_absolute_url}}">                                
+                                <div class="m-1 relative-position">
+                                    <!--start category  -->
+                                    <div style="font-size: 12px; z-index:20" class="position-absolute end-0 my-2 latest-world-post">
+                                        <a id="lastest-post-cat" href="{{course.sector.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-dark text-white rounded p-2">{{course.sub_sector.name}}</a>
+                                    </div>                                
+                                    <!-- end category -->
+                                                                     
+                                    <!-- Start of main Image -->
+                                    <div style="z-index: 1" class="HoverDiv2">
+                                        {% if course.thumbnail %}
+                                        <div class="general-overlay-zoom2"></div>
+                                        <img class="hover-image img-fluid position-relative" style="width: 100%; height: 194px;" src="{{course.thumbnail.url}}" alt="{{course.name}} image">                           
+                                        <a href="{{course.get_absolute_url}}" class="general-link2 border border-3  rounded-circle bg-dark"><i class="text-white text-white m-2 fa-solid fa-play"></i></a>
+                                        {% else %}
+                                        {% endif %}
+    
+                                    </div>
+                                    <!-- End of main Image -->
+                                </div>
+                            </a>
+                            <!-- End of Image --> 
+                                              
+                        </div>
+                        <!-- End of Image of Latest post -->
+                        <div class="col-lg-12 col-md-12 p-2">
+                            <!-- Start of title -->
+                            <div  class="my-2">
+                                <a id="text-hover" href="{{course.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{course.name}} </a>
+                            </div>
+                            <!-- End of Title -->
+                            <div class="my-1">
+                                <!-- Start student count -->
+                                <span style="font-size: 12px; height: 32px;" class="me-1 fw-bold text-muted"><i class="m-2 fas fa-user text-primary"></i> {{course.enroll_students.all.count}}</span>   
+                                <!-- End student count -->
+                                <br>
+                                <!-- Start level -->
+                                
+                                {% if course.level.name.capitalize == 'Advance' %}
+                                <span style="background-color: rgba(8, 116, 218, 0.15);" class=" border-none rounded px-1 text-info">{{course.level}}</span>
+                                {%elif course.level.name.capitalize == 'Beginner'%}
+                                <span style="background-color:  rgb(255, 233, 199);" class="border-none rounded text-warning px-1">{{course.level}}</span>
+                                {%else%}
+                                <span style="background-color:  rgb(221, 221, 250);" class="border-none rounded px-1 text-white">{{course.level}}</span>
+                                {%endif%}
+                                <!-- End level -->
+                                
+                                <!-- Start of post article  -->
+                                <br>                                
+                                <!-- End of start of post article -->
+                            </div>
+                            <!--Author  -->
+                            <div class="row card-footer border-0">
+                                <div class="col-8">
+                                    <!-- Start of Author -->
+                                    <a id="text-hover" class="d-flex text-decoration-none" href="">
+                                        <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{course.author.profile_image.url}}"  alt="{{course.author}} image">
+                                        <span id="text-hover" style="font-size: 11px" class=" m-2 py-2 fw-bolder text-muted"> {{course.author.get_full_name}}</span>
+                                    </a>
+                                    <!-- End Author -->  
+                                </div>  
+                                <div class="col-4">
+                                    <!-- Start of Save Price -->  
+                                        {% is_enrolled request course as enrolled %}
+                                        {% if not enrolled%}
+                                            {%if course.percentage_discount > 0 %}                                            
+                                            <span style="font-size: 11px;" class="py-2 text-muted"> Save {{course.percentage_discount}}%</span>
+                                            <span style="font-size: 12px; background-color: antiquewhite;" class="border rounded px-2 text-muted"> <del> {{course.price|dollar}}</span>
+                                            {%else %}
+                                            <span class=""> <i style="font-size: 14px;" class="text-primary fa fa-check-circle"></i> </span>
+                                            {%endif%}
+                                        {%else%}
+                                            <span class=""> <i style="font-size: 14px;" class="text-primary fa fa-check-circle"></i> </span>
+                                        {%endif%}
+                           
+                                    <!-- End Save Price -->  
+                                </div>                              
+                                
+                            </div>
+                            <!-- End Author -->
+
+                            <!-- Start of price and enroll -->
+                            <div class="row">
+                                <!-- Start Price -->
+                                <div class="col-4 p-2">
+                                    <!--Serve Price and %discount from Database-->
+                                    {% is_enrolled request course as enrolled %}
+                                    {% if not enrolled%}
+                                        {%if course.price > 0 %}
+                                        <span style="background-color: rgb(247, 178, 94);" class="border px-2 rounded fs-6 text-white fw-bold"> {% cal_main_price course.price course.percentage_discount as value %} {{value|dollar}} </span>
+                                        {%else %}
+                                        <span style="background-color: bisque;" class="fs-6 px-2 border rounded fw-bold"> Free </span>
+                                        {%endif%}
+                                    {%else%}
+                                        <a style="font-size: 12px;" href="" class=" mt-1 btn btn-sm btn-dark" role="button">Start<span class=""> <i style="font-size: 12px;" class="text-white fa fa-check-circle"></i> </span></a>
+                                    {%endif%}
+                                </div>
+                                <!-- End Price -->
+
+                                <!-- Start Enroll -->
+                                <div class="col-8">
+                                    {% if not enrolled%}
+                                    <a style="font-size: 12px;" href="{%url 'course_details' course.slug%}" class=" mt-1 btn btn-sm btn-dark" role="button"> <span class=""><i style="font-size: 12px;" class="text-white fa-solid fa-receipt"></i> </span> Details</a>
+                                    <a style="font-size: 12px;" href="{%url 'checkout' course.slug %}" class=" mt-1 btn btn-sm btn-dark" role="button"><span class=""><i style="font-size: 12px;" class="text-white fa-solid fa-cart-arrow-down"></i> </span> Enroll</a>
+                                    {%endif%}
+
+                                </div>
+                                <!-- End Enroll -->
+                            </div>
+                            <!-- End of Price and Enroll  -->
+                            
+                        </div>
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                                    position: absolute;
+                                    left:0;
+                                    top: 100%;
+                                width: 5%; 
+                                margin: 0 0 -1px 0;
+                                border-bottom-color: #0d6efd !important; 
+                                display: inline-block; border-bottom-style: 
+                                solid;" 
+                            class=""> 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    
+                    </div>
+                       
+                </div>
+            {%endfor%}
+
+            <!-- start of pagination -->
+            <div class="my-2">
+                {% if is_paginated %}
+                    {% include "includes/pagination.html" %}
+                {% endif %}
+            </div>
+            <!-- end of pagination -->
+            </div> 
+            
+            <!-- End of Content -->
+            
+            
+            
+        </div>
+        <!-- End of second collumn for course -->
+    </div>
+    <!-- End of two column -->
+</section>
+<!-- End of all courses in category -->
+
+<!-- Start of Course Sector/Category -->
+<section class="container-fluid">
+    <div class="row">
+        <!-- Start first column -->
+        <div class="col-lg-8 mt-5 pt-3 ">
+            
+             <!-- Start of Category content -->
+            <div class="row owl-carousel owl-category border-end">
+                {% for sector in sectors %}
+                <div class="m-1 slide-item">
+                    <a href="{{sector.get_absolute_url}}" class="text-decoration-none fw-bolder">
+                        <div class="card" style="max-width: 20rem;">
+                            <div class="card-title p-2 fs-6 text-center" >{{sector.name}}</div>
+                            <div class="card-body">
+                                <img style="width: 100%; height: 150px;" src="{{sector.sector_image.url}}" alt="{{sector.sector_image}}"> 
+    
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor%}
+            
+            </div>
+            <!-- End of Category Content -->
+        </div>
+        <!-- End of first column -->
+        <!-- Start of second column -->
+        <div class="col-lg-4">
+            <!-- Start of Follow Us -->
+            <div class="row my-5">                
+                <div class="col-12">
+                    <!-- Start of Header -->
+                    <div class="row mb-2 position-relative border-bottom">
+                        <div class="col-12">
+                            <h2 style="font-size: 18px;" class="my-3 fw-bolder ">Follow Us</h2>                
+
+                        </div>   
+
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                        position: absolute;
+                        left:0;
+                        top: 100%;
+                        width: 10%; 
+                        margin: 0 0 -1px 0;
+                        border-bottom-color: #0d6efd !important; 
+                        display: inline-block; border-bottom-style: 
+                        solid;" 
+                        > 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    </div>
+                    <!-- End of Header -->
+
+                    <!-- Start of Follow Us Content -->
+                    <div  class="col-12 mb-5 ">
+
+                        {%load social%}
+                        {%social%}
+
+                    </div>
+                    <!-- End of Follow Us Content -->
+                </div>   
+                
+            </div>
+            <!-- End of Follow Us -->
+
+        </div>
+        <!-- End of second column -->
+    </div>
+        
+        
+</section>
+<!-- End of Course Sector -->
+    <br>
+    <br>
+
+{% endblock%}

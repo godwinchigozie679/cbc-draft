@@ -1,0 +1,321 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+       
+    <!--Custom CSS-->
+    <link rel='stylesheet' href="{% static 'courses/css/nav.css' %}">
+    <link rel='stylesheet' href="{% static 'courses/css/scroll.css' %}">
+    <link rel='stylesheet' href="{% static 'courses/css/common.css' %}">
+
+    <!-- Owl Carousal CSS -->
+    <link rel='stylesheet' href="{% static 'courses/css/owl_carousal/owl.carousel.min.css' %}">
+    <link rel='stylesheet' href="{% static 'courses/css/owl_carousal/owl.theme.default.min.css' %}">
+    
+    <!-- Carousel JS -->
+    <script src="{% static '/courses/js/jquery.min.js' %}"></script>
+    <script src="{% static '/courses/js/owl.carousel.min.js' %}"></script>
+   
+    
+    <!-- FonAwesome -->
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Boxicons CSS -->
+
+    <!-- Boxicons CSS -->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+   
+    <title>
+        {%block title%}{{sector.name}} {%endblock%}
+    </title>
+  </head>
+
+
+  <body>
+    <style>
+      /*<!-- signin:hover{
+        color: #0d6efd !important;
+        
+      } */
+
+      #my-account{
+        color: white !important;
+        
+      }
+     
+      
+       /*Owl Carousel*/
+      /* CAUROSAL course-home mmmmmmmmmmmmmmmmmmmmmmmmm */
+       
+       /* new1 mmmmmmmmmmmmmmmmmmmmmmmmm */
+      
+      .owl-carousel .nav-button-home {
+        height: 50px;
+        width: 22px;
+        cursor: pointer;
+        background-color: #0d6efd;
+        position: absolute;
+        top: 110px !important;
+        z-index: 1;
+      }
+      
+      .owl-carousel .owl-prev {
+        left: 0;
+      }
+  
+      .owl-carousel .owl-next {
+        right: 5px;
+      }
+  
+      .owl-carousel .owl-nav [class*=owl-] {
+        color: #ffffff;
+        font-size: 35px;
+        background:#0d6efd;
+        border-radius: 5px;
+      }
+
+      /*Owl Carousel*/
+      /* CAUROSAL course-Category Home mmmmmmmmmmmmmmmmmmmmmmmmm */
+       
+       /* new1 mmmmmmmmmmmmmmmmmmmmmmmmm */
+
+       .owl-carousel .nav-button-category-caurosel{
+        height: 50px;
+        width: 22px;
+        cursor: pointer;
+        background-color: #0d6efd;
+        position: absolute;
+        top: 110px !important;
+        z-index: 1;
+      }
+
+      .owl-carousel .nav-button-category-caurosel.owl-prev {
+        left: 15px;
+      }
+  
+      .owl-carousel .nav-button-category-caurosel.owl-next {
+        right: 0;
+      }
+
+
+
+      /* CAUROSAL course-home-review mmmmmmmmmmmmmmmmmmmmmmmmm */
+       
+           
+       .owl-carousel .nav-button-home-review {
+        height: 50px;
+        width: 22px;
+        cursor: pointer;
+        background-color: #0d6efd;
+        position: absolute;
+        top: 110px !important;
+        z-index: 1;
+      }
+      
+      .owl-carousel .nav-button-home-review.owl-prev {
+        left: -15px;
+      }
+  
+      .owl-carousel .nav-button-home-review.owl-next {
+        right: -15px;
+      }
+      
+      /*Owl Carousel Related Course*/
+      .owl-carousel .nav-button-owl-related-course {
+        height: 50px;
+        width: 22px;
+        cursor: pointer;
+        background-color: #0d6efd;
+        position: absolute;
+        top: 110px !important;
+        z-index: 1;
+      }
+
+      .owl-carousel .nav-button-owl-related-course.owl-prev {
+        left: -15px;
+      }
+
+      .owl-carousel .nav-button-owl-related-course.owl-next {
+        right: -5px;
+      }
+
+
+      .navbar-nav a.active{
+        color: #0d6efd;
+      }
+      
+    </style>
+    <!-- Start of Hot News -->
+    <section class="container-fluid py-3 bg-dark">
+      {%load social_and_hot_news%}
+      {%social_and_hot_news%}
+        
+    </section>
+    <!-- End of Hot News -->
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-transparent bg-transparent border-bottom text-muted">
+      <div class="container-fluid">
+          <a href='{% url "home" %}' class="navbar-brand text-decoration-none">
+             <!-- <img src="images/logo.svg" height="28" alt="CoolBrand"> -->
+            <img src="{% static 'courses/cbc/logo/NAV-CBC-logo-1.png' %}" alt="", style="max-width: 10.6rem; max-height: 4.2rem;">
+             
+          </a>
+          <button type="button" class="navbar-toggler border border-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+              <span class="navbar-toggler-icon border border-0">
+                <i class="fas fa-bars" style="color:rgb(7, 0, 0); font-size:28px;"></i>
+              </span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+              <div class="navbar-nav ms-auto" >
+                
+                  <a  style="font-size: 13px;" href='{% url "home" %}' class="nav-item me-lg-4 nav-link fw-bolder text-decoration-none text-muted ">
+                    <span {%if request.resolver_match.url_name == 'home'%} id="active"{%endif%}>Home</span>
+                  </a>
+
+                  {%if request.resolver_match.url_name == 'course_page'%}
+                  <a  style="font-size: 13px;" href="{% url 'course_page' %}" class="nav-item nav-link fw-bolder text-decoration-none text-muted me-lg-4">
+                    <span {%if request.resolver_match.url_name == 'course_page'%} id="active"{%endif%}>Courses</span>
+                  </a>                  
+                  {%else%}
+                  <a  style="font-size: 13px;"  href="{% url 'course_page' %}" class="nav-item nav-link fw-bolder text-decoration-none text-muted me-lg-4">
+                    <span {%if request.resolver_match.url_name ==  "category_course"%} id="active"{%endif%}>Courses</span>
+                  </a>
+                  {%endif%}
+                  <a  style="font-size: 13px;"  href="{% url 'blog_home' %}" class="nav-item nav-link fw-bolder text-decoration-none text-muted me-lg-4">
+                    <span {%if request.resolver_match.url_name == 'blog_home'%} id="active"{%endif%}>Blog</span>
+                  </a>
+                  <a  style="font-size: 13px;"  href="{%url 'latest_news'%}" class="nav-item nav-link fw-bolder text-decoration-none text-muted me-lg-4">
+                    <span {%if request.resolver_match.url_name == 'latest_news'%} id="active"{%endif%}>News</span>
+                  </a>
+                  <a  style="font-size: 13px;"  href="#" class="nav-item nav-link fw-bolder text-muted me-3">
+                    <span {%if request.resolver_match.url_name == 'services'%} id="active"{%endif%}>Services</span>
+                  </a>
+                  <!-- Start of more Features -->
+                  <li class="dropdown  menu-large me-lg-3">
+                    <a style="font-size: 14px;" class="text-muted fw-bold nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa fa-cubes" aria-hidden="true"></i>
+
+                    </a>
+
+                    <ul style="font-size: 13px;" class="mx-0 ps-0 dropdown-menu dropdown-menu-white row megamenu  " aria-labelledby="navbarDarkDropdownMenuLink">
+                     
+                      <div class="row px-2"> 
+                        {% for sec in categories%} 
+                        <div class="col-sm-4 col-md-3 col-lg-2"> 
+                          <!-- Start of title -->
+                          <p style="font-size: 14px;" class="fw-bold text-muted">{{sec.name}}</p>
+                          <!-- End of Title -->                           
+                          {%for sub_category in sec.sector.all%}                            
+                          <!-- Start of content -->
+                          <a class="text-muted dropdown-item ps-0 my-2" href="{{sec.get_absolute_url}}">
+                            <span>{{sub_category.name}}</span>
+                          </a>
+                          {%endfor%}
+                          <!-- End of content -->
+                          
+                        </div>
+                        {% endfor%}                    
+                      </div>
+                      <!-- Start of Other Features -->
+                      <div style="border-top: 1px solid #0d6efd;" class="mb-5">
+                        <div class="row">
+                          <div class="col-lg-2 col-md-3 col-sm-4">
+                            <a class="text-muted dropdown-item ps-0 my-2" href="{%url 'latest_news'%}">
+                              <span class="p-2">Latest News</span>
+                            </a>
+                          </div>
+                          <div class="col-lg-2 col-md-3 col-sm-4">
+                            <a class="text-muted dropdown-item ps-0 my-2" href="">
+                              <span class="p-2">For Business</span>
+                            </a>
+                          </div>
+                          <div class="col-lg-2 col-md-3 col-sm-4">
+                            <a class="text-muted dropdown-item ps-0 my-2" href="">
+                              <span class="p-2">Affiliate Member</span>
+                            </a>
+                          </div>
+                          <div class="col-lg-2 col-md-3 col-sm-4">
+                            <a class="text-muted dropdown-item ps-0 my-2" href="">
+                              <span class="p-2">Guest Post</span>
+                            </a>
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <!-- End of Other Features -->                                  
+                    </ul>                    
+
+                  </li>
+                  <!-- End of More features -->
+              </div>
+              <div class="navbar-nav ms-auto">
+                {% if request.user.is_authenticated %}
+                  <a style="font-size: 13px;" class='nav-link btn btn-sm btn-primary text-white fw-bold' href='{% url "user_course" %}'>My Account</a>                     
+                {% else %}
+                
+                <li>
+                  <a {%if request.resolver_match.url_name == 'login'%} id="active"{%endif%} style="font-size: 13px;" href="{% url 'login' %}" class="text-decoration-none nav-item nav-link text-muted fw-bold pb-2 my-4">
+                    
+                    <span class="">
+                      <i class="fas fa-sign-in-alt me-1"></i>
+                      Sign In
+                    </span>
+                  </a>
+                </li>  
+
+                <li>
+                  <a style="font-size: 13px;" class=" nav-link text-decoration-none bg-primary rounded fw-bold text-white border p-3 m-3" href="{% url 'register' %}">
+                    Get Started
+                  </a>
+                </li>                
+                {% endif %}
+              </div>
+          </div>
+      </div>
+    </nav>
+    <!-- End of Navbar -->
+    
+
+  <!--Start of Dynamic content -->
+
+  {%block content%}  
+
+
+  {% endblock%}
+  <!--End of Dynamic content -->
+
+  
+  
+  <footer style="background-color: rgb(243, 240, 236);" class="container-fluid px-lg-5">
+    {%load footer%}
+    {%show_footer%}
+  </footer>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+   <!-- JS -->
+   <script src="{% static '/courses/js/navbar.js' %}"></script>
+   <script src="{% static '/courses/js/share.js' %}"></script>
+  {%block scripts%}
+  
+
+  {%endblock%}
+
+    
+  </body>
+</html>

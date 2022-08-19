@@ -1,0 +1,1 @@
+from blog.templatetags import blog_crypto_custom_price, social_and_hot_news

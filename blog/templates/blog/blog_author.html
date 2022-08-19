@@ -1,0 +1,399 @@
+{% extends 'courses/base/blog.html' %}
+
+{%block title%}
+    {%if post%}
+    {{post.author.get_full_name}}
+    {%else%}
+    blog & Author
+    {%endif%}
+{%endblock%}
+
+{%block content%}
+
+<!-- Start of Header -->
+<section  style="width: 100%; background: #f5f5f5;border-bottom: 1px solid #eee;" class="border position-relative py-4 container-fluid px-lg-5 px-md-5 px-sm-5"> 
+    <div class="row mt-5">
+       
+        <!-- before breadcrumb -->
+        <div class="text-white col-12">
+            <!-- Start of Style border-bottom -->
+            <span style="border-bottom-width: 3px;            
+            left:0;
+            top: 100%;
+            width: 10%; 
+            margin: 0 0 -1px 0;
+            border-bottom-color: #0d6efd !important; 
+            display: inline-block; border-bottom-style: 
+            solid;" 
+            > 
+            </span>
+            <!-- End of Style border-bottom -->
+            <h3 style="font-size: 25px;font-weight: 600;
+            line-height: 32px" class="text-muted">{{post.category.catching_phrase}}</h3>
+                
+        </div>
+        <!-- end of breadcrub -->
+    
+        <!-- Start of breadcrumb -->
+        <div class="col-lg-10 col-md-10 col-sm-10">
+            
+            <nav class="" aria-label="breadcrumb">                
+                <ol style="color: #666; font-size:13px;" class="breadcrumb">
+                  <li style="z-index: 2000;" class=" fw-bold breadcrumb-item"><a href="{%url 'blog_home' %}">Blog & News </a></li>                                            
+                  <li style="z-index: 2000;" class=" fw-bold breadcrumb-item active"><a class="text-decoration-none" href="{{post.get_absolute_url}}"><span class="text-muted">{{post.category}} >>> </span></a></li>                       
+                    
+                </ol>
+            </nav>
+            
+
+        </div>
+        <!-- End of Breadcumb -->
+        <!-- Start of Bubble -->
+        <div class="col-lg-2 col-md-2 col-sm-2 position-relative ">
+            <div class="border rounded mousey">
+                <div style="z-index: 300;" class="bubble x1"></div>                               
+            </div>
+            <div style="font-size: 11px; font-weight: 700; z-index: 200;" class="{%if category%}text-white{%endif%} mt-2 position-absolute">Scroll Down To Discover</div>
+            
+            
+        </div>
+        <!-- End of Bubble -->        
+
+    </div> 
+</section>
+            <!-- Start of breadcrumb background Image -->                
+                    <div id="nav-style"></div>              
+            <!-- End of breadcrumb background Image -->
+<!-- End of Header -->
+
+
+<!-- Start of Two Columns -->
+<section class="my-5 px-lg-5 px-md-5 px-sm-5 px-2">
+    <div class="row px-2">
+        <!-- Start of first Column -->
+        <div class="col-lg-4">
+            <div class="card">
+                <!-- Start of Header -->
+                
+                <div class="bg-primary card-header position-relative">
+                    <!-- Start of bg image -->
+                    <div id="blog-news-bioheader"></div>
+                    <!-- end of bg image -->
+
+                    <!-- Start of Image and Features -->
+                    <div class="row mt-4">
+                        <!-- Start of Image -->
+                        <div class="col-lg-4">
+                            <img class="blog-news-bioheader-image" src="{{post.author.profile_image.url}}"  alt="{{post.author}} image">
+
+                        </div>
+                        <!-- End of Image -->
+
+                        <!-- Start of features -->
+                        <div class="col-lg-8">
+                            <div class="col-12">
+                                <h4 class="py-2 text-white fw-bold">{{post.author.get_full_name}}</h4>
+                            </div>
+                            <div style="z-index: 10;" class="row bg-white ms-3 ms-lg-0 me-3">
+                                <div style="z-index: 10; " class="col-6 py-2 bg-white border-end">                                   
+                                    <h6 style="font-size: 11px;" class=" text-center m-0"><span class="text-primary">{{post_count}}</span> <span class="text-muted"> ARTICLES</span></h6>
+                                </div>
+                                <div style="z-index: 10;" class="col-6 bg-white py-2">
+                                    <h6 style="font-size: 11px;" class=" text-center m-0"><span class="text-primary">{{total_views}}</span> <span class="text-muted"> VIEWS</span></h6>
+                                    
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- end of features -->
+                    </div>
+                    <!-- End of Bio and Featured -->
+
+
+                </div>
+                
+                <!-- End of Header -->
+                <div style="background-color: #faf5f5;" class="card-body">
+                    <h6 class="fw-bold">About</h6>
+                    {%if post.author.profile.biography%}
+                    <p style="font-size: 12px; line-height: 24px;" class="text-justify">{{post.author.profile.biography}}</p>
+                    {%else%}
+                    <p style="font-size: 12px; line-height: 24px;" class="text-justify">No data yet</p>
+                    {%endif%}
+                    <!-- Start of Phone and Email -->
+                    <div class="col-12 bg-white rounded">
+                        <!-- Start Email -->
+                        <div class="col-12 border-bottom bg-white py-2">
+                            
+                            <p style="font-size: 12px;" class="m-0 px-1"><strong class="text-primary fw-bold py-2">WRITE: </strong>{{post.author.email}}</p>
+                           
+                        </div>
+                        <!-- End Email -->
+                        <!-- Start Phone -->
+                        <div class="col-12 bg-white py-2">   
+                            {%if post.author.profile.phone%}                           
+                            <p style="font-size: 12px;" class="m-0 px-1"><strong class="text-primary fw-bold">PHONE: </strong>
+                                {{post.author.profile.phone}}                                                                                           
+                            </p>
+                            {%else%}
+                            <p style="font-size: 12px;" class="m-0 px-1"><strong class="text-primary fw-bold">PHONE: </strong>
+                                No data yet                                                                                           
+                            </p>
+                            {%endif%}
+                            
+                              
+                        </div>                            
+                        <!-- End Phone -->
+                    </div>
+                    <!-- End of Phone and Email -->
+
+                </div>
+                <div class="card-footer mt-4">
+                    {%if request.user == post.author%}   
+                            <a style="font-size: 12px;" class="fw-bold text-decoration-none px-1" href="{% url 'edit_profile' account.pk%}">Edit your profile <span><i class="fa fa-solid fa-pen"></i></span></a>                               
+                    {%endif%} 
+                            
+                    <p style="font-size: 12px;" class=" text-center my-2 fw-bold ">Follow <span class="p-1"><i class="fa fa-i-cursor" aria-hidden="true"></i></span></p>
+
+                    <!-- Start of social -->
+                    <ul class="list-group list-group-horizontal m-0 px-2">
+                        <!-- Start of facebook -->
+                        <li class="list-group-item m-0">
+                            <a class="btn btn-white text-decoration-none m-0" style="font-size:15px" href="{{post.author.profile.facebook_url}}" role="button"
+                                target="_blank"><i class="text-primary bg-none fab fa-facebook-f"></i
+                                >
+                            </a>
+                        </li>
+                         <!-- End of facebook -->
+
+                         <!-- Start of Twitter -->
+                        <li class="list-group-item m-0">
+                            <a class="btn btn-white text-decoration-none m-0" style="font-size:15px" href="{{post.author.profile.twitter_url}}" role="button"
+                                target="_blank"><i class="text-primary bg-none fab fa-twitter"></i
+                                >
+                            </a>
+                        </li>
+                         <!-- End of Twitter -->
+
+                         <!-- Start of Instagram -->
+                        <li class="list-group-item m-0">
+                            <a class="btn btn-white text-decoration-none m-0" style="font-size:15px" href="{{post.author.profile.instagram_url}}" role="button"
+                                target="_blank"><i class="text-primary bg-none fab fa-instagram"></i
+                                >
+                            </a>
+                        </li>
+                         <!-- End of Instagram -->
+
+                         <!-- Start of Pinterest -->
+                        <li class=" list-group-item m-0">
+                            <a class="btn btn-white text-decoration-none m-0" style="font-size:15px" href="{{post.author.profile.pinterest_url}}" role="button"
+                                target="_blank"><i class="text-primary bg-none fab fa-pinterest"></i
+                                >
+                            </a>
+                        </li>
+                         <!-- End of Pinterest -->
+                    </ul>
+                    <!-- End of social -->
+
+                </div>
+            </div>
+
+            
+            
+        </div>
+        <!-- End of First Column -->
+
+        <!-- Start of second Column -->
+        <div class="col-lg-8 ">   
+            <!-- Start of Header -->
+            <div class="row mb-3 ms-lg-4">
+                <div class="row position-relative border-bottom">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <h5 style="font-size: 18px;" class="fw-bolder p-3 ">{{post.author.get_full_name}} Articles:</h5>
+                    </div>
+        
+                    <div style="font-size: 12px;" class="fw-bold col-sm-4 col-md-4 col-lg-4">
+                        <!-- Start of post selection -->
+                        <div style=" 
+                        font-weight: 500;
+                        height: 48px;
+                        line-height: 48px;
+                        border-radius: 2px;
+                        border: 1px solid #eee;
+                        background: #f5f5f5;" class="dropdown">
+                            
+                            <span class="me-5 fs-5 text-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span style="font-size: 14px;" class="ms-3 pe-5 me-5 text-muted">
+                                    {%if request.resolver_match.url_name == 'latest_post_author_post'%}
+                                        Latest
+                                    {%elif request.resolver_match.url_name == 'most_read_author_post' %}
+                                        Most Read
+                                    {%elif request.resolver_match.url_name == 'most_viewed_author_post' %}
+                                        Most Viewed
+                                    {%elif request.resolver_match.url_name == 'most_commented_author_post' %}
+                                        Most Commented
+                                    {%else%}
+                                        Latest 
+                                    {%endif%} 
+                                </span>                               
+                            </span>
+                            {%if post%}
+                            <ul style="width: 100%; font-size:13px; z-index: 300" class="text-muted dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li class="m-0"><a class="my-0 py-0 dropdown-item" href="{% url 'latest_post_author_post' post.pk%}">Latest</a></li>
+                                <li class="m-0"><a class="my-0 py-0 dropdown-item" href="{% url 'most_read_author_post' post.pk %}">Most Read</a></li>
+                                <li class="m-0"><a class="my-0 py-0 dropdown-item" href="{% url 'most_viewed_author_post' post.pk %}">Most Viewed</a></li>
+                                <li class="m-0"><a class="my-0 py-0 dropdown-item" href="{% url 'most_commented_author_post' post.pk %}">Most Commented</a></li>
+                            </ul>
+                            {%endif%}
+                            
+                          </div>
+                        
+                        <!-- End of post Selection -->
+                    </div>
+                    <!-- Start of Style border-bottom -->
+                    <span style="border-bottom-width: 1px;
+                    position: absolute;
+                    left:0;
+                    top: 100%;
+                    width: 10%; 
+                    margin: 0 0 -1px 0;
+                    border-bottom-color: #0d6efd !important; 
+                    display: inline-block; border-bottom-style: 
+                    solid;" 
+                    > 
+                    </span>
+                    <!-- End of Style border-bottom -->
+                </div>
+            </div>
+            <!-- End of Header -->
+            
+            <!-- Start of Content -->   
+            <div class="row">
+                {%for post in page_obj%}                    
+                <div class="col-lg-6 my-2">                  
+                     
+                    <div style="width: 97%; height: 100%"  class="border-bottom card position-relative">
+                        <!-- image of latest post -->                            
+                        <div class="hover-effect-image-and-overlay col-lg-12 col-md-12 p-1 position-relative"> 
+                            
+                            <!-- Start of Image -->
+                            <a href="{{post.get_absolute_url}}">                                
+                                <div class="m-1 relative-position">
+                                    <!--start category  -->
+                                    <div style="font-size: 12px; z-index:20" class="position-absolute end-0 my-2 latest-world-post">
+                                        <a id="lastest-post-cat" href="{{post.category.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-primary text-white rounded p-2">{{post.sub_category.name}}</a>
+                                    </div>                                
+                                    <!-- end category -->
+                                                                     
+                                    <!-- Start of main Image -->
+                                    <div style="z-index: 1" class="HoverDiv2">
+                                        {% if post.post_image %}
+                                        <div class="general-overlay-zoom2"></div>
+                                        <img class="hover-image img-fluid position-relative" style="width: 100%; height: 194px;" src="{{post.post_image.url}}" alt="{{post.title}} image">                           
+                                        <a href="{{post.get_absolute_url}}" class="general-link2 border border-3  rounded-circle bg-primary"><i class="fw-bolder text-white m-2 fa-regular fa-arrow-right"></i></a>
+                                        {% else %}
+                                        {% endif %}
+    
+                                    </div>
+                                    <!-- End of main Image -->
+                                </div>
+                            </a>
+                            <!-- End of Image --> 
+                                              
+                        </div>
+                        <!-- End of Image of Latest post -->
+                        <div class="col-lg-12 col-md-12 p-2">
+                            <!-- Start of title -->
+                            <div  class="my-2">
+                                <a id="text-hover" href="{{post.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{post.title}}</a>
+                            </div>
+                            <!-- End of Title -->
+                            <div class="my-1">
+                                <!-- Start Date -->
+                                <span style="font-size: 12px; height: 32px;" class="me-1 fw-bold text-muted"><i class="m-2 fa-regular fa-clock text-primary"></i> {{post.publish.date}}</span>
+                                <!-- End Date -->
+                                <!-- Start of post article  -->
+                                <br>
+                                <span style="font-size: 12.5px;" class="text-muted text-justify lh-lg"><a href="{{post.get_absolute_url}}" class="text-decoration-none text-muted" >{{post.overview|safe|truncatechars:150}}</a></span>
+                                <!-- End of start of post article -->
+                            </div>
+                            <!--Other Features  -->
+                            <div class="row card-footer border-0">
+                                <div class="col-lg-7 col-md-7 col-sm-7">
+                                    <!-- Start of Author -->
+                                    <a id="text-hover" class="d-flex text-decoration-none" href="{%url 'blog_author' post.pk%}">
+                                        <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{post.author.profile_image.url}}"  alt="{{post.author}} image">
+                                        <span id="text-hover" style="font-size: 11px" class=" m-2 py-2 fw-bolder text-muted"> by {{post.author.first_name|capfirst}} {{post.author.last_name|capfirst}}</span>
+                                    </a>
+                                    <!-- End Author -->  
+                                </div>
+                                <div class=" col-lg-5 col-md-5 col-sm-5">
+                                    <!-- Start Comment -->
+                                    <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-comment text-primary"></i> {{post.blog_post_comment.all.count}}</span>
+                                    <!-- End Comment --> 
+                                    <!-- Start Views -->
+                                    <span style="font-size: 11px" class="mx-1 fw-bolder text-muted"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{post.views}}</span>
+                                    <!-- End Views --> 
+                                </div>
+                                
+                            </div>
+                            <!-- End of Other Features -->
+                            
+                        </div>
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                                    position: absolute;
+                                    left:0;
+                                    top: 100%;
+                                width: 5%; 
+                                margin: 0 0 -1px 0;
+                                border-bottom-color: #0d6efd !important; 
+                                display: inline-block; border-bottom-style: 
+                                solid;" 
+                            class=""> 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    
+                    </div>
+                       
+                </div>
+            {%endfor%}
+            </div>                   
+               
+            
+            <!-- End of Content -->
+            
+            <!-- start of pagination -->
+            <div>
+                {% if is_paginated %}
+                    {% include "includes/pagination.html" %}
+                {% endif %}
+            </div>
+            <!-- end of pagination --> 
+                   
+        </div>
+        <!-- End of second Column -->
+    </div>
+</section>
+<!-- End of Two Columns -->
+
+<!-- Start of second ads -->
+<section class="py-3 px-lg-5" style="background-color: #f9f9f9;">
+    <div class="container-fluid bg-dark border rounded">
+        {%for ad in ads|slice:"1:2"%}
+            <!-- Image -->
+            <a href="">
+                {%if ad.image %}
+                    <img style="width: 100%; height: 100px;" class="rounded" src="{{ad.image.url}}" alt="ad-image">
+                {%else%}
+                {%endif%}
+            </a>
+            <!-- end Image -->
+        {%endfor%}
+        
+    </div>   
+</section>
+
+<!-- End of second ads -->
+{%endblock%}

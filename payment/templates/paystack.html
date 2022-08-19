@@ -1,0 +1,66 @@
+{% extends 'courses/base/base.html' %}
+{% load course_custom_tags %}
+  <!--Title-->
+{%block title%} Initiate Payement {%endblock%}
+
+
+{%block content%}
+<section style="background-color: rgba(255, 255, 241, 0.973); height: 100vh !important" id="course-bg" class="px-lg-5 pb-5 container-fluid">
+    <!--Course-->    
+    <div class='container'>
+        <br>
+        <br>
+       
+        
+        <div class="row">
+            <div class="col-12 mx-auto " style="width: 50%;">                   
+                  <div class="p-3 border rounded">
+                      <div class="">
+                        
+                      </div>
+                      <div>
+                         
+                        <button class="btn btn-primary" onclick="payWithPaystack()">Continue to Pay</button>
+                      </div>
+                  </div>
+            </div>
+
+            
+        </div>
+        
+
+    </div>
+</section>
+   
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+        
+        
+            function payWithPaystack() {
+
+                console.log('responding')
+                let currency = "NGN";
+                
+                let ref = "{{order_id}}";
+                let obj = {
+                    key: "{{paystack_public_key}}",
+                    email: "{{user.email}}",
+                    amount: "{{amount}}",
+                    ref: ref,
+                    callback: function(response){
+                        window.location.href = "{% url 'verify_paystack_payment' order_id slug %}"
+                    }
+                }
+
+                if (Boolean(currency)){
+                    obj.currency = currency.toUpperCase();
+                }
+                
+                
+                var handler = PaystackPop.setup(obj);
+                handler.openIframe();
+            }
+    
+    </script> 
+
+{% endblock%}

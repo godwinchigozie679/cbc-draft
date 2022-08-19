@@ -1,0 +1,59 @@
+{% extends 'courses/base/dashboard_base.html' %}
+{% load course_custom_tags %}
+
+{%block title%}Dashboard{%endblock%}
+
+{%block content%}
+
+<style>
+  .social-form-control{
+    max-width: 300px !important;
+    width: 100% !important;
+  }
+</style>
+
+<!-- Start of Quick Link -->
+<section class="container-fluid my-2">
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
+      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
+      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
+    </div>
+  </div>
+</section>
+<!-- End of Quick Link -->
+
+<!-- Start of Delete Account form -->
+<section class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <form action="{% url 'edit_profile' pk=profile.id %}" method="post">{% csrf_token %}
+            <div class="form-outline mb-4"> 
+
+           
+            <div class="form-outline mb-4">  
+                                   
+              {{ form.as_p }}   
+              {{ form.media }}            
+              
+            </div>
+          
+          
+            <button class="btn btn-sm btn-primary" type="submit">Update</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+</section>
+<!-- End of Delete Account Form -->
+
+
+
+{% endblock%}

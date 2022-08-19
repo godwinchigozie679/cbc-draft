@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+</head>
+<body>
+  <style>
+    .share-button-style{
+      position: fixed; 
+      cursor: pointer; 
+      z-index: 100; 
+      top: 12% !important; 
+      left: -5px !important; 
+      transition: 6s all !important; 
+      transition-delay: 1s !important;
+    }
+
+  </style>
+  {% load social_share %}
+    <div class="col-lg-12">
+      <button id="show-share" class="border share-button-style border-0 bg-transparent mb-3 ms-1 d-none">
+        <i style="font-size: 23px !important;" class="fa fa-share-alt"></i>
+      </button>
+      <!-- Close  -->
+      <button id="close-share" class="border share-button-style border-0 bg-transparent mb-3 ms-3 d-none">
+        <i style="font-size: 23px !important;" class="fa fa-window-close"></i>
+      </button>
+      
+      <!-- Social -->
+      <ul id="social-share" style="position: fixed; z-index: 1000; top: 15% !important; left: -5px !important" class="list-group border border-0 d-none">      
+        <li class="list-group-item ps-2 pe-0 border-0">{% post_to_linkedin object_or_url %} </li>
+        <li style="z-index: 2000 ;" class="list-group-item ps-2 pe-0 border border-0">  {% post_to_facebook object_or_url %}</li>
+        <li style="z-index: 1000 ;" class="list-group-item ps-2 pe-0 bg-transparent border border-0">{% post_to_gplus object_or_url %} </li>
+        <li class="list-group-item ps-2 pe-0 bg-transparent border border-0">{% post_to_reddit "{{object.title}}" object_or_url %} </li>
+        <li class="list-group-item ps-2 pe-0 bg-transparent border border-0">{% post_to_telegram "Title: {{object.title}}" object_or_url %} </li>
+        <li class="list-group-item ps-2 pe-0 bg-transparent border border-0"> {% post_to_twitter "Title: {{object.title}}. Check it out!" object_or_url %}</li>
+        <li class="list-group-item ps-2 pe-0 bg-transparent border border-0"> {% post_to_whatsapp object_or_url %}</li>
+      </ul>                                   
+        
+    </div>
+  
+</body>
+</html>

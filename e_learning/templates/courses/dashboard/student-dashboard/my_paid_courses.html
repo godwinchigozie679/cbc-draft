@@ -1,0 +1,119 @@
+{% extends 'courses/base/student_dashboard_base.html' %}
+{% load course_custom_tags %}
+
+{%block title%}Dashboard{%endblock%}
+
+{%block content%}
+<!-- Start of Quick Link -->
+<section class="container-fluid my-2">
+  <div class="card">
+    <div class="card-body">
+      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
+      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
+      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
+    </div>
+  </div>
+</section>
+<!-- End of Quick Link -->
+
+<!-- Start of success Messages -->
+{% include 'messages/message.html'%}
+
+<!-- End of message -->
+
+<!-- Start Paid Course -->
+<section class="container-fluid">
+  <div class="card">
+    <div class="card-header fs-6 "><h6 class="text-center fw-bolder">My Paid Courses</h6></div>
+    <div class="card-body">
+      <div class="row">
+        {%for user_course in user_courses%}
+            <div class='col-lg-3 col-md-4 col-sm-6 col-xs-12 my-3 '>
+                  <div class="card" style="max-width: 20rem;">                        
+                      <div class="card-body"> 
+                          <img style="width: 100%; height: 150px;" src="{{user_course.course.thumbnail.url}}" alt="{{user_course.course.thumbnail}}">                            
+                          <h5 class="card-title my-5 text-justify fw-bolder">{{user_course.course.name}}
+
+                            <!-- Start check if enrolled -->                             
+                              {% if user_course%}
+                              <i class="m-0 p-0 fs-3 text-success fa fa-check-circle"></i>                      
+                              {%endif%}         
+                            <!-- End Check if Endrolled --> 
+                          </h5> 
+                          
+                          
+                           
+                          
+                      </div>
+                      <div class='card-footer p-0'>
+                              <div class='row mx-0 border-0'>
+                                  <div class='col d-grid gap-2 m-0 border no-gutter'>
+                                      <a href="{% url 'main_course' user_course.course.slug %}" class='btn btn-light fw-bold border-0'>Start Course</a>
+                                      
+                                  </div>
+                              </div>            
+  
+                      </div>
+                      
+                </div> 
+            </div>
+        {%endfor%}
+      </div>
+    </div>
+  </div>
+  
+</section> 
+<!-- End Paid Course -->
+
+
+<!-- start main pagination -->
+<section class="container-fluid mt-2">
+  <div class="row">
+      <div class="col-lg-1 col-md-1 col-sm-12">
+
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-12">
+            <!-- Start of Pagination -->
+
+              <nav aria-label="..." class="position-relative">
+                  <ul class="pagination fs-6 position-absolute bottom-1 start-50 translate-middle-x">
+
+                      {%if user_courses.has_previous%}
+                  <li class="page-item">
+                      <a class="page-link" href="?page=1" >first &laquo</a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="?page={{user_courses.previous_page_number}}">Previous</a></li>
+                      {%endif%}
+                  
+                      {% for i in nums%}
+                      <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+                      {% endfor%}
+                  <!-- <li class="page-item active" aria-current="page">
+                      <a class="page-link" href="#">{{user_courses.number}} of {{user_courses.paginator.num_pages}}</a>
+                  </li> -->
+
+                  {%if user_courses.has_next%}
+                  <li class="page-item"><a class="page-link" href="?page={{user_courses.next_page_number}}">Next</a></li>
+                  <li class="page-item">
+                      <a class="page-link" href="?page={{user_courses.paginator.num_pages}}">last &raquo</a>
+                  </li>
+                  {%endif%}
+                  </ul>
+              </nav>
+              <!-- End of Pagination -->
+
+      </div>
+
+      <div class="col-lg-1 col-md-1 col-sm-12">
+
+      </div>
+
+  </div>
+
+</section>
+<!-- end of main pagination page -->
+<br>
+<br>
+
+
+{% endblock%}

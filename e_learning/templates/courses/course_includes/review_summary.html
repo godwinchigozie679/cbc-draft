@@ -1,0 +1,77 @@
+<body>
+    <style>
+        #star_5_percent{ width: {{star_5_percent}}; background-color: #00ba74;}
+        #star_4_percent{ width: {{star_4_percent}}; background-color: #83ce36;}
+        #star_3_percent{ width: {{star_3_percent}}; background-color: #fbb851;}
+        #star_1_percent{ width: {{star_1_percent}};}
+
+        .progress-barr{
+          height: 12px !important;
+        }
+
+    </style>
+
+
+    <div class="row">
+    <div class="col-lg-3 col-md-3 p-2 border-end">
+      {%if average_course_review%}
+      <span class="rating-overview-box-total">{{average_course_review|floatformat:1 }}</span>
+      {%else%}
+      <span class="rating-overview-box-total">0.0</span>
+      {%endif%}
+      <span class="rating-overview-box-percent mt-1">out of 5.0</span>
+      <div class="star-rating">
+        <span id="rate"> 
+            <input type="radio" {% if average_course_review >= 5 %} checked {%endif%}/><label class="full" title="5"></label>
+            <input type="radio" {% if average_course_review >= 4.5 and average_course_review <= 5.0 %} checked {%endif%} /><label class="half" title="4.5"></label>
+            <input type="radio" {% if average_course_review >= 4.0 and average_course_review <= 4.5 %} checked {%endif%} /><label class = "full" title="4"></label>
+            <input type="radio" {% if average_course_review >= 3.5 and average_course_review <= 4.0 %} checked {%endif%} /><label class="half" title="3.5"></label>
+            <input type="radio" {% if average_course_review >= 3.0 and average_course_review <= 3.5 %} checked {%endif%} /><label class = "full" title="3"></label>
+            <input type="radio" {% if average_course_review >= 2.5 and average_course_review <= 3.0 %} checked {%endif%} /><label class="half" title="2.5"></label>
+            <input type="radio" {% if average_course_review >= 2.0 and average_course_review <= 2.5 %} checked {%endif%} /><label class = "full" title="2"></label>
+            <input type="radio" {% if average_course_review >= 1.5 and average_course_review <= 2.0 %} checked {%endif%} /><label class="half" title="1.5"></label>
+            <input type="radio" {% if average_course_review >= 0.5 and average_course_review <= 1.5 %} checked {%endif%} /><label class = "full" title="1"></label>
+            <input type="radio" {% if average_course_review <= 0.5 %} checked {%endif%} /><label class="half" title="0.5"></label>
+
+        </span>
+      </div>
+
+    </div>
+    <div class="col-lg-9 col-md-9">
+      <div class="row">
+        <div class="col-lg-6 my-2">
+          <span class="rating-bars-name">5 Star</span>
+          <div class="progress progress-barr">
+            <div class="progress-bar" role="progressbar" id="star_5_percent"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{star_5_percent}}</div>
+          </div>
+
+        </div>
+        <div class="col-lg-6 my-2">
+          <span class="rating-bars-name">4 Star</span>
+          <div class="progress progress-barr">
+            <div class="progress-bar" role="progressbar" id="star_4_percent" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{star_4_percent}}</div>
+          </div>
+          
+        </div>
+        <div class="col-lg-6 my-2">
+          <span class="rating-bars-name">3 Star</span>
+          <div class="progress progress-barr">
+            <div class="progress-bar" role="progressbar" id="star_3_percent" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{star_3_percent}}</div>
+          </div>
+          
+        </div>
+        <div class="col-lg-6 my-2">
+          <span class="rating-bars-name">1 Star</span>
+          <div class="progress progress-barr">
+            <div class="progress-bar bg-danger" role="progressbar" id="star_1_percent" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{star_1_percent}}</div>
+          </div>
+          
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+    
+</body>
+
