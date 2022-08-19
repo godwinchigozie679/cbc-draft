@@ -23,6 +23,11 @@ from account.gft.info import *
 
 
 
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
+
+
 # Email Details for register verification
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = EMAIL_USE_TLS
@@ -44,7 +49,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!-bgb2ij7o+#fupc!698$n=qvun9jf=ji+kcu^681h8&wvpga-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # if DEBUG:
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Development Only
@@ -52,7 +57,7 @@ DEBUG = True
 # SOcial for PostgresSQL
 SOCIAL_AUTH_JSONFIELD_ENABLED = True   
     
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 # Just added
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
@@ -206,6 +211,8 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+whitenoise.runserver_nostatic
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
