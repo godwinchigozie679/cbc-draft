@@ -205,6 +205,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static",
 # ]
@@ -289,5 +290,8 @@ LOGGING = {
     }
 }
 
+COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
+
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 django_heroku.settings(locals())
