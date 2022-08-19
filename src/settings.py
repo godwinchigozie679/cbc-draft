@@ -23,9 +23,6 @@ from account.gft.info import *
 
 
 
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
-
 
 
 # Email Details for register verification
@@ -119,8 +116,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'livereload.middleware.LiveReloadScript',
-    'e_learning.middleware.AjaxMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'e_learning.middleware.AjaxMiddleware',    
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -212,7 +209,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-whitenoise.runserver_nostatic
+# whitenoise.runserver_nostatic
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
