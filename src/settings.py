@@ -22,11 +22,6 @@ from django.contrib.messages import constants as messages
 from account.gft.info import *
 
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
-
-
-
 # Email Details for register verification
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = EMAIL_USE_TLS
