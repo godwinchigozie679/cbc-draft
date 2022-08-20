@@ -1,6 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path, include
+from django.views.static import serve
 # for static file
 
 from django.conf import settings
@@ -14,6 +15,7 @@ urlpatterns = [
     path('', include('payment.urls')),
     path('', include('blog.urls')),  
     path('ckeditor', include('ckeditor_uploader.urls')),
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT})
     
 ]
 
