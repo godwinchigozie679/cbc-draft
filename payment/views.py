@@ -9,6 +9,8 @@ from .models import Payment, PaymentExchangeRate
 from time import time
 # from pypaystack import Transaction, Customer, Plan
 from paystackapi.paystack import Paystack
+from paystackapi.transaction import Transaction #delete if it doesn't work
+
 import json
 from django.http import JsonResponse
 import math
@@ -91,10 +93,11 @@ def initiate_paystack(request, slug):
     payment.order_id
     payment.save()    
             
-    order_id = payment.order_id
+    reference = payment.order_id
     amount = payment.amount
     slug = course.slug
-            
+    
+         
             
             
     paystack_secret_key = 'sk_test_91ea127069a2e935c5dd98f51de416fa8a0a80ab'
@@ -105,7 +108,7 @@ def initiate_paystack(request, slug):
                 'course': course,
                 'user': user,
                 'amount': amount,
-                'order_id': order_id,
+                'reference': reference,
                 'slug':slug,
                 'paystack_secret_key': paystack_secret_key,
                 'paystack_public_key': paystack_public_key,
@@ -120,8 +123,8 @@ def initiate_paystack(request, slug):
 
 # VERIFY PAYSTACK PAYMENT      
       
-def verify_paystack_payment(request, order_id, slug): 
-    payment = get_object_or_404(Payment,order_id=order_id, course__slug=slug)   
+def verify_paystack_payment(request, reference, slug): 
+    payment = get_object_or_404(Payment, order_id=reference, course__slug=slug)   
     
     
     # Exchange
@@ -129,15 +132,12 @@ def verify_paystack_payment(request, order_id, slug):
     
     try:
         paystack_secret_key = 'sk_test_91ea127069a2e935c5dd98f51de416fa8a0a80ab'
-        # transaction = Transaction(authorization_key=paystack_secret_key, )
-        paystack = Paystack(secret_key=paystack_secret_key)        
-        # response = transaction.verify(order_id) 
-        response = paystack.customer.get(order_id)
+        paystack = Paystack(secret_key=paystack_secret_key)       
+        response = paystack.transaction.verify(reference)
         
-        
-        paystack_payment_id = response[3]['customer']['customer_code']
-        paystack_payment_order_id = response[3]['reference']
-        amount = response[3]['amount']
+        paystack_payment_id = response['data']['id']
+        paystack_payment_order_id = response['data']['reference']
+        amount = response['data']['amount']
         
         payment.payment_id = paystack_payment_id
         payment.order_id = paystack_payment_order_id

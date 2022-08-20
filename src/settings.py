@@ -153,15 +153,15 @@ MESSAGE_TAGS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ddbshl19t9e2sv',
-        'USER': 'ftamgogbohtekm',
-        'PASSWORD': '321337f8f63f990446b00579c995e3213406a540e527c9b33277bb0a13d0a99f',
-        'HOST': 'ec2-34-234-240-121.compute-1.amazonaws.com',
-        'PORT': '5432',
-        # 'NAME': 'cbc',
-        # 'USER': 'chigozie',
-        # 'PASSWORD': '123456',
-        # 'HOST': 'localhost',
+        # 'NAME': 'ddbshl19t9e2sv',
+        # 'USER': 'ftamgogbohtekm',
+        # 'PASSWORD': '321337f8f63f990446b00579c995e3213406a540e527c9b33277bb0a13d0a99f',
+        # 'HOST': 'ec2-34-234-240-121.compute-1.amazonaws.com',
+        # 'PORT': '5432',
+        'NAME': 'cbc',
+        'USER': 'chigozie',
+        'PASSWORD': '123456',
+        'HOST': 'localhost',
     
     
     }

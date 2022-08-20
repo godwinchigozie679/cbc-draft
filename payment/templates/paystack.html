@@ -39,19 +39,18 @@
             function payWithPaystack() {
 
                 console.log('responding')
-                let currency = "NGN";
-                
-                let ref = "{{order_id}}";
+                let currency = "NGN";                
+                let ref = "{{reference}}";
                 let obj = {
                     key: "{{paystack_public_key}}",
                     email: "{{user.email}}",
                     amount: "{{amount}}",
                     ref: ref,
                     callback: function(response){
-                        window.location.href = "{% url 'verify_paystack_payment' order_id slug %}"
+                        window.location.href = "{% url 'verify_paystack_payment' reference slug %}"
                     }
                 }
-
+                console.log(obj)
                 if (Boolean(currency)){
                     obj.currency = currency.toUpperCase();
                 }
