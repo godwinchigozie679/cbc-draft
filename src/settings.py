@@ -43,7 +43,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!-bgb2ij7o+#fupc!698$n=qvun9jf=ji+kcu^681h8&wvpga-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # if DEBUG:
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # Development Only
@@ -158,6 +158,12 @@ DATABASES = {
         'PASSWORD': '321337f8f63f990446b00579c995e3213406a540e527c9b33277bb0a13d0a99f',
         'HOST': 'ec2-34-234-240-121.compute-1.amazonaws.com',
         'PORT': '5432',
+        # 'NAME': 'cbc',
+        # 'USER': 'chigozie',
+        # 'PASSWORD': '123456',
+        # 'HOST': 'localhost',
+    
+    
     }
 }
 
