@@ -76,6 +76,7 @@ AUTHENTICATION_BACKENDS = (
 # Application definition
 
 INSTALLED_APPS = [
+    # 'whitenoise_runserver_nostatic',
     'blog.apps.BlogConfig',    
     'account.apps.AccountConfig',
     'django.contrib.admin',
@@ -223,7 +224,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 # WHITENOISE_USE_FINDERS = True
 # WHITENOISE_MANIFEST_STRICT = False
 # WHITENOISE_ALLOW_ALL_ORIGINS = True
