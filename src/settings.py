@@ -223,7 +223,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # try disabling it
+# WHITENOISE_USE_FINDERS = True
+# WHITENOISE_MANIFEST_STRICT = False
+# WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
