@@ -223,7 +223,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' # try disabling it
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage' # try disabling it
 # WHITENOISE_USE_FINDERS = True
 # WHITENOISE_MANIFEST_STRICT = False
 # WHITENOISE_ALLOW_ALL_ORIGINS = True
