@@ -1,0 +1,135 @@
+
+https://dontrepeatyourself.org/post/django-blog-tutorial-part-4-posts-and-comments/#adding-comments-in-the-post-page
+https://www.youtube.com/watch?v=q3m6H9kHnvk
+
+Partnership: Crypto Exchange
+
+
+New:
+
+Team:
+
+Services:
+
+Course category:
+Quize
+
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+Blog category:
+    post (minute of read, date, comment count, count of views)
+    post- active-default is false (I will only show active post on the home page of blog)
+    email to notify blog author when they make a post......
+    Status = (draft, Publish, default= draft)
+
+blog
+1. add post
+2. post (edit, delete)
+
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+Course (for admin alone)
+1.add course
+2. course (edit, delete)
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+News
+1. add News
+2. All News (edit, delete)
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+
+Quiz
+
+all user:
+    change first_name and last_name
+    change_course review
+    change password
+    change user name
+    bio
+    post blog
+
+Author:
+    change first_name and last_name
+    change_course review
+    change password
+    Bio
+    blog
+
+Admin:
+    Change Everything
+    Course
+
+
+   
+
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+simpleisbetterthancomplex.com
+
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+Eroll Should go to sales_copy page.
+introduction video
+I need to get total number of videos
+view more video
+sales_copy decription
+Enroll
+add to cart
+payment guarentee refund
+About the Author
+
+in video-Material to download and key learnings
+next and Prev will be on the top
+mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+
+pigination in review (done)
+pagination in paid Course (done)
+pigination in category{done}
+
+
+* Learn Absolute and Relative
+
+Adoption
+    Forex
+	Design
+	Graphics
+	
+Digital Economy
+	Crypto NFTs
+	Crypto Trading
+	NFTs
+
+Business
+    Cryptocurrency	
+	Trading
+
+crypt, bitcoin, digital, economy, trading, money, programming, nfts
+
+Money is a liquid asset used to facilitate transactions of value. 
+It is used as a medium of exchange between different economic actors, 
+as well as a store.
+
+524933864 
+76979871
+
+
+MY CV:
+https://waynelambert.dev/cv/
+https://dev.to/radualexandrub/how-to-create-a-comment-section-for-your-django-blog-3egp
+https://dontrepeatyourself.org/post/django-blog-tutorial-part-4-posts-and-comments/ (for post and comment create)
+
+Things to delete
+1. blank, and null in post in author_profile
+
+Note
+The differences between not and ''
+is and ==
+
+if not form.data['first_name']:
+checks for None or '' an empty string or False come to that.
+
+
+#######
+1. Who the course is ment for
+2. What you will learn
+3. requirement
+
+https://preview.themeforest.net/item/skillup-online-education-html-template/full_screen_preview/33656640?_ga=2.83393363.477931039.1659992467-1966670023.1659992467
+@/??stdw.fueh:72!; quillbot premium

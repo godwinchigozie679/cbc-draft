@@ -165,7 +165,7 @@ DATABASES = {
         # 'NAME': 'cbc',
         # 'USER': 'chigozie',
         # 'PASSWORD': '123456',
-        # 'HOST': 'localhost',
+        # 'HOST': 'localhost', 
     
     
     }
