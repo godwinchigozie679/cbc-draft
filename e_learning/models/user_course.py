@@ -3,11 +3,14 @@ from account.models import Account
 from e_learning.models.course import Course
 from e_learning.models.course_modules import Modulee
 from django.urls import reverse
+from payment.author_commission_models import AuthorCommision
 
 # Create Course User models
 class UserCourse(models.Model):    
     user = models.ForeignKey(Account, null=False, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, null=False, on_delete=models.CASCADE, related_name='enroll_students')
+    percentage_commision = models.ForeignKey(AuthorCommision, null=False, on_delete=models.CASCADE, related_name='percent_commission')
+    commission = models.FloatField()
     date = models.DateTimeField(auto_now_add=True)
     
     
@@ -30,13 +33,3 @@ class UserModule(models.Model):
 
 
 
-#MMMMMMMMMMMMMMMMMMMMMMMM
-class AuthorCourse(models.Model):    
-    user = models.ForeignKey(Account, on_delete=models.CASCADE,)
-    course = models.ForeignKey(Course, null=False, on_delete=models.CASCADE, blank=True)
-    date = models.DateTimeField(auto_now_add=True)
-    
-    
-    
-    def __str__(self):
-        return f'Course: {self.course}'

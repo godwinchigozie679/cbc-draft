@@ -24,289 +24,292 @@
 }
 </style>
 
-
-<!-- Start of Quick Link -->
-<section class="container-fluid my-2">
-  <div class="card">
-    <div class="card-body">
-          <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
-          <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
-          <a href="{{course.get_absolute_url}}" class="fw-bold text-decoration-none">{{course.name}}</a>
+<!-- Start of Wrapper -->
+<div class="wrapper">
+  <!-- Start of Quick Link -->
+  <section class="container-fluid my-2">
+    <div class="card">
+      <div class="card-body">
+            <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
+            <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
+            <a href="{{course.get_absolute_url}}" class="fw-bold text-decoration-none">{{course.name}}</a>
+      </div>
     </div>
-  </div>
-</section>
-<!-- End of Quick Link -->
+  </section>
+  <!-- End of Quick Link -->
 
 
-<!-- Start of video -->
-<section class="container-fluid">
-    <div class="card p-3">
+  <!-- Start of video -->
+  <section class="container-fluid">
+      <div class="card p-3">
+        <div class="row">
+          
+            <div class="col-lg-8 col-md-8 col-sm-12">
+              <div class="ratio ratio-16x9">
+                <iframe class="rounded" src="https://player.vimeo.com/video/{{video.video_id}}" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              </div>
+              
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <!--List of Courses-->
+
+                
+                    <ul class="card p-2
+                      " id="LectureList">   
+                      <div class="card-header bg-primary"><h6 class="fw-bolder fs-6 text-white">Course Content List</h6></div>
+                      
+                      {% is_enrolled request course as enrolled %}                    
+                      
+                      {% for module in modules %}
+                      <li class="list-group-item fw-bolder fs-6 ">{{ module.name }}</li>
+                        {% for v in module.modules.all %}                                                 
+                          <li class="list-group-item list-group-edit
+
+                              ">
+                            <a style="font-size: 13px;" class='text-dark text-decoration-none 
+                            
+                              {% if not enrolled and not v.is_preview == video %} 
+                                  text-muted no-preview
+                              {% endif %}
+                            
+                            ' 
+                          {%for result in module.course_q_module.all%}
+                            {%if result.score == module.module_quiz_pass_mark or result.score > module.module_quiz_pass_mark %}
+                            href="?lecture={{v.serial_number}}"
+                            {%endif%}
+                          {%endfor%} 
+                            > <span><i class="fa-solid fa-play {% if v == video %} 
+                              active-video-link {% endif %} "></i></span>
+                            {{v.title}}
+                                                      
+                            </a>
+                            
+                          </li>
+                          
+                        {% endfor %}
+                        <!-- Start of quiz -->
+                        {% for quiz in module.course_module_quiz.all %}
+                          
+
+                        <li class="list-group-item list-group-edit"><a style="font-size: 12px;" {% if enrolled %} href="{{quiz.get_absolute_url}}" {%endif%} class="text-decoration-none {% if module.module_completed == False %} 
+                          text-muted no-preview
+                      {% endif %}"><span><i class="fa-solid fa-book"></i></span> {{quiz.topic}}</a></li>
+                          {%endfor%}
+                        
+                        <!-- End of Quiz -->
+                      {% endfor %}                             
+                    </ul>
+              
+          
+            </div> 
+        </div>  
+      </div>
+  </section>    
+  <!-- end of video div -->
+
+
+  <!-- Start of Key Concept and Prerequisite -->
+  <section class=" container-fluid my-5">
       <div class="row">
+        <!-- start of Key concept -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="card">
+            <div class="card-header"><h6 class="fw-bold">Key Concept</h6></div>
+            <div class="card-body">
+              <p>{{course.description}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- end of key Concept -->
+
+        <!-- Start of Prerequisite -->
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <div class="card">
+            <div class="card-header"><h6 class="fw-bold">Prerequisite</h6></div>
+            <div class="card-body">
+              <p>{{course.description}}</p>
+            </div>
+      
+          </div>
+        </div>
+        <!-- End of Prerequisite -->
+      </div>
+  </section>
+  <!-- End of Key Concept and Prerequisite -->
+
+
+  <!-- Start of Description -->
+  <section class=" container-fluid my-5">
+    <div class="card">
+        <div class="card-header"><h6 class="fw-bold">Description</h6></div>
+        <div class="card-body">
+          <p>{{course.description}}</p>
+        </div>
+
+    </div>
+
+  </section>
+  <!-- End of Decription -->
+
+  <!-- Start Of Module -->
+  <section class="my-3">
+      <div class="card">
+        <div class="card-header"><h6 class="fw-bold">Course Curriculum</h6></div>
+        <div class="card-body">
+          {% for module in modules %}
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                      <h6 class="accordion-header" id="header{{module.id}}">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Arr{{module.id}}" aria-expanded="false" aria-controls="Arr{{module.id}}">
+                          <h6 class="fw-bold">{{module.name}}</h6>
+                          </button>
+                      </h6>
+                      <div id="Arr{{module.id}}" class="accordion-collapse collapse" aria-labelledby="heading{{module.id}}" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+                            {% for v in module.modules.all %}       
+                            
+                              <li class="list-group-item fs-6">{{v.title}}</li>                            
+                            
+                            {% endfor %}
+                        
+                          </div>
+
+                          
+                      </div>
+                    </div>
+              </div>
+        {% endfor %} 
+      </div>
+  </section>
+  <!-- End of Course Module -->
+
+  <!-- Review -->
+  <section class="my-5">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <!-- Review -->
+            <div class="col-lg-8 col-md-8 col-sm-12 my-5">
+              <div class="row">
+                <div class="col">
+                  <!-- Average Review Start -->
+                    <span id="rate"> <span> <h6 class="text-center fw-bolder">Student Review <a class="fw-light text-decoration-none fs-6" href="{% url 'all_review' course.slug%}">({{course_reviews.count}})</a></h6> </span> 
+                        <input type="radio" {% if average_course_review >= 5 %} checked {%endif%}/><label class="full" title="5"></label>
+                        <input type="radio" {% if average_course_review >= 4.5 and average_course_review <= 5.0 %} checked {%endif%} /><label class="half" title="4.5"></label>
+                        <input type="radio" {% if average_course_review >= 4.0 and average_course_review <= 4.5 %} checked {%endif%} /><label class = "full" title="4"></label>
+                        <input type="radio" {% if average_course_review >= 3.5 and average_course_review <= 4.0 %} checked {%endif%} /><label class="half" title="3.5"></label>
+                        <input type="radio" {% if average_course_review >= 3.0 and average_course_review <= 3.5 %} checked {%endif%} /><label class = "full" title="3"></label>
+                        <input type="radio" {% if average_course_review >= 2.5 and average_course_review <= 3.0 %} checked {%endif%} /><label class="half" title="2.5"></label>
+                        <input type="radio" {% if average_course_review >= 2.0 and average_course_review <= 2.5 %} checked {%endif%} /><label class = "full" title="2"></label>
+                        <input type="radio" {% if average_course_review >= 1.5 and average_course_review <= 2.0 %} checked {%endif%} /><label class="half" title="1.5"></label>
+                        <input type="radio" {% if average_course_review >= 0.5 and average_course_review <= 1.5 %} checked {%endif%} /><label class = "full" title="1"></label>
+                        <input type="radio" {% if average_course_review <= 0.5 %} checked {%endif%} /><label class="half" title="0.5"></label>
+    
+                    </span>
+                    <!-- End of Average Review Start -->
+                </div>
+              </div>
         
-          <div class="col-lg-8 col-md-8 col-sm-12">
-            <div class="ratio ratio-16x9">
-              <iframe class="rounded" src="https://player.vimeo.com/video/{{video.video_id}}" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+          <!-- start of customer review -->
+        {%for review in course_reviews%}
+        
+              <div class="card my-1">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="{{user.profile_image.url}}" 
+                            class="rounded-circle"
+                            height="50"
+                            width="50"
+                            alt="Portrait"
+                            loading="lazy"
+                            />
+                            
+                            <p class="text-secondary text-center fs-6">{{review.create_at}}</p>
+                        </div>
+                        <div class="col-md-10">
+                            <p>
+                                <strong>{{review.user.first_name| capfirst}} {{review.user.last_name| capfirst}}</strong>
+          
+                          </p>
+                          <div class="clearfix"></div>
+                            <p class="fs-6">{{review.comment}}</p>
+                            <p class="fw-bold text-success fs-6">{{review.updated_at}}</p>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%endfor%} 
+          <!-- end of customer review -->
+            </div>
+
+            <!-- Write Review -->
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="card">
+                <div class="card-header"><h6 class="fw-bolder">Write your Review</h6></div>
+                <div class="card-body">
+                  <!-- Start show Error or success Messages -->
+                  {% include 'messages/message.html' %}
+                  <!-- End of show Error or Success Messages -->
+                  <form action="{% url 'submit_review' course.slug%}" method="POST" class="px-3 my-2 " >
+                    {% csrf_token%}
+                    <!-- rating Type -->
+                    <label class="form-label" for="subject">How do you rate this course?</label>
+                    <br>
+                    <div class="rating">
+                      <input type="radio" id="star5" name="rating" value="5" required /><label class = "full" for="star5" title="5"></label>
+                      <input type="radio" id="star4half" name="rating" value="4.5" required /><label class="half" for="star4half" title="4.5"></label>
+                      <input type="radio" id="star4" name="rating" value="4" required /><label class = "full" for="star4" title="4"></label>
+                      <input type="radio" id="star3half" name="rating" value="3.5" required /><label class="half" for="star3half" title="3.5"></label>
+                      <input type="radio" id="star3" name="rating" value="3" required /><label class = "full" for="star3" title="3"></label>
+                      <input type="radio" id="star2half" name="rating" value="2.5" required /><label class="half" for="star2half" title="2.5"></label>
+                      <input type="radio" id="star2" name="rating" value="2" required /><label class = "full" for="star2" title="2"></label>
+                      <input type="radio" id="star1half" name="rating" value="1.5" required /><label class="half" for="star1half" title="1.5"></label>
+                      <input type="radio" id="star1" name="rating" value="1" required /><label class = "full" for="star1" title="1"></label>
+                      <input type="radio" id="starhalf" name="rating" value="0" required /><label class="half" for="starhalf" title="0.5"></label>
+                  </div>
+                  <br>
+                                    
+                    <div class="mt-2">
+                      
+                      <br>
+                      <div class="form-outline">
+                        <label class="form-label" for="comment">Review:</label>
+                        <textarea name="comment" class="form-control" id="comment_id" rows="4" required></textarea>
+                        
+                      </div>
+                      {%if review is None%}
+                          <button class="btn btn-primary my-2" type="submit">Update</button>
+                      {%else%}
+                          <button class="btn btn-primary my-2" type="submit">Submit</button>
+                      {%endif%}
+                    </div>
+                  
+                  </form>
+                </div>
+    
+              </div>
+            
             </div>
             
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-12">
-            <!--List of Courses-->
-
-               
-                  <ul class="card p-2
-                    " id="LectureList">   
-                    <div class="card-header bg-primary"><h6 class="fw-bolder fs-6 text-white">Course Content List</h6></div>
-                    
-                    {% is_enrolled request course as enrolled %}                    
-                    
-                    {% for module in modules %}
-                    <li class="list-group-item fw-bolder fs-6 ">{{ module.name }}</li>
-                      {% for v in module.modules.all %}                                                 
-                        <li class="list-group-item list-group-edit
-
-                            ">
-                          <a style="font-size: 13px;" class='text-dark text-decoration-none 
-                          
-                            {% if not enrolled and not v.is_preview == video %} 
-                                text-muted no-preview
-                            {% endif %}
-                          
-                          ' 
-                         {%for result in module.course_q_module.all%}
-                          {%if result.score == module.module_quiz_pass_mark or result.score > module.module_quiz_pass_mark %}
-                          href="?lecture={{v.serial_number}}"
-                          {%endif%}
-                         {%endfor%} 
-                          > <span><i class="fa-solid fa-play {% if v == video %} 
-                            active-video-link {% endif %} "></i></span>
-                          {{v.title}}
-                                                     
-                          </a>
-                          
-                        </li>
-                        
-                      {% endfor %}
-                      <!-- Start of quiz -->
-                      {% for quiz in module.course_module_quiz.all %}
-                        
-
-                      <li class="list-group-item list-group-edit"><a style="font-size: 12px;" {% if enrolled %} href="{{quiz.get_absolute_url}}" {%endif%} class="text-decoration-none {% if module.module_completed == False %} 
-                        text-muted no-preview
-                    {% endif %}"><span><i class="fa-solid fa-book"></i></span> {{quiz.topic}}</a></li>
-                        {%endfor%}
-                      
-                      <!-- End of Quiz -->
-                    {% endfor %}                             
-                  </ul>
-             
-         
-          </div> 
-      </div>  
-    </div>
-</section>    
-<!-- end of video div -->
-
-
-<!-- Start of Key Concept and Prerequisite -->
-<section class=" container-fluid my-5">
-    <div class="row">
-      <!-- start of Key concept -->
-      <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="card">
-          <div class="card-header"><h6 class="fw-bold">Key Concept</h6></div>
-          <div class="card-body">
-            <p>{{course.description}}</p>
-          </div>
-        </div>
-      </div>
-      <!-- end of key Concept -->
-
-      <!-- Start of Prerequisite -->
-      <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="card">
-          <div class="card-header"><h6 class="fw-bold">Prerequisite</h6></div>
-          <div class="card-body">
-            <p>{{course.description}}</p>
-          </div>
-    
-        </div>
-      </div>
-      <!-- End of Prerequisite -->
-    </div>
-</section>
-<!-- End of Key Concept and Prerequisite -->
-
-
-<!-- Start of Description -->
-<section class=" container-fluid my-5">
-  <div class="card">
-      <div class="card-header"><h6 class="fw-bold">Description</h6></div>
-      <div class="card-body">
-        <p>{{course.description}}</p>
-      </div>
-
-  </div>
-
-</section>
-<!-- End of Decription -->
-
-<!-- Start Of Module -->
-<section class="my-3">
-    <div class="card">
-      <div class="card-header"><h6 class="fw-bold">Course Curriculum</h6></div>
-      <div class="card-body">
-        {% for module in modules %}
-              <div class="accordion" id="accordionExample">
-                  <div class="accordion-item">
-                    <h6 class="accordion-header" id="header{{module.id}}">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Arr{{module.id}}" aria-expanded="false" aria-controls="Arr{{module.id}}">
-                        <h6 class="fw-bold">{{module.name}}</h6>
-                        </button>
-                    </h6>
-                    <div id="Arr{{module.id}}" class="accordion-collapse collapse" aria-labelledby="heading{{module.id}}" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
-                          {% for v in module.modules.all %}       
-                           
-                            <li class="list-group-item fs-6">{{v.title}}</li>                            
-                           
-                          {% endfor %}
-                      
-                        </div>
-
-                        
-                    </div>
-                  </div>
-            </div>
-      {% endfor %} 
-    </div>
-</section>
-<!-- End of Course Module -->
-
-<!-- Review -->
-<section class="my-5">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <!-- Review -->
-          <div class="col-lg-8 col-md-8 col-sm-12 my-5">
-            <div class="row">
-              <div class="col">
-                 <!-- Average Review Start -->
-                  <span id="rate"> <span> <h6 class="text-center fw-bolder">Student Review <a class="fw-light text-decoration-none fs-6" href="{% url 'all_review' course.slug%}">({{course_reviews.count}})</a></h6> </span> 
-                      <input type="radio" {% if average_course_review >= 5 %} checked {%endif%}/><label class="full" title="5"></label>
-                      <input type="radio" {% if average_course_review >= 4.5 and average_course_review <= 5.0 %} checked {%endif%} /><label class="half" title="4.5"></label>
-                      <input type="radio" {% if average_course_review >= 4.0 and average_course_review <= 4.5 %} checked {%endif%} /><label class = "full" title="4"></label>
-                      <input type="radio" {% if average_course_review >= 3.5 and average_course_review <= 4.0 %} checked {%endif%} /><label class="half" title="3.5"></label>
-                      <input type="radio" {% if average_course_review >= 3.0 and average_course_review <= 3.5 %} checked {%endif%} /><label class = "full" title="3"></label>
-                      <input type="radio" {% if average_course_review >= 2.5 and average_course_review <= 3.0 %} checked {%endif%} /><label class="half" title="2.5"></label>
-                      <input type="radio" {% if average_course_review >= 2.0 and average_course_review <= 2.5 %} checked {%endif%} /><label class = "full" title="2"></label>
-                      <input type="radio" {% if average_course_review >= 1.5 and average_course_review <= 2.0 %} checked {%endif%} /><label class="half" title="1.5"></label>
-                      <input type="radio" {% if average_course_review >= 0.5 and average_course_review <= 1.5 %} checked {%endif%} /><label class = "full" title="1"></label>
-                      <input type="radio" {% if average_course_review <= 0.5 %} checked {%endif%} /><label class="half" title="0.5"></label>
-  
-                  </span>
-                   <!-- End of Average Review Start -->
+            <!-- Start More-Review -->
+              <div class="mb-3 mx-5">
+                    <button type="button" class="btn btn-outline-primary" id="more-review">
+                      <a href="{% url 'all_review' course.slug%}" class="text-decoration-none fw-bold fs-6">
+                      More Reviews
+                      </a>
+                    </button>
               </div>
-            </div>
+            <!-- End More-Review -->
+          </div>
+        </div>
+      </div>
       
-        <!-- start of customer review -->
-      {%for review in course_reviews%}
-      
-            <div class="card my-1">
-              <div class="card-body">
-                  <div class="row">
-                      <div class="col-md-2">
-                          <img src="{{user.profile_image.url}}" 
-                          class="rounded-circle"
-                          height="50"
-                          width="50"
-                          alt="Portrait"
-                          loading="lazy"
-                          />
-                          
-                          <p class="text-secondary text-center fs-6">{{review.create_at}}</p>
-                      </div>
-                      <div class="col-md-10">
-                          <p>
-                              <strong>{{review.user.first_name| capfirst}} {{review.user.last_name| capfirst}}</strong>
-        
-                         </p>
-                         <div class="clearfix"></div>
-                          <p class="fs-6">{{review.comment}}</p>
-                          <p class="fw-bold text-success fs-6">{{review.updated_at}}</p>
-                          
-                      </div>
-                  </div>
-              </div>
-          </div>
-          {%endfor%} 
-        <!-- end of customer review -->
-          </div>
-
-          <!-- Write Review -->
-          <div class="col-lg-4 col-md-4 col-sm-12">
-            <div class="card">
-              <div class="card-header"><h6 class="fw-bolder">Write your Review</h6></div>
-              <div class="card-body">
-                <!-- Start show Error or success Messages -->
-                {% include 'messages/message.html' %}
-                <!-- End of show Error or Success Messages -->
-                <form action="{% url 'submit_review' course.slug%}" method="POST" class="px-3 my-2 " >
-                  {% csrf_token%}
-                  <!-- rating Type -->
-                  <label class="form-label" for="subject">How do you rate this course?</label>
-                  <br>
-                  <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" required /><label class = "full" for="star5" title="5"></label>
-                    <input type="radio" id="star4half" name="rating" value="4.5" required /><label class="half" for="star4half" title="4.5"></label>
-                    <input type="radio" id="star4" name="rating" value="4" required /><label class = "full" for="star4" title="4"></label>
-                    <input type="radio" id="star3half" name="rating" value="3.5" required /><label class="half" for="star3half" title="3.5"></label>
-                    <input type="radio" id="star3" name="rating" value="3" required /><label class = "full" for="star3" title="3"></label>
-                    <input type="radio" id="star2half" name="rating" value="2.5" required /><label class="half" for="star2half" title="2.5"></label>
-                    <input type="radio" id="star2" name="rating" value="2" required /><label class = "full" for="star2" title="2"></label>
-                    <input type="radio" id="star1half" name="rating" value="1.5" required /><label class="half" for="star1half" title="1.5"></label>
-                    <input type="radio" id="star1" name="rating" value="1" required /><label class = "full" for="star1" title="1"></label>
-                    <input type="radio" id="starhalf" name="rating" value="0" required /><label class="half" for="starhalf" title="0.5"></label>
-                </div>
-                <br>
-                                   
-                  <div class="mt-2">
-                    
-                    <br>
-                    <div class="form-outline">
-                      <label class="form-label" for="comment">Review:</label>
-                      <textarea name="comment" class="form-control" id="comment_id" rows="4" required></textarea>
-                      
-                    </div>
-                    {%if review is None%}
-                        <button class="btn btn-primary my-2" type="submit">Update</button>
-                    {%else%}
-                        <button class="btn btn-primary my-2" type="submit">Submit</button>
-                    {%endif%}
-                  </div>
-                 
-                </form>
-              </div>
-  
-            </div>
-          
-          </div>
-          
-          <!-- Start More-Review -->
-            <div class="mb-3 mx-5">
-                  <button type="button" class="btn btn-outline-primary" id="more-review">
-                    <a href="{% url 'all_review' course.slug%}" class="text-decoration-none fw-bold fs-6">
-                    More Reviews
-                    </a>
-                  </button>
-            </div>
-          <!-- End More-Review -->
-        </div>
-      </div>
-    </div>
-    
-</section>
-<!-- End Review -->
+  </section>
+  <!-- End Review -->
+</div>
+<!-- End of Wrapper -->
 <br>
 <br>
 

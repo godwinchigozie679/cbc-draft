@@ -52,8 +52,8 @@
         
         <div class="row bg-transparent ">
             <div class="col-12 bg-transparent p-2   ">
-                    <form action="{% url 'initiate_payment' course.slug  %}" method="get" >
-                        <div id="width-setting" class=" border mx-auto">                        
+                <form action="{% url 'initiate_payment' course.slug  %}" method="get" >
+                    <div id="width-setting" class=" border mx-auto">                        
                         <div class="">                             
                             <div class="p-2">
                                 <img class="p-2" id="logo-inbox-img" height="50px " src="{% static 'courses/cbc/logo/CBC logo 3.png'%}" alt=""> 
@@ -63,26 +63,25 @@
                         </div>
                         <div class="card-body">
                             <h6 class="fw-bolder text-center">Select Payment Method</h6>                        
-                            <p class="fs-6 ">Payable Amount:   
+                            <p class="fs-6 my-2">Payable Amount:   
                                 <b>{% cal_main_price course.price course.percentage_discount as value %} {{value|dollar}}</b>
-                            </p>  
+                            </p> 
+                            <div class="row px-2 ">
+                                    <div class=" col-lg-6 form-check">
+                                    
+                                        <label style="cursor: pointer !important;" class="form-check-label d-flex">
+                                            <input type="radio" class="form-check-input me-1" name="paymentMethod" id="paymentMethod" value="paystack">
+                                            <img id="paystack-width" class="payment-logo" height="60px " src="{% static 'payment/payment_logo/download.png'%}" alt="">
+                                        </label>
+                                    </div>
+                                    <div  class=" col-lg-6 col-sm-12 form-check">
+                                        <label style="cursor: pointer !important;" class="form-check-label">
+                                                <input type="radio" class="form-check-input d-flex" name="paymentMethod" id="paymentMethod" value="paypal">
+                                                <img class="payment-logo" id="paypal-width" height="60px" src="{% static 'payment/payment_logo/paypal.png'%}" alt="">
+                                        </label>
+                                    </div>
                                 
-                        <div class="row px-2">
-                                <div class=" col-lg-6 form-check">
-                                   
-                                    <label style="cursor: pointer !important;" class="form-check-label d-flex">
-                                        <input type="radio" class="form-check-input me-1" name="paymentMethod" id="paymentMethod" value="paystack">
-                                        <img id="paystack-width" class="payment-logo" height="60px " src="{% static 'payment/payment_logo/download.png'%}" alt="">
-                                    </label>
-                                </div>
-                                <div  class=" col-lg-6 col-sm-12 form-check">
-                                    <label style="cursor: pointer !important;" class="form-check-label">
-                                            <input type="radio" class="form-check-input d-flex" name="paymentMethod" id="paymentMethod" value="paypal">
-                                            <img class="payment-logo" id="paypal-width" height="60px" src="{% static 'payment/payment_logo/paypal.png'%}" alt="">
-                                    </label>
-                                </div>
-                            
-                        </div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-primary fw-bold">Next..</button>

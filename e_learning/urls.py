@@ -1,7 +1,17 @@
 from django.contrib import admin
 from django.urls import path, include
 #Mapping of Homepage from view
-from e_learning.views import  homepage, course_video, user_course, course_page, course_details, all_course_in_category, review, course_author_profile, quiz
+from e_learning.views import  (homepage, 
+                               course_video, 
+                               user_course, 
+                               course_page, 
+                               course_details, 
+                               all_course_in_category, 
+                               review, 
+                               course_author_profile, 
+                               quiz, 
+                               author_admin,
+                               admin_dashboard)
 
 
 
@@ -29,6 +39,19 @@ urlpatterns = [
     # User Course for Payment and other verification
     path('account/', user_course.user_course, name ='user_course'),
     path('course_success_payment/<slug:slug>', user_course.course_success_payment, name ='course_success_payment'),
+    
+    # Author Admin
+    path('author/', author_admin.author_dashboard, name ='author_admin'),
+    path('author-courses/', author_admin.AuthorCourse.as_view(), name ='author_courses'),
+    path('author-bank-account', author_admin.bank_account_details, name ='bank_details'),
+    path('author-bank-edit', author_admin.AddBankAccountDetails.as_view(), name ='add_bank_details'),
+    path('author-bank/<int:pk>/update', author_admin.EditBankAccountDetails.as_view(), name = 'edit_bank_account'),
+    path('earnings/', author_admin.earnings, name = 'earnings'),
+    # Main Admin
+    path('dashboard-admin/', admin_dashboard.dashboard_admin, name ='dashboard_admin'),
+    path('all-courses/', admin_dashboard.AdminCourse.as_view(), name ='admin_courses'),
+    
+    
     # Review
     path('submit_review/<slug:slug>', review.submit_review, name ='submit_review'),
     path('all_review/<slug:slug>', review.all_review, name ='all_review'),

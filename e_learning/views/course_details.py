@@ -19,13 +19,7 @@ from django.contrib.auth.decorators import login_required
 #######################################################################################
   
 
-def course_details(request, slug):
-    
-    
-
-     
-   
-   
+def course_details(request, slug):   
    
    try:
        course = Course.objects.get(slug=slug)

@@ -1,0 +1,171 @@
+{% extends 'courses/base/admin_dashboard_base.html' %}
+
+{% load course_custom_tags %}
+
+{%block title%}{{request.user.get_full_name}}{%endblock%}
+
+{%block content%}
+<style>
+    
+</style>
+<!-- Start of wrapper -->
+<div class="wrapper">
+    <!-- Start of two colum -->
+    <div class="row m-0 p-0">
+        <!-- Start of first column -->
+        <div style="background-color: #f8f9fa;" class="col-lg-2">
+            {%include 'courses/dashboard/admin-dashboard/admin_nav.html'%}
+        </div>
+
+        <!-- end of first column -->
+        <!-- Start of second column -->
+        <div class="col-lg-10 container-fluid">
+            <div class="row mt-5">
+                <div class="col">
+                    <h6 class="fw-bold">Dashboard</h6>
+                </div>
+                <!-- Start of Stat -->
+                <div class="row mt-5">
+                    <!-- start of unit order -->
+                    <div class="col-lg-4 my-1">
+                        <div style="background-color: antiquewhite;" class="card">
+                            <div class="row card-body">
+                                <div class="col-md-3 col-lg-3 px-1">
+                                    <span class="text-danger text-center"><i class="fs-1 fa-solid fa-school"></i></span>
+
+                                </div>
+                                <div class="col-md-3 col-lg-9">
+                                    <p class="card-text text-center">Enrolled Courses</p>
+                                    {%if today_order%}
+                                    <h5 class="card-title text-center pt-2">{{today_order}}</h5>
+                                    {%else%}
+                                    <h5 class="card-title text-center pt-2">0</h5>
+                                    {%endif%}
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- End of unit order -->
+
+                    <!-- Start of Unit Commision -->
+                    <div class="col-lg-4 my-1">
+                        <div style="background-color: rgb(195, 248, 184);" class="card">
+                            <div class="row card-body">
+                                <div class="col-3 px-1">
+                                    <span class="text-white text-center"><i class="fs-1 fa-solid fa-usd"></i></span>
+
+                                </div>
+                                <div class="col-9 my-1">
+                                    <p class="card-text text-center">Today Earnings</p>
+                                    {%if today_earnings%}
+                                    <h5 class="card-title text-center pt-2">$ {{today_earnings|floatformat:2}}</h5>
+                                    {%else%}
+                                    <h5 class="card-title text-center pt-2">$ 0.00</h5>
+                                    {%endif%}
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- End of Unit Commission -->
+
+                    <!-- Start of all_time_order -->
+                    <div class="col-lg-4 my-1">
+                        <div style="background-color: antiquewhite;" class="card">
+                            <div class="row card-body">
+                                <div class="col-3 px-1">
+                                    <span class="text-danger text-center"><i class="fs-1 fa-solid fa-chalkboard-teacher"></i></span>
+
+                                </div>
+                                <div class="col-9 my-1">
+                                    <p class="card-text text-center">Overall Enrolled</p>
+                                    <h5 class="card-title text-center pt-2">{{all_time_order}}</h5>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of all_time_order -->
+
+                    <!-- Start of This month income -->
+                    <div class="col-lg-4">
+                        <div style="background-color: antiquewhite;" class="card">
+                            <div class="row card-body">
+                                <div class="col-3 px-1">
+                                    <span class="text-danger text-center"><i class="fs-1 fa-solid fa-usd"></i></span>
+
+                                </div>
+                                <div class="col-9 my-1">
+                                    <p class="card-text text-center">{% now 'F'%} Earnings</p>
+                                    <h5 class="card-title text-center pt-2">$ {{month_earnings}}</h5>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of this month income -->
+
+                    <!-- Start of total Earnings -->
+                    <div class="col-lg-4 my-1">
+                        <div style="background-color: rgb(195, 248, 184);" class="card">
+                            <div class="row card-body">
+                                <div class="col-3 px-1">
+                                    <span class="text-white text-center"><i class="fs-1 fa-solid fa-usd"></i></span>
+
+                                </div>
+                                <div class="col-9 my-1">
+                                    <p class="card-text text-center">Total Earnings</p>
+                                    <h5 class="card-title text-center pt-2">$ {{total_earnings|floatformat:2}}</h5>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- End of Total Earnings -->
+                    
+                    <!-- Start of Total Courses -->
+                    <div class="col-lg-4">
+                        <div style="background-color: antiquewhite;" class="card">
+                            <div class="row card-body">
+                                <div class="col-3 px-1">
+                                    <span class="text-danger text-center"><i class="fs-1 fa-solid fa-laptop-code"></i></span>
+
+                                </div>
+                                <div class="col-9 my-1">
+                                    <p class="card-text text-center">Total Courses</p>
+                                    <h5 class="card-title text-center pt-2">{{total_courses}}</h5>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- End of Total Courses -->
+
+
+
+                </div>
+                
+                <!-- End of Stat -->
+            </div>
+        
+
+        </div>
+        <!-- End of second column -->
+    </div>
+    
+    <!-- End of two column -->    
+</div>
+<!-- End of Warapper -->
+{%endblock%}

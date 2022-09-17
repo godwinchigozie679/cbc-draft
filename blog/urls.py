@@ -62,7 +62,9 @@ urlpatterns = [
     
     # Create Post
     path('blog_post/blog/create-blog_post', views.CreateBlogPost.as_view(), name='create_blog_post'),
-     path('blog_post/blog/<int:pk>/update-blog_post', views.UpdateBlogPost.as_view(), name='update_blog_post'),
+    path('blog_post/blog/<int:pk>/update-blog_post', views.UpdateBlogPost.as_view(), name='update_blog_post'),
+    #post like
+    path('post-like/<str:blog_post_slug>', views.like_blog_post, name='like_blog_post'),
     ##################################################################################################
       
            
@@ -103,6 +105,8 @@ urlpatterns = [
     path('most-viewed/news/<int:pk>/post', views.MostViewedNewsAuthorPostList.as_view(), name='most_viewed_news_author_post'),
     path('most-commented/news/<int:pk>/post', views.MostCommentedNewsAuthorPostList.as_view(), name='most_commented_news_author_post'),
     
+    #news like
+    path('news-like/<str:news_post_slug>', views.like_news_post, name='like_news_post'),
     
     
     

@@ -1,0 +1,95 @@
+{% extends 'courses/base/author_dashboard_base.html' %}
+{% load course_custom_tags %}
+
+{%block title%}{{request.user.get_full_name}}{%endblock%}
+
+{%block content%}
+
+<!-- Start of User Profile -->
+<div class="wrapper">
+    <div class="row">
+      <!-- Start of first column -->
+      <div style="background-color: #f8f9fa;" class="col-lg-2">
+        {%if request.user.is_author%}
+          {%include 'courses/dashboard/author-dashboard/author_nav.html'%}
+        {%endif%}
+      </div>
+
+    <!-- end of first column -->
+
+    <!-- Start of Second Column -->      
+    <div class="col-lg-10">
+      <div class="card">
+        <div class="card-header"><h6 class="fs-6 fw-bolder text-center">Bank Account Details</h6></div>
+        <div class="card-body">
+          
+
+          <!-- Profile -->
+          <div class="row">
+            <!-- Start of profile Image -->
+            <div class="col-lg-2 ">
+            
+
+            </div>
+            <!-- End of profile Image -->
+
+            <!-- user profile -->
+            <div class="col-lg-6 mt-4">
+              {%if bank_acount_detail %}
+              <ul class="list-group border border-0">
+                <li class="list-group-item border border-0"><b>Bank Name:</b> {{bank_acount_detail.bank_name}}</li>
+                <li class="list-group-item border border-0"><b>Account Name:</b> {{bank_acount_detail.account_name}}</li>
+                <li class="list-group-item border border-0"><b>Account Number:</b> {{bank_acount_detail.account_number}}</li>
+              </ul>
+              
+              {%else%}
+                No Bank Details ....
+              {%endif%}
+              
+
+            </div>
+
+            <!-- end of other profile -->
+          </div>
+          <!-- End of Profile -->
+
+          <div class="row">
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-10">
+              
+            </div>
+            <div class="col-lg-1">
+
+            </div>
+          </div>
+
+           
+        </div>
+
+        <!-- start of footer -->
+        <div class="card-footer bg-transparent">  
+          {%if bank_acount_detail%}        
+          <a class="btn btn-sm btn-secondary text-white my-2" href="{{bank_acount_detail.get_absolute_url}}"><i class="fa-solid fa-user-pen mx-1" aria-hidden="true"></i>Edit Account</a>
+          {%else%} 
+          <a class="btn btn-sm btn-secondary text-white my-2" href="{%url 'add_bank_details'%}"><i class="fa-solid fa-user-pen mx-1" aria-hidden="true"></i>Add Account</a>  
+          {%endif%}       
+        </div>
+        <!-- end of footer -->
+      
+      </div>
+    </div>
+    <!-- End of Second Column -->
+  </div>
+</div>
+
+<br>
+<br>
+
+<!-- End of User Profile -->
+
+
+
+
+{% endblock%}

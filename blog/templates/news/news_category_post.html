@@ -124,8 +124,10 @@
                         border: 1px solid #eee;
                         background: #f5f5f5;" class="dropdown">
                             
-                            <span class="me-5 fs-5 text-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span style="font-size: 14px;" class="ms-3 pe-5 me-5 text-muted">Latest</span>                     </span>
+                            <div class="fs-5 text-primary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span style="font-size: 14px;" class="ms-3 pe-5 me-5 text-muted">Latest</span> 
+                                <span class="ms-5 dropdown-toggle"></span>                    
+                            </div>
                             {%if category%}
                             <ul style="width: 100%; font-size:13px; z-index: 300" class="text-muted dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                   
@@ -390,7 +392,7 @@
                         
                         {%for tag in news_common_tags|slice:":8"%}   
                                                                       
-                        <a id="tag-bg-hover" class="tag-bg text-decoration-none bg-dark fw-bold text-white" href="{% url 'news_tag_list' tag.slug %}" >{{tag|capfirst}}</a>                          
+                        <a id="tag-bg-hover" class="tag-bg text-decoration-none m-1 bg-dark fw-bold text-white" href="{% url 'news_tag_list' tag.slug %}" >{{tag|capfirst}}</a>                          
                           
                         
                         {%endfor%}

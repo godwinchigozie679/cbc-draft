@@ -5,30 +5,25 @@
 
 {%block content%}
 
-
-<!-- Start of Quick Link -->
-<section class="container-fluid my-2">
-  <div class="card">
-    <div class="card-body">
-      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
-      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
-      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
-    </div>
-  </div>
-</section>
-<!-- End of Quick Link -->
-
 <!-- Start of Delete Account form -->
-<section class="container my-5">
+<div class="wrapper my-5">
   <div class="row">
-    <div class="col-lg-2">
+    <!-- Start of first column -->
+    <div style="background-color: #f8f9fa;" class="col-lg-2">
+      {%if request.user.is_author%}
+        {%include 'courses/dashboard/author-dashboard/author_nav.html'%}
+      {%elif request.user.is_admin%}
+        {%include 'courses/dashboard/admin-dashboard/admin_nav.html'%}
+      {%else%}
 
+      {%endif%}
     </div>
-
-    <div class="col-lg-8">
-      <div class="card" style="max-width: 500px; width:100%">
-        <div class="card-body">
-          <form method="POST">{% csrf_token %}
+    <!-- End of first column -->
+    <!-- Start of second column -->
+    <div class="col-lg-10 mt-5">
+      <div class="card ms-lg-5" style="max-width: 500px; width:100%">
+        <div class="card-body ms-lg-5">
+          <form class="ms-lg-5" method="POST">{% csrf_token %}
             <p>Are you sure you want to delete the account "{{ user.username }}"?</p>
               {{ form }}
             <b class="btn btn-sm btn-danger"><a class="text-decoration-none text-white" href="{%url 'confirm_delete'%}">Confirm</a></b>
@@ -38,14 +33,12 @@
         </div>
       </div>
     </div>
+    <!-- End of Second Column -->
 
-    <div class="col-lg-2">
-
-    </div>
   </div>
   
 
-</section>
+</div>
 <!-- End of Delete Account Form -->
 
 

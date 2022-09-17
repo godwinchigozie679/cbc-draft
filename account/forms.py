@@ -45,8 +45,8 @@ class RegistrationForm(UserCreationForm):
 
 
 class AccountAuthenticationForm(forms.Form):
-    email = forms.EmailField(widget=forms.TextInput)    
-    password = forms.CharField(label = "password", widget= forms.PasswordInput)
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control my-2 content-comment','placeholder': 'Enter Your Email'}))    
+    password = forms.CharField(label = "password", widget= forms.PasswordInput(attrs={'class': 'form-control my-2 content-comment','placeholder': 'Enter Your Password'}))
     
     class Meta:
         model = Account
@@ -56,9 +56,9 @@ class AccountAuthenticationForm(forms.Form):
 
 # EditProfileAccountForm
 class EditProfileAccountForm(ModelForm):
-    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter Your First Name'}))
-    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter Your Last Name'}))
-    username = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control','placeholder': 'Enter Your username'}))
+    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-2 content-comment','placeholder': 'Enter Your First Name'}))
+    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-2 content-comment','placeholder': 'Enter Your Last Name'}))
+    username = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-2 content-comment','placeholder': 'Enter Your username'}))
     profile_image = forms.ImageField(required=False, widget=forms.FileInput())
     
     class Meta:
@@ -69,11 +69,11 @@ class EditProfileAccountForm(ModelForm):
 
 # EditProfileAccountForm
 class EditProfileForm(ModelForm):
-    phone = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control content-comment','placeholder': 'Enter Your Phone Number'}))
-    twitter_url = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control content-comment','placeholder': 'Enter Your Twitter url'}))
-    facebook_url = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control content-comment','placeholder': 'Enter Your Facebook url'}))
-    instagram_url = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control content-comment','placeholder': 'Enter Your Instagram url'}))
-    biography = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control content-comment mb-3','placeholder': 'Your Comment:', "rows":8, "cols":30}))
+    phone = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-2 content-comment','placeholder': 'Enter Your Phone Number'}))
+    twitter_url = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 content-comment','placeholder': 'Enter Your Twitter url'}))
+    facebook_url = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 content-comment','placeholder': 'Enter Your Facebook url'}))
+    instagram_url = forms.CharField(required=False, widget=forms.TextInput(attrs={'class': 'form-control my-3 content-comment','placeholder': 'Enter Your Instagram url'}))
+    biography = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control content-comment my-2','placeholder': 'Your Comment:', "rows":8, "cols":30}))
     
     class Meta:    
         model = Profile

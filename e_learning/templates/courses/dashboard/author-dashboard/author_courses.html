@@ -1,0 +1,186 @@
+{% extends 'courses/base/author_dashboard_base.html' %}
+
+{% load course_custom_tags %}
+
+
+{%load static %}
+
+{%block title%}{{request.user.get_full_name}}{%endblock%}
+
+{%block content%}
+<style>
+    
+</style>
+<!-- Start of wrapper -->
+<div class="wrapper">
+    <!-- Start of two colum -->
+    <div class="row m-0 p-0">
+        <!-- Start of first column -->
+        <div style="background-color: #f8f9fa;" class="col-lg-2">
+            {%include 'courses/dashboard/author-dashboard/author_nav.html'%}
+
+        </div>
+
+        <!-- end of first column -->
+        <!-- Start of second column -->
+        <div class="col-lg-10 container-fluid">
+            <div class="col mt-5 mb-2 mx-3">
+                <h6 class="fw-bold">My Courses</h6>
+            </div>
+            <!-- Start of Content -->               
+            <div class="row">
+                
+                {%for course in page_obj%}                    
+                <div class="col-lg-4 col-md-6 col-sm-6 my-2">                  
+                    
+                    <div style="width: 97%; height: 100%"  class="border-bottom card position-relative">
+                        <!-- image of latest post -->                            
+                        <div class="hover-effect-image-and-overlay col-lg-12 col-md-12 p-1 position-relative"> 
+                            
+                            <!-- Start of Image -->
+                            <a href="{{course.get_absolute_url}}">                                
+                                <div class="m-1 relative-position">
+                                    <!--start category  -->
+                                    <div style="font-size: 12px; z-index:20" class="position-absolute end-0 my-2 latest-world-post">
+                                        <a id="lastest-post-cat" href="{{course.sector.get_absolute_url}}" class=" text-decoration-none fw-bolder bg-dark text-white rounded p-2">{{course.sub_sector.name}}</a>
+                                    </div>                                
+                                    <!-- end category -->
+                                                                    
+                                    <!-- Start of main Image -->
+                                    <div style="z-index: 1" class="HoverDiv2">
+                                        {% if course.thumbnail %}
+                                        <div class="general-overlay-zoom2"></div>
+                                        <img class="hover-image img-fluid position-relative" style="width: 100%; height: 194px;" src="{{course.thumbnail.url}}" alt="{{course.name}} image">                           
+                                        <a href="{%url 'course_details' course.slug%}" class="general-link2 border border-3  rounded-circle bg-dark"><i class="text-white text-white m-2 fa-solid fa-play"></i></a>
+                                        {% else %}
+                                        {% endif %}
+    
+                                    </div>
+                                    <!-- End of main Image -->
+                                </div>
+                            </a>
+                            <!-- End of Image --> 
+                                            
+                        </div>
+                        <!-- End of Image of Latest post -->
+                        <div class="col-lg-12 col-md-12 p-2">
+                            <!-- Start of title -->
+                            <div  class="my-2">
+                                <a id="text-hover" href="{{course.get_absolute_url}}" class=" fw-bolder text-dark fs-6 text-decoration-none">{{course.name}} </a>
+                            </div>
+                            <!-- End of Title -->
+                            <div class="my-1">
+                                <!-- Start student count -->
+                                <span style="font-size: 12px; height: 32px;" class="me-1 fw-bold text-muted"><i class="m-2 fas fa-user text-primary"></i> {{course.enroll_students.all.count}}</span>   
+                                <!-- End student count -->
+                                <br>
+                                <!-- Start level -->
+                                
+                                {% if course.level.name.capitalize == 'Advance' %}
+                                <span style="background-color: rgba(8, 116, 218, 0.15);" class=" border-none rounded px-1 text-info">{{course.level}}</span>
+                                {%elif course.level.name.capitalize == 'Beginner'%}
+                                <span style="background-color:  rgb(255, 233, 199);" class="border-none rounded text-warning px-1">{{course.level}}</span>
+                                {%else%}
+                                <span style="background-color:  rgb(221, 221, 250);" class="border-none rounded px-1 text-white">{{course.level}}</span>
+                                {%endif%}
+                                <!-- End level -->
+                                
+                                <!-- Start of post article  -->
+                                <br>                                
+                                <!-- End of start of post article -->
+                            </div>
+                            <!--Author  -->
+                            <div class="row card-footer border-0">
+                                <div class="col-8">
+                                    <!-- Start of Author -->
+                                    <a id="text-hover" class="d-flex text-decoration-none" href="">
+                                        <img id="text-hover" style="width: 36px; height: 36px" class=" m-1 rounded-circle" src="{{course.author.profile_image.url}}"  alt="{{course.author}} image">
+                                        <span id="text-hover" style="font-size: 11px" class=" m-2 py-2 fw-bolder text-muted"> {{course.author.get_full_name}}</span>
+                                    </a>
+                                    <!-- End Author -->  
+                                </div>  
+                                <div class="col-4">
+                                    <!-- Start of Save Price -->  
+                                        {% is_enrolled request course as enrolled %}
+                                        {% if not enrolled%}
+                                            {%if course.percentage_discount > 0 %}                                            
+                                            <span style="font-size: 11px;" class="py-2 text-muted"> Save {{course.percentage_discount}}%</span>
+                                            <span style="font-size: 12px; background-color: antiquewhite;" class="border rounded px-2 text-muted"> <del> {{course.price|dollar}}</span>
+                                            {%else %}
+                                            <span class=""> <i style="font-size: 14px;" class="text-primary fa fa-check-circle"></i> </span>
+                                            {%endif%}
+                                        {%else%}
+                                            <span class=""> <i style="font-size: 14px;" class="text-primary fa fa-check-circle"></i> </span>
+                                        {%endif%}
+                        
+                                    <!-- End Save Price -->  
+                                </div>                              
+                                
+                            </div>
+                            <!-- End Author -->
+
+                            <!-- Start of price and enroll -->
+                            <div class="row">
+                                <!-- Start Price -->
+                                <div class="col-4 p-2">
+                                    <!--Serve Price and %discount from Database-->
+                                    
+                                    
+                                    {%if course.price > 0 %}
+                                    <span style="background-color: rgb(247, 178, 94);" class="border px-2 rounded fs-6 text-white fw-bold"> {% cal_main_price course.price course.percentage_discount as value %} {{value|dollar}} </span>
+                                    {%else %}
+                                    <span style="background-color: bisque;" class="fs-6 px-2 border rounded fw-bold"> Free </span>
+                                    {%endif%}
+                                   
+                                </div>
+                                <!-- End Price -->
+
+                                <!-- Start Enroll -->
+                                <div class="col-8">                                    
+                                    <a style="font-size: 12px;" href="{%url 'course_details' course.slug%}" class=" mt-1 btn btn-sm btn-dark" role="button"> <span class=""><i style="font-size: 12px;" class="text-white fa-solid fa-receipt"></i> </span> Details</a>                                 
+                                  
+                                </div>
+                                <!-- End Enroll -->
+                            </div>
+                            <!-- End of Price and Enroll  -->
+                            
+                        </div>
+                        <!-- Start of Style border-bottom -->
+                        <span style="border-bottom-width: 1px;
+                                    position: absolute;
+                                    left:0;
+                                    top: 100%;
+                                width: 5%; 
+                                margin: 0 0 -1px 0;
+                                border-bottom-color: #0d6efd !important; 
+                                display: inline-block; border-bottom-style: 
+                                solid;" 
+                            class=""> 
+                        </span>
+                        <!-- End of Style border-bottom -->
+                    
+                    </div>
+                    
+                </div>
+            {%endfor%}            
+            </div>            
+            <!-- End of Content -->
+
+            <!-- start of pagination -->
+            <div class="my-3">
+                {% if is_paginated %}
+                    {% include "includes/pagination.html" %}
+                {% endif %}
+            </div>
+            <!-- end of pagination -->
+           
+        
+
+        </div>
+        <!-- End of second column -->
+    </div>
+    
+    <!-- End of two column -->    
+</div>
+<!-- End of Warapper -->
+{%endblock%}

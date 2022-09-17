@@ -6,25 +6,28 @@
 {%block content%}
 
 
-<!-- Start of Quick Link -->
-<section class="container-fluid my-2">
-  <div class="card">
-    <div class="card-body">
-      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
-      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
-      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
-    </div>
-  </div>
-</section>
-<!-- End of Quick Link -->
-
 <!-- Start of Delete Account form -->
-<section class="container-fluid">
+<div class="wrapper">
   <div class="row">
-    <div class="col">
+    <!-- Start of first column -->
+    <div style="background-color: #f8f9fa;" class="col-lg-2">
+      {%if request.user.is_author%}
+        {%include 'courses/dashboard/author-dashboard/author_nav.html'%}
+      {%elif request.user.is_admin%}
+        {%include 'courses/dashboard/admin-dashboard/admin_nav.html'%}
+      {%else%}
+      
+      {%endif%}
+    </div>
+    <!-- End of first column -->
+    <!-- Start of second column -->
+    <div class="col-lg-10">
       <div class="card">
         <div class="card-body">
           <div class="row">
+            <div class="card-header mb-4">
+              <h6 class="text-center fw-bolder">Settings</h6>
+            </div>
             <!-- Start of Image -->
             <div class="col-lg-4">
               <div class="card p-2" style="max-width: 200px; width: 100%;">
@@ -45,9 +48,9 @@
           
                 <!-- Check first name -->
                 {%if user_account.first_name%}
-                <p class="fw-bolder">First Name: <span class="fw-normal"> {{user_account.first_name|capfirst}}</span></p>          
+                <p class="fw-bolder my-3">First Name: <span class="fw-normal"> {{user_account.first_name|capfirst}}</span></p>          
                 {%else %}
-                    <div class="alert alert-warning" role="alert">
+                    <div class="alert alert-warning my-3" role="alert">
                       First name not provided by user
                     </div>
                 {%endif %}
@@ -55,9 +58,9 @@
 
                 <!-- Check last name -->
                 {%if user_account.last_name%}
-                <p class="fw-bolder">Last Name: <span class="fw-normal"> {{user_account.last_name|capfirst}}</span></p>          
+                <p class="fw-bolder my-3">Last Name: <span class="fw-normal"> {{user_account.last_name|capfirst}}</span></p>          
                 {%else %}
-                    <div class="alert alert-warning" role="alert">
+                    <div class="alert alert-warning my-3" role="alert">
                       Last name not provided by user
                     </div>
                 {%endif %}
@@ -65,9 +68,9 @@
 
                 <!-- Check username -->
                 {%if user_account.username%}
-                <p class="fw-bolder">Username: <span class="fw-normal"> {{user_account.username|capfirst}}</span></p>          
+                <p class="fw-bolder my-3">Username: <span class="fw-normal"> {{user_account.username|capfirst}}</span></p>          
                 {%else %}
-                    <div class="alert alert-warning" role="alert">
+                    <div class="alert alert-warning my-3" role="alert">
                       Username not provided by user
                     </div>
                 {%endif %}
@@ -75,9 +78,9 @@
 
                 <!-- Check email -->
                 {%if user_account.email%}
-                <p class="fw-bolder">Email: <span class="fw-normal"> {{user_account.email|capfirst}}</span></p>          
+                <p class="fw-bolder my-3">Email: <span class="fw-normal"> {{user_account.email|capfirst}}</span></p>          
                 {%else %}
-                    <div class="alert alert-warning" role="alert">
+                    <div class="alert alert-warning my-3" role="alert">
                       email adddress not provided by user
                     </div>
                 {%endif %}
@@ -96,10 +99,11 @@
         </div>
       </div>
     </div>
+    <!-- End of second column -->
   </div>
   
 
-</section>
+</div>
 <!-- End of Delete Account Form -->
 
 

@@ -12,6 +12,7 @@ from taggit.forms import *
 
 
 
+
 """blog_comment form"""
 
 class AddBlogCommentForm(forms.ModelForm):
@@ -61,8 +62,8 @@ class BlogCreationForm(forms.ModelForm):
     post_image = forms.ImageField(required=True, widget=forms.FileInput())     
     content = forms.CharField(required=False, widget=CKEditorWidget(attrs={'class': 'form-control content-comment my-2','placeholder': 'Write your Article:',}))
     overview = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'form-control content-comment my-2','placeholder': 'Write your Article Overview: (Maximum words = "300")', "rows":5, "cols":20}))
-    tags = TagField(required=False, widget=forms.TextInput(attrs={'class': 'form-control content-comment my-2','placeholder': 'enter your tags seperated with comma (e.g; crypto, digital,)', "rows":5, "cols":20}))
-          
+    tags = TagField(required=False, widget=TagWidget(attrs={'class': 'form-control content-comment my-2','placeholder': 'enter your tags seperated with comma (e.g; crypto, digital,)', "rows":5, "cols":20}))
+         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs),
     #     self.fields['parent'].widget.attrs.update(
@@ -82,5 +83,6 @@ class BlogCreationForm(forms.ModelForm):
         widgets = {
         'category': forms.Select(attrs={'class': 'form-control content-comment my-2',}),
         'sub_category': forms.Select(attrs={'class': 'form-control content-comment my-2',}),
+        
         }
        

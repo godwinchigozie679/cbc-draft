@@ -1,7 +1,7 @@
 from django.db import models
 from account.models import Account
 from e_learning.models.course import Course
-from e_learning.models.user_course import UserCourse, AuthorCourse
+from e_learning.models.user_course import UserCourse
 from e_learning.models.video import Video
 import secrets
 
@@ -13,7 +13,7 @@ class Payment(models.Model):
     amount = models.PositiveIntegerField()
     payment_id= models.CharField(max_length=200)
     user_course = models.ForeignKey(UserCourse, null=True, blank=True, on_delete=models.CASCADE)   
-    author_course = models.CharField(max_length=200)  
+    author_course = models.CharField(max_length=200)    
     verified= models.BooleanField(default=False)
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)    
@@ -45,7 +45,8 @@ class PaymentExchangeRate(models.Model):
     
     def __str__(self):
         return f'{self.exchange_rate}'
-    
+
+
       
     
    

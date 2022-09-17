@@ -35,7 +35,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
     
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>
         {%block title%} {%endblock%}
     </title>
@@ -71,15 +71,7 @@
                   <!-- End Profile Pic -->
                 </a>
                 <ul class="dropdown-menu me-5" aria-labelledby="navbarDropdown">
-                  <li>
-                    <a class="dropdown-item" href="{% url 'user_course' %}">My Paid Courses</a>
-                  </li>   
-                  <li>
-                    <a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="{% url 'account_settings' user.id %}">Settings</a>
-                  </li>
+                  
                   <li>
                     <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                   </li>

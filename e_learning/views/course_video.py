@@ -26,6 +26,9 @@ from django.contrib.auth.decorators import login_required
 def video(request, slug): 
     course = Course.objects.get(slug=slug)
     
+    #View Count
+       
+    
     
     # Course Raview
     course_reviews = Review.objects.filter(course=course)[0:4]
@@ -47,10 +50,6 @@ def video(request, slug):
             quiz = quiz
             for result in quiz.quiz_result.filter(user=request.user, quiz__course=course):
                 result = result
-                
-              
-    
-    
              
     
     
@@ -85,7 +84,6 @@ def video(request, slug):
                         if user_course and pay.verified == True:
                             video.is_preview = True                        
                             video.save()
-                        
                                                 
                 except:
                     return redirect('checkout', slug)

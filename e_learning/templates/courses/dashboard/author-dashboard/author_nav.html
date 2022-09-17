@@ -1,0 +1,62 @@
+<div class="border border-0 ">
+    <ul class="list-group border border-0 bg-dark">
+
+        <li style="border-bottom: solid white 1px !important;" class="pt-4 list-group-item border border-0">
+            <a href="{%url 'author_admin'%}" class="text-decoration-none active border border-0" >
+                <span class="me-3"> <i class="fa fa-cubes" aria-hidden="true"></i></span>
+                Dashboard
+            </a>
+    
+        </li>
+        <li style="border-bottom: solid white 1px !important;" class="pt-4 list-group-item border border-0">
+
+            <a href="{%url 'author_courses'%}" class="text-decoration-none border border-0" >
+               <span class="me-3"><i class="fas fa-desktop"></i></span>
+                My Courses
+            </a>
+                          
+        </li>
+        <li style="border-bottom: solid white 1px !important;" class="pt-4 list-group-item border border-0">
+            <a href="{% url 'profile' user.id %}" class="text-decoration-none border border-0" >
+                <span class="me-3"> <i class="fa fa-user" aria-hidden="true"></i></span>
+                Profile
+            </a>
+                        
+        </li>
+        <li style="border-bottom: solid white 1px !important;" class="pt-4 list-group-item border border-0">
+            <a href="" class="text-decoration-none border border-0" >
+                <span class="me-3"><i class="fa-regular fa-message"></i></span>
+                Messages
+            </a>
+    
+   
+        </li>                    
+
+        <li style="border-bottom: solid white 1px !important;" class="pt-4 list-group-item border border-0">
+
+            <a href="{%url 'earnings'%}" class="text-decoration-none border border-0">
+               <span class="me-3"><i class="fa-solid fa-dollar-sign"></i></span>
+                Earnings
+            </a>
+                          
+        </li>
+        <li style="border-bottom: solid white 1px !important;" class="pt-4 list-group-item border border-0">
+
+            <a href="{% url 'bank_details'%}" class="text-decoration-none border border-0">
+               <span class="me-3"><i class="fa-solid fa-bank"></i></span>
+                Payments
+            </a>
+                          
+        </li>
+
+        <li style="border-bottom: solid white 1px !important;" class="pt-4 list-group-item border border-0">
+
+            <a href="{% url 'account_settings' user.id %}" class="text-decoration-none border border-0">
+               <span class="me-3"><i class="fa fa-cog" aria-hidden="true"></i></span>
+                Settings
+            </a>
+                          
+        </li>
+    
+    </ul>
+</div>

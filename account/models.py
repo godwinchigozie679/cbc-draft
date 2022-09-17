@@ -135,3 +135,20 @@ class Profile(models.Model):
 
     def get_absolute_url(self):      
         return reverse('edit_profile', kwargs={'pk': self.pk})
+    
+    
+
+class AuthorBankAccount(models.Model):
+    user = models.OneToOneField(Account, on_delete=models.CASCADE, null=True, blank=True, related_name='bank_account')     
+    bank_name = models.CharField(max_length=50, blank=True, null=True)    
+    account_name = models.CharField(max_length=200, blank=True, null=True)
+    account_number = models.CharField(max_length=200, blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    
+    
+    def __str__(self):
+        return f'{self.user}'
+    
+
+    def get_absolute_url(self):      
+        return reverse('edit_bank_account', kwargs={'pk': self.pk})

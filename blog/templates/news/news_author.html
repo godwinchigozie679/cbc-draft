@@ -96,7 +96,7 @@
                             </div>
                             <div style="z-index: 10;" class="row bg-white ms-3 ms-lg-0 me-3">
                                 <div style="z-index: 10; " class="col-6 py-2 bg-white border-end">                                   
-                                    <h6 style="font-size: 11px;" class=" text-center m-0"><span class="text-primary">{{post_count}}</span> <span class="text-muted"> ARTICLES</span></h6>
+                                    <h6 style="font-size: 11px;" class=" text-center m-0"><span class="text-primary">{{post_count}}</span> <span class="text-muted"> NEWS</span></h6>
                                 </div>
                                 <div style="z-index: 10;" class="col-6 bg-white py-2">
                                     <h6 style="font-size: 11px;" class=" text-center m-0"><span class="text-primary">{{total_views}}</span> <span class="text-muted"> VIEWS</span></h6>
@@ -212,7 +212,8 @@
                         background: #f5f5f5;" class="dropdown">
                             
                             <span class="me-5 fs-5 text-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span style="font-size: 14px;" class="ms-3 pe-5 me-5 text-muted">Latest</span>                     </span>
+                                <span style="font-size: 14px;" class="ms-3 pe-5 me-5 text-muted">Latest</span>
+                            </span>
                             {%if post%}
                             <ul style="width: 100%; font-size:13px; z-index: 300" class="text-muted dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li class="m-0"><a class="my-0 py-0 dropdown-item" href="{% url 'latest_news_author_post' post.pk%}">Latest</a></li>

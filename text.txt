@@ -133,3 +133,8 @@ checks for None or '' an empty string or False come to that.
 
 https://preview.themeforest.net/item/skillup-online-education-html-template/full_screen_preview/33656640?_ga=2.83393363.477931039.1659992467-1966670023.1659992467
 @/??stdw.fueh:72!; quillbot premium
+
+dashboard
+http://techydevs.com/demos/themes/html/aduca-demo/aduca/dashboard.html
+
+source "C:/Users/NGWU AMAECHI/Desktop/project/cbc/env/Scripts/activate"

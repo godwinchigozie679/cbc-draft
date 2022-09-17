@@ -1,0 +1,53 @@
+{% extends 'courses/base/author_dashboard_base.html' %}
+
+{% load course_custom_tags %}
+
+
+{%load static %}
+
+{%block title%}{{request.user.get_full_name}}{%endblock%}
+
+{%block content%}
+<style>
+    
+</style>
+<!-- Start of wrapper -->
+<div class="wrapper">
+    <!-- Start of two colum -->
+    <div class="row m-0 p-0">
+        <!-- Start of first column -->
+        <div style="background-color: #f8f9fa;" class="col-lg-2">
+            {%include 'courses/dashboard/author-dashboard/author_nav.html'%}
+
+        </div>
+
+        <!-- end of first column -->
+        <!-- Start of second column -->
+        <div class="col-lg-10 container-fluid">
+            <div class="col mt-5 mb-2 mx-3">
+                <h6 class="fw-bold">My Earnings</h6>
+            </div>
+
+            <!--Start Data -->
+            <div class="row">
+
+            </div>
+            <!-- End Date -->
+            <!-- Start Chat -->
+            <div class="row">
+                
+            </div>
+            <!-- End Chat -->
+           
+
+            
+        
+
+        </div>
+        <!-- End of second column -->
+    </div>
+    
+    <!-- End of two column -->    
+</div>
+<!-- End of Warapper -->
+{%endblock%}

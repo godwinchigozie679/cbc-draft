@@ -1,7 +1,7 @@
 {% extends 'courses/base/dashboard_base.html' %}
 {% load course_custom_tags %}
 
-{%block title%}Dashboard{%endblock%}
+{%block title%}{{request.user.get_full_name}}{%endblock%}
 
 {%block content%}
 
@@ -12,22 +12,21 @@
   }
 </style>
 
-<!-- Start of Quick Link -->
-<section class="container-fluid my-2">
-  <div class="card">
-    <div class="card-body">
-      <a href="{% url 'home'%}" class="fw-bold text-decoration-none">Home >></a>
-      <a href="{% url 'course_page'%}" class="fw-bold text-decoration-none">Courses >></a>
-      <a href="{{user_course.get_absolute_url}}" class="fw-bold text-decoration-none">Dashboard</a>
-    </div>
-  </div>
-</section>
-<!-- End of Quick Link -->
-
 <!-- Start of Delete Account form -->
-<section class="container">
+<div class="wrapper">
   <div class="row">
-    <div class="col">
+    <!-- Start of first column -->
+    <div style="background-color: #f8f9fa;" class="col-lg-2">
+      {%if request.user.is_author%}
+        {%include 'courses/dashboard/author-dashboard/author_nav.html'%}
+      {%elif request.user.is_admin%}
+        {%include 'courses/dashboard/admin-dashboard/admin_nav.html'%}
+      {%else%}
+      {%endif%}
+    </div>
+    <!-- End of first column -->
+    <!-- Start of Second column -->
+    <div class="col-10">
       <div class="card">
         <div class="card-body">
           <form action="{% url 'edit_profile' pk=profile.id %}" method="post">{% csrf_token %}
@@ -48,11 +47,14 @@
         </div>
       </div>
     </div>
+    <!-- End of second column -->
   </div>
   
 
-</section>
+</div>
 <!-- End of Delete Account Form -->
+<br>
+<br>
 
 
 

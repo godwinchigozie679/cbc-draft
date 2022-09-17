@@ -11,6 +11,7 @@ from django.contrib.auth import update_session_auth_hash
 
 # Mixins
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Password Reset
 
 
@@ -187,6 +188,14 @@ def logout_view(request):
     return render(request, template_name='registration/loggedout.html')
 
 #mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+# def login(request):
+#     context={}
+#     context_next.update(csrf(request))
+#     if 'next' in request.GET:
+#         context['next'] = request.GET.get('next')
+#     return render_to_response('login.html', context)
+
+
 # Login
 def login_view(request):
     
@@ -195,6 +204,8 @@ def login_view(request):
         return HttpResponse(f"You are already authenticated as {user.email}. Go to <a href='/'>home</a>")
      
     if request.POST:
+        next_url = str(request.POST.get('next'))
+        
         form = AccountAuthenticationForm(request.POST)
               
         if form.is_valid():
@@ -209,21 +220,29 @@ def login_view(request):
                     messages.warning(request, 'Your email is not verified. Please, check your email inbox or spam.')
                     send_activation_email(request, user)
                     return redirect(reverse('login')) 
-                else:    
+                else: 
+                      
                     if user is not None:
-                        login(request, user)
-                        # if user.is_author:
-                        #     return HttpResponse('..Author')
-                        # elif user.is_admin:
-                        #     return HttpResponse('..admin')
-                        # else:
-                        return redirect(reverse('user_course'))
+                                                
+                        login(request, user)                                               
+                        
+                        if next_url and user:
+                            return redirect(next_url.replace("%20"*2, '').strip())
+                        
+                        elif user.is_author:
+                            return redirect(reverse('author_admin'))
+                        elif user.is_admin:
+                            return redirect(reverse('dashboard_admin')) #change to admin
+                        else:
+                            return redirect(reverse('user_course'))
                     
                     else:
+                        
                         messages.warning(request, 'Email OR Password is incorrect')
                 
             except:
-                messages.warning(request, 'Email OR Password is incorrect')      
+                print(user, 'working....')
+                messages.warning(request, 'Email or password is incorrect')      
                 return redirect(reverse('login'))
     else:         
         form = AccountAuthenticationForm()
@@ -299,7 +318,7 @@ class EditProfileAccount(generic.UpdateView):
         if form.is_valid():
             edit_account = form.save(commit=False)
             form.instance = self.request.user
-            print(edit_account)  # Print so I can see in cmd prompt that something posts as it should
+            # print(edit_account)  # Print so I can see in cmd prompt that something posts as it should
             edit_account.save()
             return redirect('account_settings', user.id)
         
@@ -332,7 +351,7 @@ class EditProfile(LoginRequiredMixin, generic.UpdateView):
         if form.is_valid():
             edit_profile = form.save(commit=False)
             form.instance = self.request.user
-            print(edit_profile)  # Print so I can see in cmd prompt that something posts as it should
+            # print(edit_profile)  # Print so I can see in cmd prompt that something posts as it should
             edit_profile.save()
             return redirect('profile', user.id)
         return render(request,  {'form': form})

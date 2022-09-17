@@ -10,8 +10,10 @@ from django.views.generic.list import MultipleObjectMixin
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 # from social_handle.models import SocialHandle
 import datetime
+import time
 # Create your views here.
 from django.db.models import Sum
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -277,6 +279,13 @@ class BlogPostDetails(BlogNewsTagsMixin, MultipleObjectMixin, DetailView):
         
         context['post'] = get_object_or_404(Post, blog_post_slug=self.kwargs['blog_post_slug']) #Post
         
+        # Liked Post
+        liked = False
+        
+        if context['post'].liked.filter(id=self.request.user.id).exists():
+            liked = True
+        
+        context['liked'] = liked
         
         for comment in object_list:
             context['comment'] = comment
@@ -291,6 +300,14 @@ class BlogPostDetails(BlogNewsTagsMixin, MultipleObjectMixin, DetailView):
         
         if self.request.user.is_authenticated:
             context['comment_form'] = AddBlogCommentForm(instance=self.request.user)        
+        # Views Counter
+        
+        if context['post']:
+            post_counter = context['post']
+            post_counter.views += 1
+            post_counter.save()
+            
+        
               
         return context
 
@@ -299,7 +316,7 @@ class BlogPostDetails(BlogNewsTagsMixin, MultipleObjectMixin, DetailView):
 """Create Blog Comment"""  
 class CreateBlogComment(LoginRequiredMixin, CreateView):
     login_url = '/login/'
-    redirect_field_name = 'next'# redirect after successful login
+    redirect_field_name = 'next_url'# redirect after successful login
     
     model = BlogComment
     form_class = AddBlogCommentForm   
@@ -452,7 +469,7 @@ class BlogPortal(LoginRequiredMixin, ListView):
     
     login_url = '/login/'
     
-    redirect_field_name = 'next'# redirect after successful login
+    redirect_field_name = 'next_url'# redirect after successful login
     
     paginate_by = settings.pagination_number
     
@@ -585,8 +602,6 @@ class CreateBlogPost(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user 
         
         
-        
-        
         if not form.instance.content:
            return redirect('create_blog_post')#I will come back
             
@@ -626,6 +641,44 @@ class UpdateBlogPost(LoginRequiredMixin, UpdateView):
             edit_post.save()
             return redirect('blog_portal', post.pk)
         return render(request,  {'form': form})   
+
+#Uodate View
+class UpdateBlogPost(LoginRequiredMixin, UpdateView):
+    login_url = '/login'
+    redirect_field_name = 'next'
+    
+    model = Post
+    form_class = BlogCreationForm    
+    template_name = 'blog/blog_creation_form.html'    
+        
+    # Post the data into the DB
+    def post(self, request, pk, *args, **kwargs):
+        user = request.user
+        post = get_object_or_404(Post, pk=pk)
+        form = BlogCreationForm(request.POST, instance=post)        
+        if form.is_valid():
+            edit_post = form.save(commit=False)
+            form.instance = self.request.user                       
+            edit_post.save()
+            return redirect('blog_portal', post.pk)
+        return render(request,  {'form': form})
+
+#Like Blog Post@login_required(login_url='login')
+def like_blog_post(request, blog_post_slug):
+    
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    liked = False
+    
+    if post.liked.filter(id=request.user.id).exists():
+        post.liked.remove(request.user)
+        liked = False
+    else:
+        post.liked.add(request.user)  
+        liked = True 
+    
+    return HttpResponseRedirect(reverse('blog_post_details', args=[str(blog_post_slug)]))
+    
+    
     
 ############################################################################################
 
@@ -778,7 +831,10 @@ class NewsPostDetails(BlogNewsTagsMixin, MultipleObjectMixin, DetailView):
         context = super(NewsPostDetails, self).get_context_data(object_list=object_list, **kwargs)
         
         context['post'] = get_object_or_404(NewsPost, news_post_slug=self.kwargs['news_post_slug']) #Post
-        
+        if context['post']:
+            post_counter = context['post']
+            post_counter.views += 1
+            post_counter.save()
         
         for comment in object_list:
             context['comment'] = comment
@@ -788,6 +844,14 @@ class NewsPostDetails(BlogNewsTagsMixin, MultipleObjectMixin, DetailView):
         
         
         context['related_post'] = related_post.annotate(tag_count=Count('tags')).order_by('-tag_count', '-publish')  #related post list        
+        
+        # Liked Post
+        liked = False
+        
+        if context['post'].liked.filter(id=self.request.user.id).exists():
+            liked = True
+        
+        context['liked'] = liked
         
         context['category'] = context['post'].category #Category
         
@@ -801,7 +865,7 @@ class NewsPostDetails(BlogNewsTagsMixin, MultipleObjectMixin, DetailView):
 """Create News Comment"""  
 class CreateNewsComment(LoginRequiredMixin, CreateView):
     login_url = '/login/'
-    redirect_field_name = 'next'# redirect after successful login
+    redirect_field_name = 'next_url'# redirect after successful login
     
     model = NewsComment
     form_class = AddNewsCommentForm   
@@ -949,3 +1013,19 @@ class MostCommentedNewsAuthorPostList(BlogNewsTagsMixin, NewsAuthorParameterMixi
         return NewsPost.news_published.filter(author_id=self.get_object()).annotate(Count('news_post_comment')).order_by('news_post_comment')# Post  
     
     paginate_by = settings.pagination_number
+    
+
+#Like Blog Post@login_required(login_url='login')
+def like_news_post(request, news_post_slug):
+    
+    post = get_object_or_404(NewsPost, id=request.POST.get('post_id'))
+    liked = False
+    
+    if post.liked.filter(id=request.user.id).exists():
+        post.liked.remove(request.user)
+        liked = False
+    else:
+        post.liked.add(request.user)  
+        liked = True 
+    
+    return HttpResponseRedirect(reverse('news_post_details', args=[str(news_post_slug)]))

@@ -1,7 +1,7 @@
 {% extends 'courses/base/base.html' %}
 {% load course_custom_tags %}
   <!--Title-->
-{%block title%}Login{%endblock%}
+{%block title%}Sign in{%endblock%}
 
             
 
@@ -21,7 +21,7 @@
         <form action="{% url 'login'  %}" method="post" class="py-5">  {% csrf_token %}
           <!-- Start of Social Login -->
           <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-            <p class="lead fw-normal mb-0 me-3 fs-6">Login with</p>
+            <p class="lead fw-normal mb-0 me-3 fs-6">Sign in with</p>
             <button type="button" class="btn btn-primary btn-floating mx-1">
               <i class="fs-6 fab fa-facebook-f"></i>
             </button>
@@ -46,15 +46,16 @@
           <!-- Email input -->
           <div class="form-outline mb-4">
 
-            <input type="email" name="email" id="id_email" class="form-control fs-6 form-control-sm"
+            <input type="email" name="email" id="id_email" class="form-control form-content-input fs-6 form-control-sm"
               placeholder="Enter a valid email address" />
           </div>
-           
+          <!-- next -->
+          <input type="hidden" name="next" value="{{ request.GET.next }}  "/>
               
           <!-- Password input -->
 
           <div class="form-outline mb-3">
-            <input type="password" name="password" id="id_password" class="form-control form-control-sm fs-6"
+            <input type="password" name="password" id="id_password" class="form-control form-content-input form-control-sm fs-6"
               placeholder="Enter password" />
           </div>
 
@@ -64,9 +65,9 @@
 
           <div class="text-center text-lg-start mt-4 pt-2">
             <button type="submit" class="btn btn-primary fs-6 btn-lg"
-              style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Sign in</button>
             <p class="small fw-bold fs-6 mt-2 pt-1 mb-0">Don't have an account? <a href="{%url 'register' %}"
-                class="link-danger fs-6">Join</a></p>
+                class="link-danger fs-6">Get Started</a></p>
           </div>
 
         </form>

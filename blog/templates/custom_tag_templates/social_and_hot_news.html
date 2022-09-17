@@ -15,7 +15,7 @@
         <!-- Start of Hot News Date -->
         <div  class=" col-lg-1 position-relative">
             {% for news in all_news|slice:":1"%}
-            <span class=" fs-4 text-white fw-bold" style="position: absolute;" >{{news.publish.date|date:'d'}}</span>
+            <span class=" fs-4 text-white fw-bold" style="position: absolute; left: 40px !important" >{{news.publish.date|date:'d'}}</span>
             <span class=" text-white" style="text-align:left; float:left; width: 100%; font-size: 11px; font-weight:500; margin-left: 30px" >{{news.publish.date|date:'M'}}</span>
             <span class=" text-white" style="text-align:left; float:left; width: 100%; font-size: 11px; font-weight:500; margin-left: 30px;" >{{news.publish.date|date:'Y'}}</span>
             {% endfor%}        

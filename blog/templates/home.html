@@ -758,7 +758,7 @@
                         
                         {%for tag in common_tags|slice:":8"%}   
                                                                       
-                        <a id="tag-bg-hover" class="tag-bg text-decoration-none bg-dark fw-bold text-white" href="{% url 'blog_tag_list' tag.slug %}" >{{tag|capfirst}}</a>                          
+                        <a id="tag-bg-hover" class="tag-bg text-decoration-none bg-dark fw-bold text-white m-1" href="{% url 'blog_tag_list' tag.slug %}" >{{tag|capfirst}}</a>                          
                           
                         
                         {%endfor%}
@@ -819,7 +819,7 @@
 
                     <!-- Start of Author -->
                     <div style="position: absolute; z-index: 2; top:30px; left: 40px; width: 100%;">
-                        <a style="position: absolute; z-index: 2;" id="text-hover" class="d-flex text-decoration-none" href="">
+                        <a style="position: absolute; z-index: 2;" id="text-hover" class="d-flex text-decoration-none">
                             <img id="text-hover" style="width: 30px; height: 30px" class=" m-1 rounded-circle" src="{{course.author.profile_image.url}}"  alt="{{course.author}} image">
                             <span id="text-hover" style="font-size: 11px" class=" m-2 fw-bolder text-white"> by {{course.author.first_name|capfirst}} {{course.author.last_name|capfirst}}</span>
                         </a>                         
@@ -959,9 +959,9 @@
             </div>
             <!-- End of Header -->
             <!-- Start of Video -->
-            <div class="row owl-carousel popular-videos">                
+            <div class=" owl-carousel popular-videos">                
                 {% for course in featured_courses|slice:"3:8"%}                   
-                        <div style="z-index: 100; width:100%" class="slide-item col-lg-4 mb-1 col-md-4 position-relative ">
+                        <div style="z-index: 100; width:100%" class="slide-item col-lg-4 col-md-4 position-relative ">
 
                             <div class="">
                                 <!-- Start Image -->
@@ -993,20 +993,20 @@
                                     <!--Other Features  -->
                                     <div style="z-index: 100;" class="row">
                                          <!-- Start of Date -->
-                                        <div class="col-lg-5 col-md-5 col-sm-5 ">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 ">
                                             <span style="font-size: 11px" class="fw-bolder text-white"><i class="m-2 fa-regular fa-clock text-primary"></i> {{course.date.date}}</span>
                                             
                                         </div>
                                         <!-- End Date -->   
             
                                         <!-- Start Views -->
-                                        <div class="col-lg-3 col-md-3 col-sm-3">
+                                        <div class="col-lg-4 col-md-4 col-sm-4">
                                             <span style="font-size: 11px" class="mx-1 fw-bolder text-white"><i class="mx-2 fa-solid fa-eye text-primary"></i> {{course.views}}</span>
                                         </div>
                                         <!-- End Views -->
                                         
                                          <!-- Start Enroll -->
-                                         <div class="col-lg-1 col-md-1 col-sm-1">
+                                         <div class="col-lg-2 col-md-2 col-sm-2">
                                             <a href="{% url 'checkout' course.slug %}" class="mx-1 btn btn-primary btn-sm fw-bolder text-white">Enroll</a>
                                          </div>
                                          <!-- End Enroll -->
@@ -1233,7 +1233,7 @@
             <!-- End of firt Trending Post --> 
 
             <!-- Start of Other Trending Post -->           
-            <div class="row mt-4 owl-carousel owl-blog-cat-second-column ms-lg-3 ">
+            <div class="mt-4 owl-carousel owl-blog-cat-second-column ms-lg-3 ">
                 {%for post in all_trending_post|slice:"1:7"%}                     
                 
                 <div style="width: 97%;"  class="row slide-item border-bottom relative-postion">                            

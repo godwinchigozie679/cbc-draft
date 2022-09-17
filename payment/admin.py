@@ -1,5 +1,6 @@
 from django.contrib import admin
 from payment.models import Payment, PaymentExchangeRate
+from payment.author_commission_models import AuthorCommision
 
 # Register your models here.
 
@@ -10,3 +11,4 @@ class PaymentAdmin(admin.ModelAdmin):
 
 admin.site.register(Payment, PaymentAdmin)
 admin.site.register(PaymentExchangeRate)
+admin.site.register(AuthorCommision)

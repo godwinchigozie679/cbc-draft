@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
-from e_learning.models.user_course import UserCourse, AuthorCourse
+from e_learning.models.user_course import UserCourse
 from django.contrib import messages
 from e_learning.models.course import Course
 from account.models import Account
 from e_learning.models.video import Video
 from e_learning.templatetags import course_custom_tags
 from .models import Payment, PaymentExchangeRate
+from payment.author_commission_models import AuthorCommision
 from time import time
 # from pypaystack import Transaction, Customer, Plan
 from paystackapi.paystack import Paystack
@@ -49,6 +50,7 @@ def initiate_payment(request, slug):
         try:            
             user_course = UserCourse.objects.get(course=course, user=user)
             
+            
             error = 'You Are Already Enrolled in this Course'
         except:
             pass      
@@ -90,7 +92,7 @@ def initiate_paystack(request, slug):
     payment.user = user 
     payment.author_course = course.author
     payment.amount = amount 
-    payment.order_id
+    payment.order_id    
     payment.save()    
             
     reference = payment.order_id
@@ -100,7 +102,7 @@ def initiate_paystack(request, slug):
          
             
             
-    paystack_secret_key = 'sk_test_91ea127069a2e935c5dd98f51de416fa8a0a80ab'
+    paystack_secret_key = 'sk_test_ddd359b5ad1643d940d6c2fc8d0dec2ccca74f07'
     paystack_public_key = 'pk_test_52299579c0d5504d20141c1092f8b3022f085e7c'
                 
             
@@ -126,12 +128,12 @@ def initiate_paystack(request, slug):
 def verify_paystack_payment(request, reference, slug): 
     payment = get_object_or_404(Payment, order_id=reference, course__slug=slug)   
     
-    
+    print('verify payment console...')
     # Exchange
     exchange_rate = str(PaymentExchangeRate.objects.all()[0]) 
     
     try:
-        paystack_secret_key = 'sk_test_91ea127069a2e935c5dd98f51de416fa8a0a80ab'
+        paystack_secret_key = 'sk_test_ddd359b5ad1643d940d6c2fc8d0dec2ccca74f07'
         paystack = Paystack(secret_key=paystack_secret_key)       
         response = paystack.transaction.verify(reference)
         
@@ -146,20 +148,24 @@ def verify_paystack_payment(request, reference, slug):
         
        
           
-        # Update Author Ordered Course 
-        # authorCourse = AuthorCourse(user= payment.author_course, course=payment.course)         
-        # authorCourse.save() 
+        
         
         
         # Update User Course Paid Course
-        userCourse = UserCourse(user= payment.user, course=payment.course)                         
+        per_comm = AuthorCommision.objects.all()[0]
+        
+        amount = payment.amount
+        author_comm = (amount * float(str(per_comm)))/100 
+        
+        userCourse = UserCourse(user= payment.user, 
+                                course=payment.course, 
+                                percentage_commision=per_comm, 
+                                commission=author_comm)                         
+        
         userCourse.save()  
         
         payment.user_course = userCourse        
-        payment.save()         
-        
-        
-        # user_course_module = UserModule.objects.create(user_course=userCourse, user_course_module=)
+        payment.save()   
         
         return redirect('course_success_payment', slug)
     except:

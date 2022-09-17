@@ -8,9 +8,6 @@ from django.urls import reverse
 from taggit.managers import TaggableManager
 
 
-
-
-
 # Create your models here.
 
 class Level(models.Model):
@@ -42,6 +39,8 @@ class Course(models.Model):
     views = models.IntegerField(default=0)
     tags = TaggableManager()
     
+    
+        
     
     
     class Meta:
